@@ -1,0 +1,54 @@
+package co.wiss1.control;
+
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.List;
+
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import co.wiss1.model.W0020Model;
+
+// WebServlet
+@WebServlet("/W0020Control")
+public class W0020Control extends HttpServlet {
+	public void doPost(HttpServletRequest request, HttpServletResponse response)
+		throws IOException, ServletException {
+		System.out.println("doPost start");
+
+		// アクションIDの取得
+		String actionId = request.getParameter("actionId");
+
+			// 削除
+			if ("delete".equals(actionId)){
+				//ViewからchkBoxの値を受け取る
+				String[] checkBox = request.getParameterValues("chkbox");
+
+				//削除の項目を送る
+				int delete = W0020Model.updateCategory(checkBox);
+				if(delete >= 1){
+					System.out.println("削除成功");
+					request.setAttribute("delete",delete);
+		        }else{
+		            System.out.println("削除失敗");
+		            request.setAttribute("delete",delete);
+		        }
+			}
+
+		// 初期表示 と削除後の再検索したカテゴリ一覧を取得
+			// カテゴリ一覧の取得
+			List<HashMap<String, String>> categoryList = W0020Model.getCategoryList();
+			// カテゴリ一覧が空ではなく1件以上存在する場合、カテゴリ一覧をセット
+			if (categoryList != null && 0 < categoryList.size()) {
+				request.setAttribute("categoryList", categoryList);
+			}
+			RequestDispatcher dispatch =getServletContext().getRequestDispatcher("/view/W0020View.jsp");
+			dispatch.forward(request, response);
+		System.out.println("doPost end");
+	}
+
+}

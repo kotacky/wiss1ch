@@ -12,7 +12,7 @@ public class DBAccessUtils {
 		String port     = "5432";
 		String dbname   = "postgres";
 		String user     = "postgres";
-		String password = "postgres";
+		String password = "easy";
 		String url      = "jdbc:postgresql://" + host + ":" + port + "/" + dbname;
 		Connection con  = null;
 		try {

@@ -9,7 +9,7 @@
 		<link rel="stylesheet" type="text/css" href="./css/W0010.css">
 		<div style="text-align: right;">
 		<li ><% out.print(session.getAttribute("userName")); %></li>
-		<a  href="<%= request.getContextPath() %>/W0000Control/" >ログアウト</a></right></div>
+
 		<title>WISS1ch</title>
 		<style>
 			h1{color: blue; }
@@ -28,8 +28,8 @@
 	</head>
 
 	<body>
-	<form name="MyForm" method="POST" action="<%= request.getContextPath() %>/W0030View.jsp">
-
+	<form name="MyForm" method="POST" action="<%= request.getContextPath() %>/W0000Control">
+	<input type="submit" value="ログアウト" ></div>
 
 		<div>
 			<CENTER>

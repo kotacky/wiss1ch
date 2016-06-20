@@ -5,53 +5,35 @@
 <html lang=ja>
 	<head>
 		<meta charset="UTF-8">
-		<title><h1><% out.print(request.getAttribute("categryName")); %></h1></title>
+		<title><h2><% out.print(request.getAttribute("categryName")); %></h2></title>
 		<style>
 			h1{color: blue; }
 		</style>
 		<script type="text/javascript">
-		function logOut(){
-     	   MyMessage = confirm("ログアウトします。よろしいですか？");
-     	     if ( MyMessage == true ){
-				 document.MyForm.action = "<%= request.getContextPath() %>/W0000Control"
-     	         document.MyForm.submit();
-     	     }else{
-     	    	return;
-     	     }
 
-		function func(Command){
-			  document.MyForm.actionId.value = Command;
+		function func(insert){
 			  document.MyForm.action = "<%= request.getContextPath() %>/W0040Control"
 				  document.MyForm.submit();
 		 }
 
-		function init(Command){
-			  document.MyForm.actionId.value = Command;
+		function func(update){
 			  document.MyForm.action = "<%= request.getContextPath() %>/W0040Control"
 				  document.MyForm.submit();
-		 }
 		 }
 		</script>
 
 	</head>
-		<div align="right" >
-		<input type="button" name="btn1" value ="ログアウトする"  onClick="logOut();">
-		</div>
+			<div align="right" >
+			<form name="MyForm" method="POST" action="<%= request.getContextPath() %>/W0000Control">
+			<input type="submit" name="logOut" value="ログアウト" onclick="logOut();"></form>
+			</div>
 	<body>
-
-		<div>
 			<CENTER>
 			<h1>WISS1ch</h1>
-
-
 			<%-- コメントの表示--%>
 			<table>
-
-					<tr>
-						<th>選択</th>
-						<th>コメントID</th>
-						<th>ユーザー名</th>
-					</tr>
+				<label>コメントID</label>
+				<label>ユーザー名</label>
 			</CENTER>
 
 					<%
@@ -61,7 +43,7 @@
 					<% if (commentList != null) { %>
 						<% for (HashMap<String,String> commentInfo : commentList) { %>
 						<tr>
-							<th><input type="checkbox" name="chkbox" value="<%= commentInfo.get("commentId") %>"></th>
+							<th><input type="checkbox" name="chkbox" value="<%= commentInfo.get("comment") %>"></th>
 							<td><% out.print(commentInfo.get("commentId")); %></td>
 							<td><% out.print(commentInfo.get("userName")); %></td>
 						</tr>
@@ -76,7 +58,6 @@
 			<input type="button" name="btn1" value ="投稿する"  onClick="func('insert');">
 			<input type="submit" name="btn1" value ="削除する"  onClick="func('update');">
 			<input type="hidden" name="actionId">
-			</form>
 		</body>
 
 </html>

@@ -40,7 +40,6 @@ public class W0040Model {
 				resultSet = statement.executeQuery(sb.toString());
 			// 実行結果の取得
 			while(resultSet.next()) {
-
 				commentInfo.put("commentId", resultSet.getString("post_id"));
 				commentInfo.put("userName", resultSet.getString("user_name"));
 				commentInfo.put("comment", resultSet.getString("post"));
@@ -85,7 +84,7 @@ public static int updatecomment(String[] checkBox ) {	 												//コメン�
 
         connection.setAutoCommit(true);							 								//自動コミットを有効にする
 
-        String sql = "UPDATE t_post SET delete_flg = TRUE WHERE (post_id IN()";
+        String sql = "UPDATE t_post SET delete_flg = TRUE WHERE (post_id IN( + checkBox + )";
 
         System.out.println("引数に" + checkBox + "が入力されました。");
         System.out.println(sql);
@@ -113,14 +112,11 @@ return updateCount;
 
 
 
-public static int insertComment(String commentId) {
+public static int insertComment(String comment) {
 
-
-			//List<HashMap<String, String>> commentList = new ArrayList<HashMap<String, String>>();
-				ResultSet resultSet = null;
 				Connection connection = null;
 				Statement statement = null;
-				String insertCount = null;
+				int insertCount = 0;
 
 			try
 		{
@@ -130,15 +126,13 @@ public static int insertComment(String commentId) {
 
 	        //自動コミットを有効にする
 	        	connection.setAutoCommit(true);
+	        	//コメントの追加
+	        	 String insertSql = "INSERT INTO t_post(post)"
+	             + "VALUES('" + comment + "')";
+	        	 System.out.println("1:" + insertSql);
+	             insertCount = statement.executeUpdate(insertSql);
 
-	        	 String insertSql = "INSERT INTO t_post";
-	             System.out.println("1:" + insertSql);
-
-	             insertSql = insertSql + "(post)"+ "VALUES('" + commentId + "')";
-
-	             resultSet = statement.executeQuery(insertSql);
-
-	             System.out.println("引数に" + commentId + "が入力されました。");
+	             System.out.println("引数に" + comment + "が入力されました。");
 
 	             System.out.println(insertSql);
 
@@ -154,7 +148,6 @@ public static int insertComment(String commentId) {
 		 finally{
 			 try {
 	 		// もろもろクローズ処理
-				resultSet.close();
 				statement.close();
 				connection.close();
 			} catch (Exception e) {
@@ -163,13 +156,8 @@ public static int insertComment(String commentId) {
 				e.printStackTrace ();
 			}
 		 }
-	return insertComment(null);
+	return insertCount;
 	}
+
+
 }
-
-
-
-
-
-
-

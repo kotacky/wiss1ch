@@ -24,11 +24,8 @@ import co.wiss1.model.W0040Model;
 			// 処理に必要となる情報を受け取る
 			// カテゴリIDの取得
 				String categoryid = request.getParameter("categoryId");
-				String checkBox[ ] = request.getParameterValues("chkbox");
-
 			// アクションIDの取得
 				String actionId = request.getParameter("actionId");
-				request.getParameter("comment");
 
 			// 登録
 			if ("insert".equals(actionId)) {
@@ -36,17 +33,14 @@ import co.wiss1.model.W0040Model;
 			}
 			// コメントの削除
 			else if("update".equals(actionId)) {
+				String checkBox[ ] = request.getParameterValues("chkbox");
 				W0040Model.updatecomment(checkBox);
 			}
 			// 初期表示
 			List<HashMap<String, String>> commentList = W0040Model.getCommentList(categoryid);
 			if (commentList != null && 0 < commentList.size()) {
-				request.setAttribute("categoryList", commentList);
 			}
-		RequestDispatcher dispatch =getServletContext().getRequestDispatcher("/view/W0020View.jsp");
+		RequestDispatcher dispatch =getServletContext().getRequestDispatcher("/view/W0040View.jsp");
 		dispatch.forward(request, response);
 	}
 }
-
-
-

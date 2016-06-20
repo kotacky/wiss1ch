@@ -23,6 +23,9 @@
 		}else if (document.myForm.password.value == ""){
 			alert("パスワードを入力してください。");
 
+		}else{
+			document.myForm.action = "<%= request.getContextPath() %>/W0010Control"
+			document.myForm.submit();
 		}
 	}
 	</script>

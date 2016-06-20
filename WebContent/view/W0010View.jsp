@@ -3,8 +3,8 @@
 <html lang="ja">
 	<head>
 
-	<link rel="stylesheet" type="text/css" href="wiss1ch/WebContent/view/css/W0010.css">
-	<link rel="stylesheet" type="text/css" href="./css/W0010.css">
+
+	<link href="<%= request.getContextPath() %>/view/css/W0010.css" rel="stylesheet" type="text/css" />
 	<meta charset="Windows-31J">
 	<title>WISS1</title>
 	<div style="bottom:40;"><h1 style="text-align: center;"><span style="color:#6A5ACD;font-size:50px;">WISS1ch</span></h1></div>
@@ -14,11 +14,11 @@
 			alert("ユーザーIDを入力してください。");
 
 			// バグ修正中につきコメントアウト
-/*			var str="user";
-			document.write(str.length);
+/*			String input = new Scanner(System.in).nextLine();
+			if (input.length() <= 4) {
 
 		}else if (document.myForm.Nam.value.length() <= 3) {
-			alert("ユーザーIDが短すぎます。"); */
+			alert("ユーザーIDが短すぎます。");  */
 
 		}else if (document.myForm.password.value == ""){
 			alert("パスワードを入力してください。");

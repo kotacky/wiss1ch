@@ -6,8 +6,10 @@
 <html lang="ja">
 	<head>
 		<meta charset="UTF-8" />
-
-		<li><% out.print(session.getAttribute("User")); %></li>
+		<link rel="stylesheet" type="text/css" href="./css/W0010.css">
+		<div style="text-align: right;">
+		<li ><% out.print(session.getAttribute("userName")); %></li>
+		<a  href="<%= request.getContextPath() %>/W0000Control/" >ログアウト</a></right></div>
 		<title>WISS1ch</title>
 		<style>
 			h1{color: blue; }
@@ -16,67 +18,67 @@
 		  function init(Command){
 			  document.MyForm.actionId.value = Command;
 			  document.MyForm.action = "<%= request.getContextPath() %>/W0020Control"
-				  document.MyForm.submit();  //
-		  }
-		  function Regest(){
-			  document.MyForm.action = "<%= request.getContextPath() %>/W0030View"
 			  document.MyForm.submit();  //
+		  }
+		  function Regist(){
+			  document.MyForm.action = "<%= request.getContextPath() %>/view/W0030View.jsp"
+			  document.MyForm.submit();
 		  }
 		</script>
 	</head>
 
 	<body>
-	<form name="MyForm" method="GET" action="<%= request.getContextPath() %>/W0030View">
-    <a style="right:" href="<%= request.getContextPath() %></W0000Control/" >ログアウト</a>
+	<form name="MyForm" method="POST" action="<%= request.getContextPath() %>/W0030View.jsp">
+
 
 		<div>
 			<CENTER>
 			<h1>WISS1ch</h1>
 			<%-- テーブルの表示--%>
-			<table>
-				<thead>
+			<table border="1">
+
 					<tr>
 						<th>選択</th>
 						<th>カテゴリID</th>
 						<th>カテゴリ名</th>
 					</tr>
 			</CENTER>
-				</thead>
+
 				    <%
 						// カテゴリ一覧を取得
 						List<HashMap<String,String>> categoryList = (List<HashMap<String,String>>)request.getAttribute("categoryList");
 					%>
-					<% String sessionflag = "あ";
+					<% String sessionflag = session.getAttribute("adminFlg").toString();
+					System.out.print("権限は" + sessionflag + "です！！！");
 					   String chk1 = null;
 					   String chk2 = null;
-		  			  String str1 = "i";
+		  			  String str1 = "t";
 		    		  if(sessionflag.equals(str1) ){
-		    		      String str2 = "button";
-		    		      String str3 = "checkbox";
+		    		      String str2 = "true";
 		    		      chk1 = str2;
-		    		      chk2 = str3;
 		    		  }else{
 		    			  String str2 = "disabled";
-		    			  String str3 = "true";
 		    			  chk1 = str2;
-		    		      chk2 = str3;
+
 		    		     }	%>
 
 					<% if (categoryList != null) { %>
 
 						<% for (HashMap<String,String> categoryInfo : categoryList) { %>
 						<tr>
-							<th><input type="<%= chk2  %>" value="checkbox" name="chkbox" value="<%= categoryInfo.get("categoryId") %>"></th>
+							<td><input type="checkbox" <%= chk1  %> value="" name="chkbox" value="<%= categoryInfo.get("categoryId") %>"></td>
 							<td><% out.print(categoryInfo.get("categoryId")); %></td>
-							<td><a href="<%= request.getContextPath() %>/control/W0040Control.java" ><% out.print(categoryInfo.get("categoryId")); %></a><td>
-						</tr>
-						<% } %>
-					<% } %>
-			</table>
+							<td><a href="<%= request.getContextPath() %>/control/W0040Control.java" ><% out.print(categoryInfo.get("categoryName")); %></a></td>
 
+							<% } %>
+						<% } %>
+						</tr>
+			</table>
+			<P>
 			<input type="button"  <%=chk1 %> value="カテゴリ登録" onClick="Regist();" >
-			<input type="button"  <%= chk2  %> value="カテゴリ削除" onClick="init(update);">
+			<input type="button"  <%= chk1  %> value="カテゴリ削除" onClick="init(update);">
 			<input type="hidden" name="actionId"></div>
+			</P>
 		</form>
 	</body>
 </html>

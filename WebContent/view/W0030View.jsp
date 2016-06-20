@@ -10,26 +10,36 @@
            function logOut(){
         	   MyMeasage = confirm("ログアウトします。よろしいですか？");
         	       if ( MyMessage == true ){
-        	    	 document.myForm.action = "<%= request.getContextPath() %>/W0000Control"
+        	    	 document.MyForm.action = "<%= request.getContextPath() %>/W0000Control"
         	         document.MyForm.submit();
         	       }else{
       				 return;
       			   }
            }
            function Registration(){
-        	  if(document.myForm.categoryInputText.value != ""){
-        		  document.myForm.action = "<%= request.getContextPath() %>/W0030Control"
+        	  if(document.MyForm.categoryInputText.value != ""){
+        		  document.MyForm.action = "<%= request.getContextPath() %>/W0030Control"
         	      document.MyForm.submit();
         	  }else{
-        		  alert("未記入です。");
+        		  alert("未記入です。");//値
         		  return;
         	  }
            }
 
        </script>
  	 </head>
+
+ 	 <% try{ %>
+		<% String insertFlag = request.getAttribute("insertFlag").toString(); %>
+		<% if("1".equals(insertFlag)){ %>
+			<H2><% out.print("登録が完了しました。"); %></H2>
+			<% }else if("0".equals(insertFlag)){ %>
+			<H2><% out.print("登録が失敗しました。"); %></H2>
+			<% } %>
+			<% }catch(NullPointerException insertException){ %>
+
  	 <body>
- 		<form name="myForm" method="GET" action="#">
+ 		<form name="MyForm" method="GET" action="#">
 			<div align="right">
     		<input type="button" name="logout" value="ログアウト" onClick="logOut();">
     		</div>
@@ -43,5 +53,3 @@
 		</form>
 	</body>
 </html>
-
-

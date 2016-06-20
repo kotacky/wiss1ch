@@ -97,9 +97,6 @@ public class W0030Model {
 		            //どのようなSQL文が入っているか出力
 		            System.out.println ("次のsqlを実行します" + insertSql);
 
-		            //影響のあった行数を出力
-		            insertCount = statement.executeUpdate(insertSql);
-		            //executeUpdate:桁数(挿入)
 
 		         }
 		         catch (SQLException e) {

@@ -2,8 +2,9 @@
 <!DOCTYPE html>
 <html lang="ja">
 	<head>
+
+	<link rel="stylesheet" type="text/css" href="wiss1ch/WebContent/view/css/W0010.css">
 	<link rel="stylesheet" type="text/css" href="./css/W0010.css">
-	<link rel="stylesheet" type="text/css" href="W0010.css">
 	<meta charset="Windows-31J">
 	<title>WISS1</title>
 	<div style="bottom:40;"><h1 style="text-align: center;"><span style="color:#6A5ACD;font-size:50px;">WISS1ch</span></h1></div>
@@ -17,14 +18,11 @@
 			document.write(str.length);
 
 		}else if (document.myForm.Nam.value.length() <= 3) {
-			alert("ユーザーIDが短すぎます。");
+			alert("ユーザーIDが短すぎます。"); */
 
 		}else if (document.myForm.password.value == ""){
-			alert("パスワードを入力してください。");           */
+			alert("パスワードを入力してください。");
 
-		}else{
-			document.myForm.action = "<%= request.getContextPath() %>/W0010Control"
-			document.myForm.submit();
 		}
 	}
 	</script>

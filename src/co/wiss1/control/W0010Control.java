@@ -44,9 +44,10 @@ public class W0010Control extends HttpServlet {
 			  dispatch.forward(request, response);
 
 		  }else{
+			    request.setAttribute("EMSG0004", "パスワードが間違っています。");
 			    RequestDispatcher dispatch = request.getRequestDispatcher("/view/W0010View.jsp");
 			    dispatch.forward(request, response);
-			    request.setAttribute("EMSG0004", "パスワードが間違っています。");
+
 		  }
 
 	   /* // ログアウト・セッションの破棄・ログイン画面への遷移

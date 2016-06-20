@@ -15,13 +15,15 @@
 			h1{color: blue; }
 		</style>
 		<script type="text/javascript">
-		  function init(Command){
-			  document.MyForm.actionId.value = Command;
-			  document.MyForm.action = "<%= request.getContextPath() %>/W0020Control"
-			  document.MyForm.submit();  //
+		  function ob(Comand){
+		   alert("ためし");
 		  }
 		  function Regist(){
 			  document.MyForm.action = "<%= request.getContextPath() %>/view/W0030View.jsp"
+			  document.MyForm.submit();
+		  }
+		  function go(){
+			  document.MyForm.action = "<%= request.getContextPath() %>/W0040Control"
 			  document.MyForm.submit();
 		  }
 		</script>
@@ -68,7 +70,7 @@
 						<tr>
 							<td><input type="checkbox" <%= chk1  %> value="" name="chkbox" value="<%= categoryInfo.get("categoryId") %>"></td>
 							<td><% out.print(categoryInfo.get("categoryId")); %></td>
-							<td><a href="<%= request.getContextPath() %>/control/W0040Control.java" ><% out.print(categoryInfo.get("categoryName")); %></a></td>
+							<td><a onClick="go();" name="<%categoryInfo.get("categoryName"); %>>"  href="#" ><% out.print(categoryInfo.get("categoryName")); %></a></td>
 
 							<% } %>
 						<% } %>
@@ -76,8 +78,8 @@
 			</table>
 			<P>
 			<input type="button"  <%=chk1 %> value="カテゴリ登録" onClick="Regist();" >
-			<input type="button"  <%= chk1  %> value="カテゴリ削除" onClick="init(update);">
-			<input type="hidden" name="actionId"></div>
+			<input type="button"  <%= chk1  %> value="カテゴリ削除" onClick="ob();">
+			<input type="hidden" name="actionId" value=""></div>
 			</P>
 		</form>
 	</body>

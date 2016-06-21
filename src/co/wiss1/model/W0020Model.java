@@ -92,7 +92,7 @@ public class W0020Model {
             System.out.println(sql);
 
             UpdateCount = statement.executeUpdate (sql);
-
+            
             if(UpdateCount >= 1){																	//削除が成功しているかどうかの確認
             	System.out.println("削除成功");
             }

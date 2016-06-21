@@ -8,7 +8,7 @@
        <title>管理者画面</title>
        <script type="text/javascript">
            function logOut(){
-        	   MyMeasage = confirm("ログアウトします。よろしいですか？");
+        	   MyMessage = confirm("ログアウトします。よろしいですか？");
         	       if ( MyMessage == true ){
         	    	 document.MyForm.action = "<%= request.getContextPath() %>/W0000Control"
         	         document.MyForm.submit();
@@ -17,7 +17,7 @@
       			   }
            }
            function Registration(){
-        	  if(document.MyForm.categoryInputText.value != ""){
+        	  if(document.MyForm.categoryName.value != ""){
         		  document.MyForm.action = "<%= request.getContextPath() %>/W0030Control"
         	      document.MyForm.submit();
         	  }else{
@@ -37,7 +37,7 @@
 			<H2><% out.print("登録が失敗しました。"); %></H2>
 			<% } %>
 			<% }catch(NullPointerException insertException){ %>
-
+			<% } %>
  	 <body>
  		<form name="MyForm" method="GET" action="#">
 			<div align="right">
@@ -46,7 +46,7 @@
     		<center> <h1>WISS1ch</h1></center>
       		<p><center>管理者メニュー</center></p>
 			<p><center>カテゴリの追加<br>
-			<input type="text" name="categoryInputText"
+			<input type="text" name="categoryName"
 		 	maxlength="20" value="" placeholder="例：芸能">
 			<input type="button" value="カテゴリ追加" onClick="Registration();">
 			</center></p>

@@ -12,8 +12,8 @@ import co.wiss1.common.DBAccessUtils;
 
 public class W0040Model {
 
-	public static List<HashMap<String, String>> getCommentList(String categoryid) {
-
+	public static List<HashMap<String, String>> getCommentList(String Id) {
+				System.out.println("引数は" + Id + "になります!!");
 		// コメント一覧を格納する箱
 			List<HashMap<String, String>> commentList = new ArrayList<HashMap<String, String>>();
 		// SQL実行結果格納用Set
@@ -22,7 +22,7 @@ public class W0040Model {
 			Connection connection = null;
 		// SQLステートメント
 			Statement statement = null;
-			HashMap<String, String> commentInfo = new HashMap<String, String>();
+
 		try {
 			// DB接続
 				connection = DBAccessUtils.getConnection();
@@ -33,21 +33,24 @@ public class W0040Model {
 				sb.append("SELECT p.post,p.user_name,p.post_id,c.category_name "
 						+ "FROM t_post p LEFT OUTER JOIN t_category c "
 						+ "ON c.category_id = p.category_id "
-						+ "WHERE p.category_id = '"+ categoryid +"' AND p.delete_flg = 'FALSE'"
+						+ "WHERE p.category_id = '"+ Id +"' AND p.delete_flg = 't'"
 						+ "ORDER BY p.post_id	");
 
 			// SQL文実行
 				resultSet = statement.executeQuery(sb.toString());
 			// 実行結果の取得
 			while(resultSet.next()) {
+				HashMap<String, String> commentInfo = new HashMap<String, String>();
+				commentInfo.put("CategoryName", resultSet.getString("category_name"));
 				commentInfo.put("commentId", resultSet.getString("post_id"));
 				commentInfo.put("userName", resultSet.getString("user_name"));
 				commentInfo.put("comment", resultSet.getString("post"));
+				commentInfo.put("Id", resultSet.getString("post_id"));
 				commentList.add(commentInfo);
 				System.out.println(commentInfo.get("commentId"));
 				System.out.println(commentInfo.get("userName"));
 				System.out.println(commentInfo.get("comment"));
-				System.out.println(commentInfo.get(""));
+
 			}
 		} catch (SQLException e) {
 			System.out.println("SQL実行処理失敗!!");

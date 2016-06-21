@@ -27,6 +27,7 @@ public class W0030Control extends HttpServlet{
     	//登録する処理INSERT
 			//Viewからフォーム入力の値を受け取る
 			String categoryName = request.getParameter("categoryName");
+			System.out.print(categoryName);
 
 				//Model重複チェックメソッドから重複フラグを受け取る
 				int getOverlapCount = W0030Model.getOverlapCount(categoryName);

@@ -39,7 +39,7 @@
 			<% }catch(NullPointerException insertException){ %>
 			<% } %>
  	 <body>
- 		<form name="MyForm" method="GET" action="#">
+ 		<form name="MyForm" method="POST" action="#">
 			<div align="right">
     		<input type="button" name="logout" value="ログアウト" onClick="logOut();">
     		</div>

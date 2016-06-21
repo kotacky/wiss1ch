@@ -45,6 +45,7 @@ public class W0030Model {
 		        	System.out.println("引数に" + categoryName + "が入力されました。");
 	             	resultSet = statement.executeQuery(selectSql);
 	             	getOverlapCount = resultSet.getInt("COUNT(category_name)");
+		        	System.out.println("getOverlapCountに" + getOverlapCount + "が入力されました。");
 
 		         }
 		         catch (SQLException e){

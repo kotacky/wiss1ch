@@ -38,6 +38,7 @@ public class W0010Control extends HttpServlet {
 		  String adminFlg = UserInfo.get("adminFlg");
 
 		  if (hashedpassword.equals(password)){
+			  session.setAttribute("userId",userId);
 			  session.setAttribute("userName",userName);
 			  session.setAttribute("adminFlg",adminFlg);
 			  RequestDispatcher dispatch = request.getRequestDispatcher("/W0020Control");
@@ -47,8 +48,8 @@ public class W0010Control extends HttpServlet {
 			    request.setAttribute("EMSG0004", "パスワードが間違っています。");
 			    RequestDispatcher dispatch = request.getRequestDispatcher("/view/W0010View.jsp");
 			    dispatch.forward(request, response);
-
 		  }
+
 
 	   /* // ログアウト・セッションの破棄・ログイン画面への遷移
 

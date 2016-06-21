@@ -10,20 +10,18 @@
 	<div style="bottom:40;"><h1 style="text-align: center;"><span style="color:#6A5ACD;font-size:50px;">WISS1ch</span></h1></div>
 	<script type="text/javascript">
 	function login(){
-		if(document.myForm.userId.value == ""){
+		var str = document.myForm.password.value;
+		if (document.myForm.userId.value == ""){
+			//no1
 			alert("ユーザーIDを入力してください。");
 
-			// バグ修正中につきコメントアウト
-/*			String input = new Scanner(System.in).nextLine();
-			if (input.length() <= 4) {
+		}else if (str == ""){//no2
 
-		}else if (document.myForm.Nam.value.length() <= 3) {
-			alert("ユーザーIDが短すぎます。");  */
-
-		}else if (document.myForm.password.value == ""){
 			alert("パスワードを入力してください。");
-
-		}else{
+		}else if( str.length < 4){
+			alert("パスワードが短い");
+		}
+		else{
 			document.myForm.action = "<%= request.getContextPath() %>/W0010Control"
 			document.myForm.submit();
 		}
@@ -33,6 +31,12 @@
 </head>
 <body style="background-color:#D3D3D3">
 	<div class="form-wrapper">
+	<% try{ %>
+		<% String EMSG  = request.getAttribute("EMSG0004").toString(); %>
+
+			<H3 style="margin-left:80px;color:red"><% out.print(EMSG); %></H3>
+	<% }catch(NullPointerException deleteException){ %>
+	<% } %>
   <h1>Login</h1>
   <form name="myForm" method="POST" action="#">
     <div class="form-item">
@@ -44,7 +48,7 @@
       <input type="password" maxlength="8" name="password" placeholder="Password"></input>
     </div>
     <div class="button-panel">
-      <input type="submit" class="button" title="Login" value="Login" onclick="login();"></input>
+      <input type="button" class="button" title="Login" value="Login" onclick="login();"></input>
     </div>
   </form>
   <div class="form-footer">

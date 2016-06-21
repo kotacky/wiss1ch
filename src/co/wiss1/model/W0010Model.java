@@ -28,7 +28,7 @@ public class W0010Model{
 			statement = connection.createStatement();
 			// SQL文作成
 			StringBuffer sb  = new StringBuffer();
-			sb.append("SELECT user_name, password, admin_flg FROM t_login_info WHERE user_id = '"+ userId + "'");
+			sb.append("SELECT user_name, password, admin_flg FROM t_user_info WHERE user_id = '"+ userId + "'");
 			// SQL文実行
 			resultSet = statement.executeQuery(sb.toString());
 

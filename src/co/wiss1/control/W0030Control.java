@@ -26,6 +26,7 @@ public class W0030Control extends HttpServlet{
 
     	//登録する処理INSERT
 			//Viewからフォーム入力の値を受け取る
+			//UTF-8にエンコード
 			request.setCharacterEncoding("UTF-8");
 			String categoryName = request.getParameter("categoryName");
 			System.out.print("値に" + categoryName + "が入力されました。");
@@ -37,7 +38,7 @@ public class W0030Control extends HttpServlet{
 					//カテゴリ追加メソッドから挿入した桁数を受け取る
 					ret = W0030Model.insertCategory(categoryName);
 				}else{
-					//getAttributeメソッドでrequestからViewが取得する		//重複しています
+					//getAttributeメソッドでrequestからViewが取得する //重複しています
 					request.setAttribute("getOverlapCount",getOverlapCount);
 				}
 		//Viewの画面に戻す

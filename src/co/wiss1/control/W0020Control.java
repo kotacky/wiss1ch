@@ -22,11 +22,17 @@ public class W0020Control extends HttpServlet {
 
 		// アクションIDの取得
 		String actionId = request.getParameter("actionId");
+		String checkBox[] = request.getParameterValues("chkbox"); //Viewのchkboxの値を取得
+		String Id = request.getParameter("categoryId");
+		System.out.print("引数は"+Id );
+
 
 			// 削除
-			if ("delete".equals(actionId)){
+			if ("Update".equals(actionId)){
 				//ViewからchkBoxの値を受け取る
-				String[] checkBox = request.getParameterValues("chkbox");
+				for (int i = 0; i < checkBox.length; i++ ) {
+		            System.out.println(checkBox[i] + "<br>");
+		        }
 
 				//削除の項目を送る
 				int delete = W0020Model.updateCategory(checkBox);

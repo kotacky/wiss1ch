@@ -26,11 +26,13 @@ public class W0030Control extends HttpServlet{
 
     	//登録する処理INSERT
 			//Viewからフォーム入力の値を受け取る
+			request.setCharacterEncoding("UTF-8");
 			String categoryName = request.getParameter("categoryName");
-			System.out.print(categoryName);
+			System.out.print("値に" + categoryName + "が入力されました。");
 
-				//Model重複チェックメソッドから重複フラグを受け取る
+				//Model重複チェックメソッドから重複カウントを受け取る
 				int getOverlapCount = W0030Model.getOverlapCount(categoryName);
+				System.out.print("重複カウント" + getOverlapCount + "が入力されました。");
 				if(getOverlapCount == 0){
 					//カテゴリ追加メソッドから挿入した桁数を受け取る
 					ret = W0030Model.insertCategory(categoryName);

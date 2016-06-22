@@ -6,7 +6,7 @@ body {
 	font-family: 'FontAwesome', sans-serif;
  	color: #5e5e5e;
  	font: 400 87.5%/1.5em 'Open Sans', sans-serif;
- 	background: #f8dce0;
+ 	background: #d3d3d3;
 }
 
 /* Form Layout */
@@ -20,10 +20,23 @@ body {
 h1 {
   text-align: center;
   padding: 1em 0;
+  color:#6A5ACD;
+  font-size: 50px;
 }
 
 form {
   padding: 0 1.5em;
+}
+
+.button {
+  height: 30px;
+  width : 100px;
+  	margin-left: 95px;
+     text-shadow: 1px 1px 2px #A96F00;
+     background-image:  -webkit-linear-gradient(top,  #3549b9,  #72b4ea);
+     border-color:  rgba(0,  0,  0,  0.25) rgba(0,  0,  0,  0.35) rgba(0,  0,  0,  0.35) rgba(0,  0,  0,  0.25);
+     color:  #ffffe4;
+     text-shadow:  0px -1px 0px #c27800;
 }
 
 .form-item {

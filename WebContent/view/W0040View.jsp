@@ -4,6 +4,24 @@
 <!DOCTYPE html>
 <html lang=ja>
 	<head>
+		<% try{ %>
+		<%
+						// 投稿内容一覧を取得
+							List<HashMap<String,String>> commentList = (List<HashMap<String,String>>)request.getAttribute("commentList");
+
+		%>
+
+		<%String Id; %>
+
+
+		<% Id = commentList.get(0).get("Id"); %>
+		<%System.out.println("★"+ Id); %>
+		<div align="right" >
+		<input type="submit" name="logOut" value="ログアウト" onclick="logOut();">
+		</div>
+		<CENTER><h1>WISS1ch</h1></CENTER>
+
+
 		<meta charset="UTF-8">
 		<title><h2><% out.print(request.getAttribute("categryName")); %></h2></title>
 		<style>
@@ -11,53 +29,53 @@
 		</style>
 		<script type="text/javascript">
 
-		function func(insert){
+		function func(command){
+			  document.MyForm.actionId.value = command;
+			  document.MyForm.Id.value = <%= Id %>;
 			  document.MyForm.action = "<%= request.getContextPath() %>/W0040Control"
-				  document.MyForm.submit();
+			  document.MyForm.submit();
 		 }
 
-		function func(update){
-			  document.MyForm.action = "<%= request.getContextPath() %>/W0040Control"
-				  document.MyForm.submit();
-		 }
+
 		</script>
 
 	</head>
-			<div align="right" >
-			<form name="MyForm" method="POST" action="<%= request.getContextPath() %>/W0000Control">
-			<input type="submit" name="logOut" value="ログアウト" onclick="logOut();"></form>
-			</div>
 	<body>
+		<form name="MyForm" method="POST" action="<%= request.getContextPath() %>/W0000Control">
+
+
 			<CENTER>
-			<h1>WISS1ch</h1>
 			<%-- コメントの表示--%>
 			<table>
-				<label>コメントID</label>
-				<label>ユーザー名</label>
 			</CENTER>
 
-					<%
-						// 投稿内容一覧を取得
-							List<HashMap<String,String>> commentList = (List<HashMap<String,String>>)request.getAttribute("commentList");
-					%>
-					<% if (commentList != null) { %>
+
+					<h2><%out.print(commentList.get(0).get("CategoryName")); %>スレッド</h2>
+						<% if (commentList != null) { %>
+
 						<% for (HashMap<String,String> commentInfo : commentList) { %>
 						<tr>
+							<td colspan=2>投稿内容<br/><% out.print(commentInfo.get("comment")); %></td>
+						</tr>
+						<tr>
 							<th><input type="checkbox" name="chkbox" value="<%= commentInfo.get("comment") %>"></th>
-							<td><% out.print(commentInfo.get("commentId")); %></td>
-							<td><% out.print(commentInfo.get("userName")); %></td>
+							<td>投稿者:<% out.print(commentInfo.get("userName")); %></td>
 						</tr>
 						<% } %>
 					<% } %>
+					<% }catch(NullPointerException deleteException){ %>
+						<% } %>
 
 			</table>
-		</div>
-			<CENTER>
 
-			コメント入力欄<textarea name="example" rows="3"  maxlength='100' cols="30" value="<%= request.getParameter("comment") %>"></textarea>
+
+
+
+			コメント入力欄<input type="text"  id="example" name="example" >
 			<input type="button" name="btn1" value ="投稿する"  onClick="func('insert');">
-			<input type="submit" name="btn1" value ="削除する"  onClick="func('update');">
-			<input type="hidden" name="actionId">
+			<input type="button" name="btn1" value ="削除する"  onClick="func('update');">
+			<input type="hidden" name="actionId" value="">
+			<input type="hidden" name="Id" value="">
+		 </form>
 		</body>
-
 </html>

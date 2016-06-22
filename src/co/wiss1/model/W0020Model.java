@@ -39,7 +39,7 @@ public class W0020Model {
 			statement = connection.createStatement();
 			// SQL文作成
 			StringBuffer sb = new StringBuffer();
-			sb.append("SELECT * FROM t_category ORDER BY category_id");
+			sb.append("SELECT * FROM t_category WHERE delete_flg = 'FALSE' ORDER BY category_id");
 			// SQL文実行
 			resultSet = statement.executeQuery(sb.toString());
 			// 実行結果の取得
@@ -70,7 +70,7 @@ public class W0020Model {
 
 
 
-	public static int updateCategory(String[] CategoryId) {	 										//カテゴリ削除
+	public static int updateCategory(String checkBox[]) {	 										//カテゴリ削除
 
 		//List<HashMap<String, String>> categoryList = categoryList<HashMap<String, String>>() ;
 		//ResultSet resultSet = null;
@@ -85,19 +85,18 @@ public class W0020Model {
         	statement = connection.createStatement();												//Statementを取得するためのコード
 
             connection.setAutoCommit(true);							 								//自動コミットを有効にする
+            for (int i = 0; i < checkBox.length; i++ ) {
+            String sql = "UPDATE t_category SET delete_flg = 'TRUE' WHERE category_id =  '"+ checkBox[i] +"'";
 
-            String sql = "UPDATE t_category SET delete_flg = TRUE WHERE category_id =  '"+ CategoryId +"'";
-
-            System.out.println("引数に" + CategoryId + "が入力されました。");
-            System.out.println(sql);
-
-            UpdateCount = statement.executeUpdate (sql);
-            
-            if(UpdateCount >= 1){																	//削除が成功しているかどうかの確認
-            	System.out.println("削除成功");
-            }
-            else{
-            	System.out.println("削除失敗");
+            	System.out.println("引数に" + checkBox[i] + "が入力されました。");
+            	UpdateCount = statement.executeUpdate (sql);
+            	System.out.println(sql);
+            	if(UpdateCount >= 1){																	//削除が成功しているかどうかの確認
+                	System.out.println("削除成功");
+                }
+                else{
+                	System.out.println("削除失敗");
+                }
             }
         }
 		catch (SQLException e){

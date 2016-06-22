@@ -10,24 +10,22 @@
 	<div style="bottom:40;"><h1 style="text-align: center;"><span style="color:#6A5ACD;font-size:50px;">WISS1ch</span></h1></div>
 	<script type="text/javascript">
 	function login(){
-		var str = document.myForm.password.value;
-		if (document.myForm.userId.value == ""){
-			//no1
-			alert("ユーザーIDを入力してください。");
-
-		}else if (str == ""){//no2
-
+		var str = document.myForm.userId.value;
+		var str2 = document.myForm.password.value;
+		if (str == ""  && str2 ==""){
+			alert("パスワード又は、ユーザーIDを入力してください。");
+		}else if(str2 == ""){
 			alert("パスワードを入力してください。");
-		}else if( str.length < 4){
-			alert("パスワードが短い");
-		}
-		else{
+		}else if (str2.length < 4){
+			alert("パスワードが短すぎます。");
+		}else if( str.length < 1){
+			alert("ユーザーIDが短すぎます。");
+		}else{
 			document.myForm.action = "<%= request.getContextPath() %>/W0010Control"
 			document.myForm.submit();
 		}
 	}
 	</script>
-
 </head>
 <body style="background-color:#D3D3D3">
 	<div class="form-wrapper">

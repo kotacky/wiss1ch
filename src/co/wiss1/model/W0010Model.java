@@ -32,7 +32,7 @@ public class W0010Model{
 			// SQL文実行
 			resultSet = statement.executeQuery(sb.toString());
 
-			// カテゴリ一覧を格納する箱
+			// ユーザー情報を格納する箱
 			resultSet.next();
 			userInfo.put("userName", resultSet.getString("user_name"));
 			userInfo.put("password", resultSet.getString("password"));

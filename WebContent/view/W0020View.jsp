@@ -6,9 +6,8 @@
 <html lang="ja">
 	<head>
 		<meta charset="UTF-8" />
-		<link rel="stylesheet" type="text/css" href="./css/W0010.css">
+		<link href="<%= request.getContextPath() %>/view/css/W0020.css" rel="stylesheet" type="text/css" />
 		<!-- 「rel="～" href="…"」「このHTMLのstylesheetはcss/W0010.cssです」  -->
-
 		<div style="text-align: right;">
 		<!-- -align: right;」「 右揃え」  -->
 		<li ><% out.print(session.getAttribute("userName")); %></li>

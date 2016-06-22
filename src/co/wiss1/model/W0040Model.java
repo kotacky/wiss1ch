@@ -33,7 +33,7 @@ public class W0040Model {
 				sb.append("SELECT p.post,p.user_name,p.post_id,c.category_name "
 						+ "FROM t_post p LEFT OUTER JOIN t_category c "
 						+ "ON c.category_id = p.category_id "
-						+ "WHERE p.category_id = '"+ Id +"' AND p.delete_flg = 't'"
+						+ "WHERE p.category_id = '"+ Id +"' AND p.delete_flg = 'f'"
 						+ "ORDER BY p.post_id	");
 
 			// SQL文実行
@@ -53,7 +53,7 @@ public class W0040Model {
 
 			}
 		} catch (SQLException e) {
-			System.out.println("SQL実行処理失敗!!");
+			System.out.println("リスト取得SQL実行処理失敗!!");
 			e.printStackTrace();
 		} finally {
 			try {
@@ -71,10 +71,9 @@ public class W0040Model {
 	}
 
 
-public static int updatecomment(String[] checkBox ) {	 												//コメント削除
 
-	//List<HashMap<String, String>> commentList = new ArrayList<HashMap<String, String>>();
-	ResultSet resultSet = null;
+public static int updateComment(String checkBox[] ) {	 												//コメント削除
+
 	Connection connection = null;
 	Statement statement = null;
 	int updateCount = 0;
@@ -87,12 +86,15 @@ public static int updatecomment(String[] checkBox ) {	 												//コメン�
 
         connection.setAutoCommit(true);							 								//自動コミットを有効にする
 
-        String sql = "UPDATE t_post SET delete_flg = TRUE WHERE (post_id IN( + checkBox + )";
 
-        System.out.println("引数に" + checkBox + "が入力されました。");
+        //ループ処理!checkBox[ ]文処理する。
+        for( int i = 0; i < checkBox.length; i++) {
+        System.out.println("引数に" + checkBox[i] + "が入力されました!!");
+        String sql = "UPDATE t_post SET delete_flg = TRUE WHERE post_id = '"+ checkBox[i] + "'";
+        System.out.println("checkBoxに!" + checkBox + "が入力されました!!");
         System.out.println(sql);
-
-        statement.executeUpdate (sql);
+        updateCount = statement.executeUpdate (sql);
+    }
     }
 	catch (SQLException e){
 	System.err.println("SQL failed.");
@@ -101,7 +103,6 @@ public static int updatecomment(String[] checkBox ) {	 												//コメン�
 	finally{
 		try {
 			// もろもろクローズ処理
-				resultSet.close();
 				statement.close();
 				connection.close();
 		} catch (Exception e) {
@@ -115,11 +116,12 @@ return updateCount;
 
 
 
-public static int insertComment(String comment) {
+public static int insertComment(String comment, String Id) {
 
 				Connection connection = null;
 				Statement statement = null;
 				int insertCount = 0;
+				System.out.println("model引数は"+Id +"ですbabavava" );
 
 			try
 		{
@@ -130,8 +132,8 @@ public static int insertComment(String comment) {
 	        //自動コミットを有効にする
 	        	connection.setAutoCommit(true);
 	        	//コメントの追加
-	        	 String insertSql = "INSERT INTO t_post(post)"
-	             + "VALUES('" + comment + "')";
+	        	 String insertSql = "INSERT INTO t_post(post,category_id,delete_flg)"
+	             + " VALUES('" + comment + "','"+ Id +"',FALSE)";
 	        	 System.out.println("1:" + insertSql);
 	             insertCount = statement.executeUpdate(insertSql);
 
@@ -161,6 +163,9 @@ public static int insertComment(String comment) {
 		 }
 	return insertCount;
 	}
+
+
+
 
 
 }

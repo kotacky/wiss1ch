@@ -17,11 +17,6 @@ body {
   max-width: 370px;
 }
 
-h1 {
-  text-align: center;
-  padding: 1em 0;
-}
-
 form {
   padding: 0 1.5em;
 }

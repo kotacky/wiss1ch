@@ -7,13 +7,13 @@
 	<link href="<%= request.getContextPath() %>/view/css/W0010.css" rel="stylesheet" type="text/css" />
 	<meta charset="Windows-31J">
 	<title>WISS1</title>
-	<div style="bottom:40;"><h1 style="text-align: center;"><span style="color:#6A5ACD;font-size:50px;">WISS1ch</span></h1></div>
+	<div style="bottom:40;">
 	<script type="text/javascript">
 	function login(){
 		var str = document.myForm.userId.value;
 		var str2 = document.myForm.password.value;
 		if (str == ""  && str2 ==""){
-			alert("ユーザーID又は、パスワードを入力してください。");
+			alert("パスワード又は、ユーザーIDを入力してください。");
 		}else if(str2 == ""){
 			alert("パスワードを入力してください。");
 		}else if (str2.length < 4){
@@ -27,7 +27,12 @@
 	}
 	</script>
 </head>
-<body style="background-color:#D3D3D3">
+<body style="background-color:#DDDDDD">
+
+            <h1><CENTER>
+   		    <img src="<%= request.getContextPath() %>/view/img/wiss1ch.png">
+    		</CENTER></h1>
+
 	<div class="form-wrapper">
 	<% try{ %>
 		<% String EMSG  = request.getAttribute("EMSG0004").toString(); %>
@@ -35,7 +40,7 @@
 			<H3 style="margin-left:80px;color:red"><% out.print(EMSG); %></H3>
 	<% }catch(NullPointerException deleteException){ %>
 	<% } %>
-  <h1>Login</h1>
+  <h1><CENTER>Login</CENTER></h1>
   <form name="myForm" method="POST" action="#">
     <div class="form-item">
       <label for="email"></label>

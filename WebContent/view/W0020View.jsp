@@ -13,18 +13,35 @@
 		<li ><% out.print(session.getAttribute("userName")); %></li>
 		<!-- <li> …… リストの項目を記述する」「sessionとは？必要な情報をクライアントではなくサーバ側に保存」  -->
 		<title>WISS1ch</title>
-		<style>
-			h1{color: blue; }
-		</style>
+
 		<script type="text/javascript">
-		  function init(Comand){
-			  document.MyForm.actionId.value = Comand;
+		 function logOut(){
+      	   MyMessage = confirm("ログアウトします。よろしいですか？");
+      	       if ( MyMessage == true ){
+      	    	 document.MyForm.action = "<%= request.getContextPath() %>/W0000Control"
+      	         document.MyForm.submit();
+      	       }else{
+    				 return;
+    			   }
+         }
+		  function init(Command){
+
+				 	 MyMessage = confirm("削除しますか");
+				  if ( MyMessage == true ){
+					     document.MyForm.actionId.value = Command;
+		      	    	 document.MyForm.action = "<%= request.getContextPath() %>/W0020Control"
+		      	         document.MyForm.submit();
+		      	       }else{
+		    			return;
+					}
+	     }
+			  document.MyForm.actionId.value = Command;
 			  document.MyForm.action = "<%= request.getContextPath() %>/W0020Control"
 				/*-「getContextPath()とは？環境に依存しないURL」*/
 			  document.MyForm.submit();
 				//「submit()とは？HTMLのformタグの内容をサーバに送信する動作のこと」
 
-		  }
+
 		  function Regist(){
 			  document.MyForm.action = "<%= request.getContextPath() %>/view/W0030View.jsp"
 			  document.MyForm.submit();
@@ -41,11 +58,14 @@
 	<form name="MyForm" method="POST" action="<%= request.getContextPath() %>/W0000Control">
 	<!--  //「postとは？入力データをCGIに引き渡す方法（METHOD）として、「GET」と「POST」があります」
 	//「最大有効文字数という制限がない POST ２５５文字まででデータをサーバに送る手段 GET METHOD」-->
-	<input type="submit" value="ログアウト" ></div>
+	<!-- <input type="submit" value="ログアウト" > -->
+	<input type="button" class="button" name="logout" value="ログアウト" onClick="logOut();">
 
 		<div>
 			<CENTER>
-			<h1>WISS1ch</h1>
+			<h1>
+   		    <img src="<%= request.getContextPath() %>/view/img/wiss1ch.png">
+    		</h1>
 			<%-- テーブルの表示--%>
 			<table border="1">
 
@@ -93,7 +113,7 @@
 			</table>
 			<P>
 			<input type="button"  <%=chk1 %> value="カテゴリ登録" onClick="Regist();" >
-			<input type="button"  <%= chk1  %> value="カテゴリ削除" onClick="init('Update');">
+			<input type="button"  <%=chk1 %> value="カテゴリ削除" onClick="init('Update');">
 			<input type="hidden" name="actionId" value="">
 			<input type="hidden" name="Id" value="">
 			</div>

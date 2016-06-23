@@ -36,21 +36,22 @@ public class W0030Model {
 		        	connection.setAutoCommit(true);
 
 		        	//重複チェック
-		        	String selectSql="SELECT COUNT(category_name) FROM t_category";
+		        	String selectSql="SELECT COUNT(category_name) as cnt FROM t_category WHERE category_name = ('" + categoryName + "') AND delete_flg = FALSE";
 		        	System.out.println("1:" + selectSql);
 
-		        	selectSql = selectSql
-	             			+ "WHERE category_name = ('" + categoryName + "')";
+
 
 		        	System.out.println("引数に" + categoryName + "が入力されました。");
 	             	resultSet = statement.executeQuery(selectSql);
-	             	getOverlapCount = resultSet.getInt("COUNT(category_name)");
+	             	System.out.println("resultSetに" + resultSet + "が入力されました。");
+	             	resultSet.next();
+	             	getOverlapCount = resultSet.getInt("cnt");
 		        	System.out.println("getOverlapCountに" + getOverlapCount + "が入力されました。");
 
 		         }
 		         catch (SQLException e){
 
-		               System.err.println("SQL failed.");
+		               System.err.println("重複SQL failed.");
 		               e.printStackTrace ();
 		         }
 		         finally {
@@ -88,8 +89,7 @@ public class W0030Model {
 		        	connection.setAutoCommit(true);
 
 		        	//カテゴリ名の追加
-		        	String insertSql = "INSERT INTO t_category (category_name)"
-			        + " VALUES ('" + categoryName + "')";
+		        	String insertSql = "INSERT INTO t_category (category_name,delete_flg) VALUES ('" + categoryName + "',FALSE)";
 		            //System.out.println("1:" + insertSql );
 
 		      	    insertCount = statement.executeUpdate(insertSql);
@@ -102,7 +102,7 @@ public class W0030Model {
 		         }
 		         catch (SQLException e) {
 
-		               System.err.println("SQL failed.");
+		               System.err.println("追加SQL failed.");
 		               e.printStackTrace ();
 		         }
 		         finally {

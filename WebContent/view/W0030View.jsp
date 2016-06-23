@@ -2,7 +2,7 @@
 <!DOCTYPE html >
 <html lang="ja">
  	   <head>
- 	   <link rel="stylesheet" type="text/css" href="./css/W0030.css">
+ 	   <link href="<%= request.getContextPath() %>/view/css/W0030.css" rel="stylesheet" type="text/css" />
  	   <meta charset="UTF-8">
        <title>管理者画面</title>
        <script type="text/javascript">
@@ -30,13 +30,11 @@
 
  	 <% try{ %>
 		<% String insertFlag = request.getAttribute("insertFlag").toString(); %>
-		<% if("1".equals(insertFlag)){ %>
-			<H2><% out.print("登録が完了しました。"); %></H2>
-			<% }else if("0".equals(insertFlag)){ %>
+		<% if("0".equals(insertFlag)){ %>
 			<H2><% out.print("登録が失敗しました。"); %></H2>
 			<% } %>
-			<% }catch(NullPointerException insertException){ %>
-			<% } %>
+		<% }catch(NullPointerException insertException){ %>
+	<% } %>
  	 <body>
 
  		<form name="MyForm" method="POST" action="#">
@@ -55,4 +53,3 @@
 		</form>
 
 	</body>
-</html>

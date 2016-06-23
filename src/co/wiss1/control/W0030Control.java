@@ -45,12 +45,16 @@ public class W0030Control extends HttpServlet{
 		if(ret == 1){
 			//登録成功
 			request.setAttribute("insertFlag",1);
+			//
+			RequestDispatcher dispatch =getServletContext().getRequestDispatcher("/W0020Control");
+			dispatch.forward(request, response);
 		}
 		else{
 			//登録失敗
 			request.setAttribute("insertFlag",0);
+			RequestDispatcher dispatch =getServletContext().getRequestDispatcher("/view/W0030View.jsp");
+			dispatch.forward(request, response);
 		}
-		RequestDispatcher dispatch =getServletContext().getRequestDispatcher("/view/W0030View.jsp");
-		dispatch.forward(request, response);
+
 	}
 }

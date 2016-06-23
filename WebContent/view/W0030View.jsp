@@ -42,9 +42,11 @@
     		<input type="button" class="button" name="logout" value="ログアウト" onClick="logOut();">
     	    </div>
 
-    		<h1><center> WISS1ch</center></h1>
+    		<h1>
+   		    <img src="<%= request.getContextPath() %>/view/img/wiss1ch.png">
+    		</h1>
 
-      		<p><center><B><span style="font-size:16px">管理者メニュー</span></B></center></p>
+      		<p><center><B><span style="font-size:16px">管理者画面</span></B></center></p>
 			<p><center><B><span style="font-size:16px">カテゴリの追加</span></B><br>
 			<input type="text" name="categoryName"
 		 	maxlength="20" value="" placeholder="例：芸能">

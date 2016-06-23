@@ -16,7 +16,8 @@
       			   }
            }
            function Registration(){
-        	  if(document.MyForm.categoryName.value != ""){
+        	  if(!((document.MyForm.categoryName.value.trim()=="")||(document.MyForm.categoryName.value==null))){
+        		  document.MyForm.categoryName.value = document.MyForm.categoryName.value.trim()
         		  document.MyForm.action = "<%= request.getContextPath() %>/W0030Control"
         	      document.MyForm.submit();
         	  }else{
@@ -31,7 +32,7 @@
  	 <% try{ %>
 		<% String insertFlag = request.getAttribute("insertFlag").toString(); %>
 		<% if("0".equals(insertFlag)){ %>
-			<H2><% out.print("登録が失敗しました。"); %></H2>
+			<H2><% out.print("カテゴリ名が重複しています。"); %></H2>
 			<% } %>
 		<% }catch(NullPointerException insertException){ %>
 	<% } %>

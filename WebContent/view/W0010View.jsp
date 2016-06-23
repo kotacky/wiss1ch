@@ -13,7 +13,7 @@
 		var str = document.myForm.userId.value;
 		var str2 = document.myForm.password.value;
 		if (str == ""  && str2 ==""){
-			alert("パスワード又は、ユーザーIDを入力してください。");
+			alert("ユーザーID又は、パスワードを入力してください。");
 		}else if(str2 == ""){
 			alert("パスワードを入力してください。");
 		}else if (str2.length < 4){

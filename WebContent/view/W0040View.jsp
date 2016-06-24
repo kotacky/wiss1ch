@@ -3,91 +3,89 @@
 <%@ page import = "java.util.List" %>
 <!DOCTYPE html>
 <html lang=ja>
-	<head>
-		<% try{ %>
-		<%
-		// 投稿内容一覧を取得
-			List<HashMap<String,String>> commentList = (List<HashMap<String,String>>)request.getAttribute("commentList");
-		%>
+    <head>
+        <link href="<%= request.getContextPath() %>/view/css/W0040.css" rel="stylesheet" type="text/css" />
+        <meta charset="UTF-8">
+        <title>WISS1ch</title>
+        <style>
+            h1{color: blue; }
+        </style>
+        <script type="text/javascript">
+            function logOut(){
+                MyMessage = confirm("ログアウトします。よろしいですか？");
+                if ( MyMessage == true ) {
+                    document.MyForm.action = "<%= request.getContextPath() %>/W0000Control"
+                    document.MyForm.submit();
+                } else {
+                    return;
+                }
+            }
+            function os(command){
+                document.MyForm.actionId.value = command;
+                document.MyForm.action = "<%= request.getContextPath() %>/W0040Control"
+                document.MyForm.submit();
+            }
+            function ok(command){
+                document.MyForm.actionId.value = command;
+                document.MyForm.action = "<%= request.getContextPath() %>/W0040Control"
+                document.MyForm.submit();
+            }
+        </script>
+    </head>
+    <body>
+        <form name="MyForm" method="POST" action="#">
+            <div align="right">
+            <% out.print(session.getAttribute("userName")); %>
+    		<input style="margin-left:20px" type="button" class="button" name="logout" value="ログアウト" onClick="logOut();">
+            </div>
+            <CENTER><h1>WISS1ch</h1></CENTER>
 
-
-		<%String Id; %>
-
-		<% Id = commentList.get(0).get("Id"); %>
-		<%System.out.println("★"+ Id); %>
-
-		<div align="right" >
-		<input type="submit" name="logOut" value="ログアウト" onclick="logOut();">
-		</div>
-		<CENTER><h1>WISS1ch</h1></CENTER>
-
-
-		<meta charset="UTF-8">
-		<title><h2><% out.print(request.getAttribute("categryName")); %></h2></title>
-		<style>
-			h1{color: blue; }
-		</style>
-		<script type="text/javascript">
-
-		function func(command){
-			  document.MyForm.actionId.value = command;
-
-			  document.MyForm.action = "<%= request.getContextPath() %>/W0040Control"
-			  document.MyForm.submit();
-		 }
-		function os(command){
-			  document.MyForm.actionId.value = command;
-			  document.MyForm.action = "<%= request.getContextPath() %>/W0040Control"
-			  document.MyForm.submit();
-		 }
-		function ok(command){
-			  document.MyForm.actionId.value = command;
-			  document.MyForm.action = "<%= request.getContextPath() %>/W0040Control"
-			  document.MyForm.submit();
-		 }
-
-
-		</script>
-
-	</head>
-	<body>
-		<form name="MyForm" method="POST" action="<%= request.getContextPath() %>/W0000Control">
-
-
-			<CENTER>
-			<%-- コメントの表示--%>
-			<table>
-			</CENTER>
-
-
-					<h2>
-						<%out.print(commentList.get(0).get("CategoryName")); %>スレッド</h2>
-						<% if (commentList != null) { %>
-
-						<% for (HashMap<String,String> commentInfo : commentList) { %>
-						<tr>
-							<td colspan=2>投稿内容<br/><% out.print(commentInfo.get("comment")); %></td>
-						</tr>
-						<tr>
-							<th><input type="checkbox" name="chkbox" value="<%= commentInfo.get("commentId") %>"></th>
-							<td>投稿者:<% out.print(commentInfo.get("userName")); %></td>
-						</tr>
-						<% } %>
-					<% } %>
-
-			</table>
-
-
-
-
-			コメント入力欄<input type="text"  id="example" name="example" >
-			<input type="button" name="btn1" value ="投稿する"  onClick="os('insert');">
-			<input type="button" name="btn1" value ="削除する"  onClick="ok('update');">
-			<input type="hidden" name="actionId" value="">
-			<input type="hidden" name="Id" value="<%= Id %>">
-			<% }catch(NullPointerException deleteException){ %>
-					<input type="button" value="一見おきてる!?">
-				<% } %>
-		 </form>
-		</body>
+            <%
+                // 投稿内容一覧を取得
+                List<HashMap<String,String>> commentList = (List<HashMap<String,String>>)request.getAttribute("commentList");
+            %>
+            <% String sessionflag = session.getAttribute("adminFlg").toString();%>
+			<% String userId = session.getAttribute("userId").toString();%>
+            <% String chk1 = null ;%>
+            <% String chk2 = "t";%>
+            <%String Id; %>
+            <% Id = request.getAttribute("Id").toString(); %>
+            <CENTER>
+            <%-- コメントの表示--%>
+            <table style="background-color:#F0F8FF;">
+            </CENTER>
+                    <h2><%out.print(commentList.get(0).get("CategoryName")); %>スレッド</h2>
+                        <% if (commentList != null) { %>
+                            <%
+                                for (HashMap<String,String> commentInfo : commentList) {
+                                    String comment = commentInfo.get("comment");
+                                    String commentId = commentInfo.get("commentId");
+                                    String commentUserId = commentInfo.get("userId");
+                                    if(chk2.equals(sessionflag)){
+                                        chk1 = "true";
+                                    } else if(commentUserId.equals(userId)) {
+                                       chk1 ="true";
+                                    } else {
+                                       chk1 ="disabled";
+                                    }
+                            %>
+                        <tr>
+                            <td colspan=2>投稿内容<br/><% out.print(comment); %></td>
+                            <td>ユーザID</td>
+                        </tr>
+                        <tr>
+                            <th><input type="checkbox"  <%=chk1 %> name="chkbox" value="<%= commentId %>"></th>
+                            <td><% out.print(commentUserId); %></td>
+                        </tr>
+                            <% } %>
+                        <% } %>
+            </table>
+            コメント入力欄<textarea input type="text  id="example" name="example"  rows="4" cols="40"></textarea>
+            <input type="button" name="btn1" value ="投稿する" onClick="os('insert');">
+            <input type="button" name="btn1" value ="削除する" onClick="ok('update');">
+            <input type="hidden" name="actionId" value="">
+            <input type="hidden" name="Id" value="<%= Id %>">
+            <input type="hidden" name="userId" value="<%= userId %>">
+         </form>
+        </body>
 </html>

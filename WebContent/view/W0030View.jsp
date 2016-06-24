@@ -1,11 +1,12 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
+<%@ page import = "javax.servlet.http.HttpSession" %>
 <!DOCTYPE html >
 <html lang="ja">
- 	   <head>
- 	   <link href="<%= request.getContextPath() %>/view/css/W0030.css" rel="stylesheet" type="text/css" />
- 	   <meta charset="UTF-8">
-       <title>管理者画面</title>
-       <script type="text/javascript">
+	<head>
+		<meta charset="UTF-8">
+		<link href="<%= request.getContextPath() %>/view/css/W0030.css" rel="stylesheet" type="text/css" />
+	<title>管理者画面</title>
+		<script type="text/javascript">
            function logOut(){
         	   MyMessage = confirm("ログアウトします。よろしいですか？");
         	       if ( MyMessage == true ){
@@ -40,7 +41,8 @@
 
  		<form name="MyForm" method="POST" action="#">
 			<div align="right">
-    		<input type="button" class="button" name="logout" value="ログアウト" onClick="logOut();">
+			<% out.print(session.getAttribute("userName")); %>
+    		<input style="margin-left:20px" type="button" class="button" name="logout" value="ログアウト" onClick="logOut();">
     	    </div>
 
     		<h1>
@@ -52,6 +54,7 @@
 			<input type="text" name="categoryName"
 		 	maxlength="20" value="" placeholder="例：芸能">
 			<input type="button"  value="カテゴリ登録" onClick="Registration();">
+			<input type="hidden" name="userName" value=<%="\""+session.getAttribute("userName")+"\"" %>>
 			</center></p>
 		</form>
 

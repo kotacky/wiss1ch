@@ -23,5 +23,15 @@ public class W0000Control extends HttpServlet{
 				RequestDispatcher dispatch =getServletContext().getRequestDispatcher("/view/W0010View.jsp");
 				dispatch.forward(request, response); //画面遷移
 
+			      session = request.getSession(false);
+
+			      if (session == null){
+			        System.out.println("セッションは破棄されました");
+			      }else{
+			        System.out.println("セッションが残っています");
+			      }
+
+
+
 	}
 }

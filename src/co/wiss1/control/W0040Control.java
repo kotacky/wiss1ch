@@ -28,6 +28,7 @@ import co.wiss1.model.W0040Model;
 			// 処理に必要となる情報を受け取る
 			// カテゴリIDの取得
 				String Id = request.getParameter("Id");
+				request.setAttribute("Id",Id);
 				System.out.println("引数は"+Id +"です!!!!!!" );
 				String comment = request.getParameter("example");
 				System.out.println("引数は"+ comment +"です!!!!!!!!!!!!!!!!!!");
@@ -36,11 +37,12 @@ import co.wiss1.model.W0040Model;
 
 			// 登録
 			if ("insert".equals(actionId)) {
+				String userId = request.getParameter("userId");
 				System.out.println("insertに" + actionId + "が入力されました");
 				//用修正ヒント30行目のもの
 				System.out.println("引数は"+Id +"ですbaba" );
 
-				int insertCount = W0040Model.insertComment(comment,Id);
+				int insertCount = W0040Model.insertComment(comment,Id,userId);
 				request.setAttribute("insertCount",insertCount);
 			}
 			// コメントの削除

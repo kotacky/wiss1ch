@@ -7,11 +7,6 @@
 	<head>
 		<meta charset="UTF-8" />
 		<link href="<%= request.getContextPath() %>/view/css/W0020.css" rel="stylesheet" type="text/css" />
-		<!-- 「rel="～" href="…"」「このHTMLのstylesheetはcss/W0010.cssです」  -->
-		<div style="text-align: right;">
-		<!-- -align: right;」「 右揃え」  -->
-		<li ><% out.print(session.getAttribute("userName")); %></li>
-		<!-- <li> …… リストの項目を記述する」「sessionとは？必要な情報をクライアントではなくサーバ側に保存」  -->
 		<title>WISS1ch</title>
 
 		<script type="text/javascript">
@@ -24,23 +19,31 @@
     				 return;
     			   }
          }
-		  function init(Command){
 
-				 	 MyMessage = confirm("削除しますか");
-				  if ( MyMessage == true ){
-					     document.MyForm.actionId.value = Command;
-		      	    	 document.MyForm.action = "<%= request.getContextPath() %>/W0020Control"
-		      	         document.MyForm.submit();
-		      	       }else{
-		    			return;
-					}
-	     }
-			  document.MyForm.actionId.value = Command;
-			  document.MyForm.action = "<%= request.getContextPath() %>/W0020Control"
-				/*-「getContextPath()とは？環境に依存しないURL」*/
-			  document.MyForm.submit();
-				//「submit()とは？HTMLのformタグの内容をサーバに送信する動作のこと」
+		  function deletes(Command){
+			// チェックボックス要素をすべて取得する
+			var boxes = document.getElementsByName("chkbox");
+			// チェックボックスの個数を取得する
+		    var cnt = boxes.length;
 
+			var flg = 0;  //flg:チェックの判定用
+			for(var i=0; i < cnt; i++) {
+		    	if(boxes.item(i).checked) {
+		    	    flg = 1;
+		       }
+		    }
+			if(flg > 0){
+			  MyMessage = confirm("削除しますか");
+		  		if ( MyMessage == true ){
+		  			document.MyForm.actionId.value = Command;
+					document.MyForm.action = "<%= request.getContextPath() %>/W0020Control"
+					document.MyForm.submit();
+				  }
+			   }
+			 if(flg ==0){
+				 alert("チェックボックスが未入力です。");
+			  }
+		     }
 
 		  function Regist(){
 			  document.MyForm.action = "<%= request.getContextPath() %>/view/W0030View.jsp"
@@ -50,16 +53,17 @@
 			  document.MyForm.Id.value = tekitou;
 			  document.MyForm.action = "<%= request.getContextPath() %>/W0040Control"
 			  document.MyForm.submit();
-		  }					<!--
+		  }
 		</script>
 	</head>
 
 	<body>
 	<form name="MyForm" method="POST" action="<%= request.getContextPath() %>/W0000Control">
-	<!--  //「postとは？入力データをCGIに引き渡す方法（METHOD）として、「GET」と「POST」があります」
-	//「最大有効文字数という制限がない POST ２５５文字まででデータをサーバに送る手段 GET METHOD」-->
-	<!-- <input type="submit" value="ログアウト" > -->
-	<input type="button" class="button" name="logout" value="ログアウト" onClick="logOut();">
+
+			<div align="right">
+			<% out.print(session.getAttribute("userName")); %>
+    		<input style="margin-left:20px" type="button" class="button" name="logout" value="ログアウト" onClick="logOut();">
+    	    </div>
 
 		<div>
 			<CENTER>
@@ -78,14 +82,11 @@
 				    <%
 						// カテゴリ一覧を取得
 						List<HashMap<String,String>> categoryList = (List<HashMap<String,String>>)request.getAttribute("categoryList");
-						//「HashMapとは？キーとなる文字列と要素がペアになっている連想配列」
 
 					%>
 					<% String sessionflag = session.getAttribute("adminFlg").toString();
-						//「toString()とは？　toStringメソッドは対象のオブジェクトを文字列に変換した結果を返します。」
 
 					System.out.println("★権限は" + sessionflag + "です！！！★");
-						//("権限は" + sessionflag + "です！！！")とは？
 
 					   String chk1 = null;
 					   String chk2 = null;
@@ -113,7 +114,7 @@
 			</table>
 			<P>
 			<input type="button"  <%=chk1 %> value="カテゴリ登録" onClick="Regist();" >
-			<input type="button"  <%=chk1 %> value="カテゴリ削除" onClick="init('Update');">
+			<input type="button"  <%=chk1 %> value="カテゴリ削除" onClick="deletes('Update');">
 			<input type="hidden" name="actionId" value="">
 			<input type="hidden" name="Id" value="">
 			</div>

@@ -30,12 +30,12 @@ public class W0040Model {
 				statement = connection.createStatement();
 			// SQL文作成
 				StringBuffer sb = new StringBuffer();
-				sb.append("SELECT p.post,p.user_name,p.post_id,c.category_name "
+				sb.append("SELECT p.post,p.user_name,p.post_id,c.category_name,user_id "
 						+ "FROM t_post p LEFT OUTER JOIN t_category c "
 						+ "ON c.category_id = p.category_id "
 						+ "WHERE p.category_id = '"+ Id +"' AND p.delete_flg = 'f'"
 						+ "ORDER BY p.post_id	");
-
+				System.out.println(sb);
 			// SQL文実行
 				resultSet = statement.executeQuery(sb.toString());
 			// 実行結果の取得
@@ -46,11 +46,12 @@ public class W0040Model {
 				commentInfo.put("userName", resultSet.getString("user_name"));
 				commentInfo.put("comment", resultSet.getString("post"));
 				commentInfo.put("Id", resultSet.getString("post_id"));
+				commentInfo.put("userId", resultSet.getString("user_id"));
 				commentList.add(commentInfo);
-				System.out.println(commentInfo.get("commentId"));
-				System.out.println(commentInfo.get("userName"));
-				System.out.println(commentInfo.get("comment"));
-
+				System.out.println("コメントIdは" + commentInfo.get("commentId") + "です" );
+				System.out.println("ユーザ名は" + commentInfo.get("userName") + "です" );
+				System.out.println("コメントは" + commentInfo.get("comment") + "です" );
+				System.out.println("ユーザIdは" + commentInfo.get("userId") + "です" );
 			}
 		} catch (SQLException e) {
 			System.out.println("リスト取得SQL実行処理失敗!!");
@@ -116,7 +117,7 @@ return updateCount;
 
 
 
-public static int insertComment(String comment, String Id) {
+public static int insertComment(String comment, String Id,String userId) {
 
 				Connection connection = null;
 				Statement statement = null;
@@ -132,8 +133,8 @@ public static int insertComment(String comment, String Id) {
 	        //自動コミットを有効にする
 	        	connection.setAutoCommit(true);
 	        	//コメントの追加
-	        	 String insertSql = "INSERT INTO t_post(post,category_id,delete_flg)"
-	             + " VALUES('" + comment + "','"+ Id +"',FALSE)";
+	        	 String insertSql = "INSERT INTO t_post(post,category_id,delete_flg,user_id,create_date)"
+	             + " VALUES('" + comment + "','"+ Id +"',FALSE,'"+ userId +"',NOW())";
 	        	 System.out.println("1:" + insertSql);
 	             insertCount = statement.executeUpdate(insertSql);
 

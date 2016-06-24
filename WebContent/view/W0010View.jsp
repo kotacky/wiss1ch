@@ -6,7 +6,7 @@
 
 	<link href="<%= request.getContextPath() %>/view/css/W0010.css" rel="stylesheet" type="text/css" />
 	<meta charset="Windows-31J">
-	<title>WISS1</title>
+	<title>WISS1ch</title>
 	<div style="bottom:40;">
 	<script type="text/javascript">
 	function login(){
@@ -51,7 +51,7 @@
       <input type="password" maxlength="8" name="password" placeholder="Password"></input>
     </div>
     <div class="button-panel">
-      <input type="button" class="button" title="Login" value="Login" onclick="login();"></input>
+    <input type="submit" class="button" title="Login" value="Login" onclick="login();"></input>
     </div>
   </form>
   <div class="form-footer">

@@ -19,10 +19,9 @@ public class W0000Control extends HttpServlet{
 		HttpSession session = request.getSession(false);
 
 
-
-RequestDispatcher dispatch =getServletContext().getRequestDispatcher("/view/W0010View.jsp");
-				dispatch.forward(request, response);
-				session.invalidate();
+				session.invalidate(); //セッション破棄
+				RequestDispatcher dispatch =getServletContext().getRequestDispatcher("/view/W0010View.jsp");
+				dispatch.forward(request, response); //画面遷移
 
 	}
 }

@@ -30,13 +30,17 @@ public class W0030Control extends HttpServlet{
 			request.setCharacterEncoding("UTF-8");
 			String categoryName = request.getParameter("categoryName");
 			System.out.print("値に" + categoryName + "が入力されました。");
+			//ViewからuserNameを受け取る
+			String userName = request.getParameter("userName");
+			System.out.println("ControlのUserNameに" + userName + "が入力されている。");
+
 
 				//Model重複チェックメソッドから重複カウントを受け取る
 				int getOverlapCount = W0030Model.getOverlapCount(categoryName);
 				System.out.print("重複カウント" + getOverlapCount + "が入力されました。");
 				if(getOverlapCount == 0){
 					//カテゴリ追加メソッドから挿入した桁数を受け取る
-					ret = W0030Model.insertCategory(categoryName);
+					ret = W0030Model.insertCategory(categoryName,userName);
 				}else{
 					//getAttributeメソッドでrequestからViewが取得する //重複しています
 					request.setAttribute("getOverlapCount",getOverlapCount);

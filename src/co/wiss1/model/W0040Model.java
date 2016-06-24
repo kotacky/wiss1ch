@@ -30,7 +30,7 @@ public class W0040Model {
 				statement = connection.createStatement();
 			// SQL文作成
 				StringBuffer sb = new StringBuffer();
-				sb.append("SELECT p.post,p.user_name,p.post_id,c.category_name,user_id "
+				sb.append("SELECT p.post,p.user_name,p.post_id,p.user_id,c.category_name "
 						+ "FROM t_post p LEFT OUTER JOIN t_category c "
 						+ "ON c.category_id = p.category_id "
 						+ "WHERE p.category_id = '"+ Id +"' AND p.delete_flg = 'f'"

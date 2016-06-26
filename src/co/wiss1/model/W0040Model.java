@@ -86,8 +86,6 @@ public static int updateComment(String checkBox[] ) {	 												//コメン�
     	statement = connection.createStatement();													//Statementを取得するためのコード
 
         connection.setAutoCommit(true);							 								//自動コミットを有効にする
-
-
         //ループ処理!checkBox[ ]文処理する。
         for( int i = 0; i < checkBox.length; i++) {
         System.out.println("引数に" + checkBox[i] + "が入力されました!!");

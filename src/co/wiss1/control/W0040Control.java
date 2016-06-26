@@ -12,13 +12,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import co.wiss1.model.W0020Model;
+
 import co.wiss1.model.W0040Model;
 
 // WebServlet
 @WebServlet("/W0040Control")
 	public class W0040Control extends HttpServlet {
-
 	public void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException {
 			System.out.println("doPost start");
@@ -46,9 +45,15 @@ import co.wiss1.model.W0040Model;
 				request.setAttribute("insertCount",insertCount);
 			}
 			// コメントの削除
+
 			if("update".equals(actionId)) {
 				String checkBox[ ] = request.getParameterValues("chkbox");
 				System.out.println("checkBox[ ]に" + checkBox + "が入力されました。");
+				//ViewからchkBoxの値を受け取る
+				for (int i = 0; i < checkBox.length; i++ ) {
+		            System.out.println(checkBox[i] + "<br>");
+		        }
+
 				//用修正
 				int updateCount = W0040Model.updateComment(checkBox);
 				System.out.println("updateに" + updateCount + "が入力されました。");

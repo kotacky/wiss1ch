@@ -7,7 +7,6 @@
 
         <link href="<%= request.getContextPath() %>/view/css/W0040.css" rel="stylesheet" type="text/css" />
         <meta charset="UTF-8">
-        <title>WISS1ch</title>
 
         <script type="text/javascript">
             function logOut(){
@@ -19,16 +18,36 @@
                     return;
                 }
             }
-            function os(command){
+            function insert(command){
                 document.MyForm.actionId.value = command;
                 document.MyForm.action = "<%= request.getContextPath() %>/W0040Control"
                 document.MyForm.submit();
             }
-            function ok(command){
-                document.MyForm.actionId.value = command;
-                document.MyForm.action = "<%= request.getContextPath() %>/W0040Control"
-                document.MyForm.submit();
-            }
+            function update(Command){
+    			// チェックボックス要素をすべて取得する
+    			var boxes = document.getElementsByName("chkbox");
+    			// チェックボックスの個数を取得する
+    		    var cnt = boxes.length;
+
+    			var flg = 0;  //flg:チェックの判定用
+    			for(var i=0; i < cnt; i++) {
+    		    	if(boxes.item(i).checked) {
+    		    	    flg = 1;
+    		       }
+    		    }
+    			if(flg > 0){
+    			  MyMessage = confirm("削除しますか");
+    		  		if ( MyMessage == true ){
+    		  			document.MyForm.actionId.value = Command;
+    					document.MyForm.action = "<%= request.getContextPath() %>/W0040Control"
+    					document.MyForm.submit();
+    				  }
+    			   }
+    			 if(flg ==0){
+    				 alert("チェックボックスが未入力です。");
+    			  }
+    		     }
+
         </script>
     </head>
     <body>
@@ -37,7 +56,7 @@
             <% out.print(session.getAttribute("userName")); %>
     		<input style="margin-left:20px" type="button" class="button" name="logout" value="ログアウト" onClick="logOut();">
             </div>
-            <CENTER><h1>WISS1ch</h1></CENTER>
+
 			<% String sessionflag = session.getAttribute("adminFlg").toString();%>
 			<% String userId = session.getAttribute("userId").toString();%>
             <% String chk1 = null ;%>
@@ -53,8 +72,11 @@
 			<% try { %>
 
             <CENTER>
+            <h1>
+   		    	<img src="<%= request.getContextPath() %>/view/img/wiss1ch.png">
+    		</h1>
             <%-- コメントの表示--%>
-            <table style="background-color:#F0F8FF;"border="1">
+			<table style="">
 			<h2><%out.print(commentList.get(0).get("CategoryName")); %>スレッド</h2>
             </CENTER>
 
@@ -72,34 +94,35 @@
                                        chk1 ="disabled";
                                     }
                             %>
-
+				<div class="margin">
+				<table>
                         <tr>
                             <th colspan=2>投稿内容<br/><% out.print(comment); %></th>
 
                         </tr>
-                        <tr>
-                            <th><input type="checkbox"  <%=chk1 %> name="chkbox" value="<%= commentId %>"></th>
-                            <td>ユーザID<% out.print(commentUserId); %></td>
+                        <tr><br/>
+                            <th><input type="checkbox"  <%=chk1 %> name="chkbox" value="<%= commentId %>"onClick="chk();"></th>
+                            <td>ユーザID  <% out.print(commentUserId); %></td>
                         </tr>
                             <% } %>
                         <% } %>
-            </table>
-
-
-            コメント入力欄<textarea input type="text  id="example" name="example"  rows="4" cols="40" maxlength="200" placeholder="コメント記入欄"></textarea>
-            <input type="button" name="btn1" value ="投稿する" onClick="os('insert');">
-            <input type="button" name="btn1" value ="削除する" onClick="ok('update');">
-            <input type="hidden" name="actionId" value="">
-            <input type="hidden" name="Id" value="<%= Id %>">
-            <input type="hidden" name="userId" value="<%= userId %>">
+            	</table>
+             	</div>
+			<P class="margin">
+            コメント入力欄<textarea class="margin" input type="text"  id="example" name="example"  rows="4" cols="40" maxlength="200"  placeholder="コメント記入欄"></textarea>
+            <input class="margin" type="button" name="btn1" value ="投稿する" onClick="insert('insert');">
+            <input class="margin" type="button" name="btn1" value ="削除する" onClick="update('update');">
+            <input class="margin" type="hidden" name="actionId" value="">
+            <input class="margin" type="hidden" name="Id" value="<%= Id %>">
+            <input class="margin" type="hidden" name="userId" value="<%= userId %>">
+            </P>
 			<%} catch(NullPointerException deleteException){ %>
-
-				コメント入力欄<textarea input type="text  id="example" name="example"  rows="4" cols="40" maxlength="200" placeholder="コメント記入欄"></textarea>
-				<input type="button" name="btn1" value ="投稿する" onClick="os('insert');">
-            	<input type="button" name="btn1" value ="削除する" onClick="ok('update');">
-            	<input type="hidden" name="actionId" value="">
-            	<input type="hidden" name="Id" value="<%= Id %>">
-            	<input type="hidden" name="userId" value="<%= userId %>">
+				コメント入力欄<textarea class="margin" input type="text"  id="example" name="example"  rows="4" cols="40"  maxlength="200"  placeholder="コメント記入欄"></textarea>
+				<input class="margin" type="button" name="btn1" value ="投稿する" onClick="insert('insert');">
+            	<input class="margin" type="button" name="btn1" value ="削除する" onClick="update('update');">
+            	<input class="margin" type="hidden" name="actionId" value="">
+            	<input class="margin" type="hidden" name="Id" value="<%= Id %>">
+            	<input class="margin" type="hidden" name="userId" value="<%= userId %>">
 			<% } %>
 
            	         </form>

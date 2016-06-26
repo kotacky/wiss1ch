@@ -33,6 +33,8 @@ public class W0000Control extends HttpServlet{
 		} else {
 			System.out.println("セッションが残っています");
 		}
+		dispatch.forward(request, response); // 画面遷移 セッション不具合の原因
+		session = request.getSession(false);
 
 		if (session == null) {
 			System.out.println("セッションは破棄されました");

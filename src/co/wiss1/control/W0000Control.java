@@ -13,25 +13,31 @@ import javax.servlet.http.HttpSession;
 public class W0000Control extends HttpServlet{
 
 	public void doPost(HttpServletRequest request, HttpServletResponse response)
-		throws IOException, ServletException{
+			throws IOException, ServletException{
 
-/*httpsessionで権限を持たせる*/
-		HttpSession session = request.getSession(false);
+		/*httpsessionで権限を持たせる*/
+		HttpSession session = request.getSession(true);
 
+		if (session == null) {
+			System.out.println("セッションは破棄されました");
+		} else {
+			System.out.println("セッションが残っています");
+		}
 
-				session.invalidate(); //セッション破棄
-				RequestDispatcher dispatch =getServletContext().getRequestDispatcher("/view/W0010View.jsp");
-				dispatch.forward(request, response); //画面遷移
+		session.invalidate();
+		session = request.getSession(false);
+		RequestDispatcher dispatch =getServletContext().getRequestDispatcher("/view/W0010View.jsp");
 
-			      session = request.getSession(false);
+		if (session == null) {
+			System.out.println("セッションは破棄されました");
+		} else {
+			System.out.println("セッションが残っています");
+		}
 
-			      if (session == null){
-			        System.out.println("セッションは破棄されました");
-			      }else{
-			        System.out.println("セッションが残っています");
-			      }
-
-
-
+		if (session == null) {
+			System.out.println("セッションは破棄されました");
+		} else {
+			System.out.println("セッションが残っています");
+		}
 	}
 }

@@ -9,6 +9,19 @@
         <meta charset="UTF-8">
 
         <script type="text/javascript">
+
+
+        function getLenB( str ) {
+        	var i, cnt = 0;
+			for(i=0 ; i<str.length ; i++) {
+        	if(escape(str.charAt(i)).length < 4){
+        		cnt++;
+			}else{
+				cnt+=2;
+			}
+			}
+			return cnt;
+        	}
             function logOut(){
                 MyMessage = confirm("ログアウトします。よろしいですか？");
                 if ( MyMessage == true ) {
@@ -97,12 +110,15 @@
 				<div class="margin">
 				<table>
                         <tr>
-                            <th colspan=2>投稿内容<br/><% out.print(comment); %></th>
+                           <th colspan=2><span style="margin-right: 13em;"></span>投稿内容<span style="margin-right: 8em;"></span>ユーザID  <% out.print(commentUserId); %>
+                            <div style="text-align : left">
+                            <input type="checkbox"  <%=chk1 %> name="chkbox" style="width:20px;height:20px;" value="<%= commentId %>"onClick="chk();">
+                            <FONT size="4"><% out.print(comment); %></FONT>
+                            </div>
 
-                        </tr>
-                        <tr><br/>
-                            <th><input type="checkbox"  <%=chk1 %> name="chkbox" value="<%= commentId %>"onClick="chk();"></th>
-                            <td>ユーザID  <% out.print(commentUserId); %></td>
+
+                            </th>
+                            <br/>
                         </tr>
                             <% } %>
                         <% } %>
@@ -110,7 +126,7 @@
              	</div>
 			<P class="margin">
             コメント入力欄<textarea class="margin" input type="text"  id="example" name="example"  rows="4" cols="40" maxlength="200"  placeholder="コメント記入欄"></textarea>
-            <input class="margin" type="button" name="btn1" value ="投稿する" onClick="insert('insert');">
+            <input class="margin" type="submit" name="btn1" value ="投稿する" onClick="insert('insert');">
             <input class="margin" type="button" name="btn1" value ="削除する" onClick="update('update');">
             <input class="margin" type="hidden" name="actionId" value="">
             <input class="margin" type="hidden" name="Id" value="<%= Id %>">
@@ -118,7 +134,7 @@
             </P>
 			<%} catch(NullPointerException deleteException){ %>
 				コメント入力欄<textarea class="margin" input type="text"  id="example" name="example"  rows="4" cols="40"  maxlength="200"  placeholder="コメント記入欄"></textarea>
-				<input class="margin" type="button" name="btn1" value ="投稿する" onClick="insert('insert');">
+				<input class="margin" type="submit" name="btn1" value ="投稿する" onClick="insert('insert');">
             	<input class="margin" type="button" name="btn1" value ="削除する" onClick="update('update');">
             	<input class="margin" type="hidden" name="actionId" value="">
             	<input class="margin" type="hidden" name="Id" value="<%= Id %>">

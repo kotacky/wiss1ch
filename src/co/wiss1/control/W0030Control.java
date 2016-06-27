@@ -8,7 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
+import javax.servlet.http.HttpSession;
 import co.wiss1.model.W0030Model;
 
 @WebServlet("/W0030Control")
@@ -20,6 +20,11 @@ public class W0030Control extends HttpServlet{
 
 	public void doPost(HttpServletRequest request, HttpServletResponse response)
 		throws IOException, ServletException{
+
+		  //sessionから取得したUserNameをNull対応
+		  HttpSession session = request.getSession(true);
+		  try{
+			  String user = session.getAttribute("userName").toString();
 
 		//初期値
 		int ret = 0;
@@ -33,7 +38,6 @@ public class W0030Control extends HttpServlet{
 			//ViewからuserNameを受け取る
 			String userName = request.getParameter("userName");
 			System.out.println("ControlのUserNameに" + userName + "が入力されている。");
-
 
 				//Model重複チェックメソッドから重複カウントを受け取る
 				int getOverlapCount = W0030Model.getOverlapCount(categoryName);
@@ -59,6 +63,9 @@ public class W0030Control extends HttpServlet{
 			RequestDispatcher dispatch =getServletContext().getRequestDispatcher("/view/W0030View.jsp");
 			dispatch.forward(request, response);
 		}
-
+		  }catch(NullPointerException W0030nullException){
+			  RequestDispatcher dispatch =getServletContext().getRequestDispatcher("/view/W0010View.jsp");
+			  dispatch.forward(request, response);
+	   }
 	}
 }

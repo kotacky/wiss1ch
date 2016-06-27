@@ -10,6 +10,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import co.wiss1.model.W0020Model;
 
@@ -20,32 +21,38 @@ public class W0020Control extends HttpServlet {
 		throws IOException, ServletException {
 		System.out.println("doPost start");
 
-		// アクションIDの取得
-		String actionId = request.getParameter("actionId");
-		String checkBox[] = request.getParameterValues("chkbox"); //Viewのchkboxの値を取得
-		String Id = request.getParameter("categoryId");
-		System.out.print("引数は"+Id );
+		  //sessionから取得したUserNameをNull対応
+		  HttpSession session = request.getSession(true);
+		  try{
+			  String user = session.getAttribute("userName").toString();
 
 
-			// 削除
-			if ("Update".equals(actionId)){
-				//ViewからchkBoxの値を受け取る
-				for (int i = 0; i < checkBox.length; i++ ) {
-		            System.out.println(checkBox[i] + "<br>");
-		        }
+			  // アクションIDの取得
+			  String actionId = request.getParameter("actionId");
+			  String checkBox[] = request.getParameterValues("chkbox"); //Viewのchkboxの値を取得
+			  String Id = request.getParameter("categoryId");
+			  System.out.print("引数は"+Id );
 
-				//削除の項目を送る
-				int delete = W0020Model.updateCategory(checkBox);
-				if(delete >= 1){
-					System.out.println("削除成功");
-					request.setAttribute("delete",delete);
-		        }else{
-		            System.out.println("削除失敗");
-		            request.setAttribute("delete",delete);
-		        }
-			}
 
-		// 初期表示 と削除後の再検索したカテゴリ一覧を取得
+			  // 削除
+			  if ("Update".equals(actionId)){
+				  //ViewからchkBoxの値を受け取る
+				  for (int i = 0; i < checkBox.length; i++ ) {
+					  System.out.println(checkBox[i] + "<br>");
+				  }
+
+				  //削除の項目を送る
+				  int delete = W0020Model.updateCategory(checkBox);
+				  if(delete >= 1){
+					  System.out.println("削除成功");
+					  request.setAttribute("delete",delete);
+				  }else{
+					  System.out.println("削除失敗");
+					  request.setAttribute("delete",delete);
+				  }
+			  }
+
+			  // 初期表示 と削除後の再検索したカテゴリ一覧を取得
 			// カテゴリ一覧の取得
 			List<HashMap<String, String>> categoryList = W0020Model.getCategoryList();
 			// カテゴリ一覧が空ではなく1件以上存在する場合、カテゴリ一覧をセット
@@ -54,7 +61,10 @@ public class W0020Control extends HttpServlet {
 			}
 			RequestDispatcher dispatch =getServletContext().getRequestDispatcher("/view/W0020View.jsp");
 			dispatch.forward(request, response);
-		System.out.println("doPost end");
+			System.out.println("doPost end");
+		}catch(NullPointerException W0030nullException){
+			RequestDispatcher dispatch =getServletContext().getRequestDispatcher("/view/W0010View.jsp");
+			dispatch.forward(request, response);
+		}
 	}
-
 }

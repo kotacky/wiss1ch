@@ -69,30 +69,29 @@
             <% out.print(session.getAttribute("userName")); %>
     		<input style="margin-left:20px" type="button" class="button" name="logout" value="ログアウト" onClick="logOut();">
             </div>
-
+            <% String categoryName = request.getAttribute("Name").toString();%>
 			<% String sessionflag = session.getAttribute("adminFlg").toString();%>
 			<% String userId = session.getAttribute("userId").toString();%>
             <% String chk1 = null ;%>
             <% String chk2 = "t";%>
-            <%String Id; %>
+            <% String Id; %>
             <% Id = request.getAttribute("Id").toString(); %>
 
 
 
             <%  List<HashMap<String,String>> commentList = (List<HashMap<String,String>>)request.getAttribute("commentList"); %>
 
+				<% try { %>
 
-			<% try { %>
 
-            <CENTER>
-            <h1>
+				<CENTER>
+            	<h1>
    		    	<img src="<%= request.getContextPath() %>/view/img/wiss1ch.png">
-    		</h1>
-            <%-- コメントの表示--%>
-			<table style="">
-			<h2><%out.print(commentList.get(0).get("CategoryName")); %>スレッド</h2>
-            </CENTER>
-
+    			</h1>
+            	<%-- コメントの表示--%>
+				<table style="">
+				<h2><%out.print(request.getAttribute("Name"));%>スレッド</h2>
+            	</CENTER>
                         <% if (commentList != null) { %>
                             <%
                                 for (HashMap<String,String> commentInfo : commentList) {
@@ -112,7 +111,7 @@
                         <tr>
                            <th colspan=2><span style="margin-right: 13em;"></span>投稿内容<span style="margin-right: 8em;"></span>ユーザID  <% out.print(commentUserId); %>
                             <div style="text-align : left">
-                            <input type="checkbox"  <%=chk1 %> name="chkbox" style="width:20px;height:20px;" value="<%= commentId %>"onClick="chk();">
+                            <input type="checkbox"  <%=chk1 %> name="chkbox" style="width:17px;height:17px;" value="<%= commentId %>"onClick="chk();">
                             <FONT size="4"><% out.print(comment); %></FONT>
                             </div>
 
@@ -131,14 +130,15 @@
             <input class="margin" type="hidden" name="actionId" value="">
             <input class="margin" type="hidden" name="Id" value="<%= Id %>">
             <input class="margin" type="hidden" name="userId" value="<%= userId %>">
+            <input class="margin" type="hidden" name="Name" value="<%= categoryName %>">
             </P>
 			<%} catch(NullPointerException deleteException){ %>
-				コメント入力欄<textarea class="margin" input type="text"  id="example" name="example"  rows="4" cols="40"  maxlength="200"  placeholder="コメント記入欄"></textarea>
-				<input class="margin" type="submit" name="btn1" value ="投稿する" onClick="insert('insert');">
-            	<input class="margin" type="button" name="btn1" value ="削除する" onClick="update('update');">
-            	<input class="margin" type="hidden" name="actionId" value="">
-            	<input class="margin" type="hidden" name="Id" value="<%= Id %>">
-            	<input class="margin" type="hidden" name="userId" value="<%= userId %>">
+			コメント入力欄<textarea class="margin" input type="text"  id="example" name="example"  rows="4" cols="40"  maxlength="200"  placeholder="コメント記入欄"></textarea>
+			<input class="margin" type="submit" name="btn1" value ="投稿する" onClick="insert('insert');">
+            <input class="margin" type="button" name="btn1" value ="削除する" onClick="update('update');">
+            <input class="margin" type="hidden" name="actionId" value="">
+            <input class="margin" type="hidden" name="Id" value="<%= Id %>">
+            <input class="margin" type="hidden" name="Name" value="<%= categoryName %>">
 			<% } %>
 
            	         </form>

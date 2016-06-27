@@ -29,6 +29,12 @@ import co.wiss1.model.W0040Model;
 				String Id = request.getParameter("Id");
 				request.setAttribute("Id",Id);
 				System.out.println("引数は"+Id +"です!!!!!!" );
+
+				String categoryName = request.getParameter("Name");
+				request.setAttribute("Name",categoryName);
+				System.out.println("カテゴリ名は"+categoryName +"です!!!!!!" );
+
+
 				String comment = request.getParameter("example");
 				System.out.println("引数は"+ comment +"です!!!!!!!!!!!!!!!!!!");
 			// アクションIDの取得
@@ -38,7 +44,6 @@ import co.wiss1.model.W0040Model;
 			if ("insert".equals(actionId)) {
 				String userId = request.getParameter("userId");
 				System.out.println("insertに" + actionId + "が入力されました");
-				//用修正ヒント30行目のもの
 				System.out.println("引数は"+Id +"ですbaba" );
 
 				int insertCount = W0040Model.insertComment(comment,Id,userId);
@@ -54,7 +59,6 @@ import co.wiss1.model.W0040Model;
 		            System.out.println(checkBox[i] + "<br>");
 		        }
 
-				//用修正
 				int updateCount = W0040Model.updateComment(checkBox);
 				System.out.println("updateに" + updateCount + "が入力されました。");
 				request.setAttribute("updateCount",updateCount);

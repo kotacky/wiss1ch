@@ -49,8 +49,11 @@
 			  document.MyForm.action = "<%= request.getContextPath() %>/view/W0030View.jsp"
 			  document.MyForm.submit();
 		  }
-		  function go(tekitou){
-			  document.MyForm.Id.value = tekitou;
+		  function move(Command){
+
+			  var values = Command.split(','); // , 区切;
+			  document.MyForm.Id.value = values[0];
+			  document.MyForm.Name.value = values[1];
 			  document.MyForm.action = "<%= request.getContextPath() %>/W0040Control"
 			  document.MyForm.submit();
 		  }
@@ -104,9 +107,10 @@
 
 						<% for (HashMap<String,String> categoryInfo : categoryList) { %>
 						<%String Id = categoryInfo.get("categoryId"); %>
+						<%String Name = categoryInfo.get("categoryName"); %>
 						<tr>
-							<td><input type="checkbox" <%= chk1  %> name="chkbox" value="<%= categoryInfo.get("categoryId") %>" onClick="chk();"></td>
-							<td><a onClick="go('<%=Id %>');"   href="#"  value=""  ><% out.print(categoryInfo.get("categoryName")); %></a></td>
+							<td><input type="checkbox" <%= chk1  %> name="chkbox" style="width:17px;height:17px;"value="<%= categoryInfo.get("categoryId") %>" onClick="chk();"></td>
+							<td><a onClick="move('<%=Id %>,<%=Name %>');"   href="#"  value=""  ><% out.print(categoryInfo.get("categoryName")); %></a></td>
 
 							<% } %>
 						<% } %>
@@ -117,6 +121,7 @@
 			<input type="button"  <%=chk1 %> value="カテゴリ削除" onClick="deletes('Update');">
 			<input type="hidden" name="actionId" value="">
 			<input type="hidden" name="Id" value="">
+			<input type="hidden" name="Name" value="">
 			</div>
 			</P>
 		</form>

@@ -26,11 +26,11 @@ margin{
 
 table {
 margin-left:auto;margin-right:auto;
-border: solid 1px #330000;
+border: solid 1px rgb(175, 136, 166);
 border-collapse: collapse;
-background-color:pink;
+background-color:rgb(255, 254, 242);
 width: 40%;
-color:red;
+color:black;
 	 }
 P.margin{
 	text-align:center;

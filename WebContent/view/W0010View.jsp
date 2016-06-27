@@ -29,9 +29,9 @@
 </head>
 <body style="background-color:#DDDDDD">
 
-            <h1><CENTER>
+            <h2><CENTER>
    		    <img src="<%= request.getContextPath() %>/view/img/wiss1ch.png">
-    		</CENTER></h1>
+    		</CENTER></h2>
 
 	<div class="form-wrapper">
 	<% try{ %>
@@ -40,7 +40,7 @@
 			<H3 style="margin-left:80px;color:red"><% out.print(EMSG); %></H3>
 	<% }catch(NullPointerException deleteException){ %>
 	<% } %>
-  <h1><CENTER>Login</CENTER></h1>
+  <h1>Login</h1>
   <form name="myForm" method="POST" action="#">
     <div class="form-item">
       <label for="email"></label>

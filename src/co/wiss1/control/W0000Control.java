@@ -30,16 +30,14 @@ public class W0000Control extends HttpServlet{
 
 		if (session == null) {
 			System.out.println("セッションは破棄されました");
+			dispatch.forward(request, response); // 画面遷移 セッション不具合の原因
 		} else {
 			System.out.println("セッションが残っています");
+		/*	RequestDispatcher dispatc =getServletContext().getRequestDispatcher("/view/W0030View.jsp");
+			dispatc.forward(request, response); // 検証用 セッションが残っていると0030へ遷移 */
 		}
-		dispatch.forward(request, response); // 画面遷移 セッション不具合の原因
+
 		session = request.getSession(false);
 
-		if (session == null) {
-			System.out.println("セッションは破棄されました");
-		} else {
-			System.out.println("セッションが残っています");
-		}
 	}
 }

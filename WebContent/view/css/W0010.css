@@ -1,4 +1,4 @@
-/*head*/
+/* head */
 
 
 /* body */
@@ -9,12 +9,19 @@ body {
  	background: #f8dce0;
 }
 
+h1 {
+   padding-top: 30px;
+   text-align: center;
+
+}
+
 /* Form Layout */
 .form-wrapper {
   background: #fafafa;
   margin: 3em auto;
   padding: 0 1em;
   max-width: 370px;
+  height:350px;
 }
 
 form {

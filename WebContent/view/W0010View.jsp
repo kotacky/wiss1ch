@@ -27,7 +27,7 @@
 	}
 	</script>
 </head>
-<body style="background-color:#DDDDDD">
+<body style="background-color:#fdf8d9">
 
             <h2><CENTER>
    		    <img src="<%= request.getContextPath() %>/view/img/wiss1ch.png">
@@ -35,6 +35,7 @@
 
 	<div class="form-wrapper">
 	<% try{ %>
+
 		<% String EMSG  = request.getAttribute("EMSG0004").toString(); %>
 
 			<H3 style="margin-left:80px;color:red"><% out.print(EMSG); %></H3>

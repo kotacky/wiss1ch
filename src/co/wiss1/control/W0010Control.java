@@ -36,7 +36,7 @@ public class W0010Control extends HttpServlet {
 		  String userName = UserInfo.get("userName");
 		  String password = UserInfo.get("password");
 		  String adminFlg = UserInfo.get("adminFlg");
-
+		  String chk = UserInfo.get("残念");
 		  if (hashedpassword.equals(password)){
 			  session.setAttribute("userId",userId);
 			  session.setAttribute("userName",userName);
@@ -44,6 +44,10 @@ public class W0010Control extends HttpServlet {
 			  RequestDispatcher dispatch = request.getRequestDispatcher("/W0020Control");
 			  dispatch.forward(request, response);
 
+		  }else if(chk.equals("残念")){
+			    request.setAttribute("EMSG0004", "Idが違います!!");
+			    RequestDispatcher dispatch = request.getRequestDispatcher("/view/W0010View.jsp");
+			    dispatch.forward(request, response);
 		  }else{
 			    request.setAttribute("EMSG0004", "パスワードが間違っています。");
 			    RequestDispatcher dispatch = request.getRequestDispatcher("/view/W0010View.jsp");

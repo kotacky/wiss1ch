@@ -6,6 +6,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.HashMap;
 
+import org.postgresql.util.PSQLException;
+
 import co.wiss1.common.DBAccessUtils;
 
 public class W0010Model{
@@ -40,6 +42,9 @@ public class W0010Model{
 			System.out.println(userInfo.get("userName"));
 			System.out.println(userInfo.get("password"));
 			System.out.println(userInfo.get("adminFlg"));
+		}catch (PSQLException e) {
+			userInfo.put("残念", "残念");
+			System.out.println(userInfo + "■■■■■");
 		} catch (SQLException e) {
 			System.out.println("SQL実行処理失敗!!!!!");
 			e.printStackTrace();

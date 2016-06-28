@@ -16,12 +16,12 @@
       				 return;
       			   }
            }
-  	       //スペース、空文字、null入力を未記入と判断する。又、入力時の空白を無くす。
            function Registration(){
-        	   if(document.myForm.example1.value != null){
-   				document.myForm.action = "<%= request.getContextPath() %>/W0030Control"
-   				document.myForm.submit();
-   			}else{
+        	  if(!((document.MyForm.categoryName.value.trim()=="")||(document.MyForm.categoryName.value==null))){
+        		  document.MyForm.categoryName.value = document.MyForm.categoryName.value.trim()
+        		  document.MyForm.action = "<%= request.getContextPath() %>/W0030Control"
+        	      document.MyForm.submit();
+        	  }else{
         		  alert("未記入です。");//値
         		  return;
         	  }

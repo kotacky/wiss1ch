@@ -18,11 +18,10 @@
            }
   	       //スペース、空文字、null入力を未記入と判断する。又、入力時の空白を無くす。
            function Registration(){
-        	  if(!((document.MyForm.categoryName.value.trim()=="")||(document.MyForm.categoryName.value==null))){
-        		  document.MyForm.categoryName.value = document.MyForm.categoryName.value.trim()
-        		  document.MyForm.action = "<%= request.getContextPath() %>/W0030Control"
-        	      document.MyForm.submit();
-        	  }else{
+        	   if(document.myForm.example1.value != null){
+   				document.myForm.action = "<%= request.getContextPath() %>/W0030Control"
+   				document.myForm.submit();
+   			}else{
         		  alert("未記入です。");//値
         		  return;
         	  }
@@ -35,8 +34,6 @@
 		<% String insertFlag = request.getAttribute("insertFlag").toString(); %>
 		<% if("0".equals(insertFlag)){ %>
 			<H2><% out.print("カテゴリ名が重複しています。"); %></H2>
-				<META HTTP-EQUIV="refresh"
-                content="5;http://localhost:8080/wiss1ch/view/W0030View.jsp">
 			<% } %>
 		<% }catch(NullPointerException insertException){ %>
 	<% } %>

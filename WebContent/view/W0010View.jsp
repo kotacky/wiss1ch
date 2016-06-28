@@ -19,16 +19,16 @@
 				alert('半角英数字以外の文字が含まれています。');
 		}else if (str2.length < 0){
 					alert("パスワードを入力して下さい。");
-			  if ( str.length < 4){
+			  if ( str.length < 3){
 							alert("ユーザーIDが短すぎます。");
 				}
 		}else if(str2.length <= 0){
 			alert("パスワードを入力して下さい。");
 
-		}else if(str.length < 4) {
+		}else if(str.length < 3) {
 			alert("パスワードが短すぎます。");
 		 }
-		else if ( str.length < 4){
+		else if ( str.length < 3){
 			if ( str.length <= 0){
 				alert("ユーザーIDを入力して下さい。");}
 			if ( st2r.length <= 0){

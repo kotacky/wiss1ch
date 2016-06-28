@@ -68,7 +68,7 @@ public class W0030Model {
 		         return getOverlapCount;
 	}
 
-	public static int insertCategory(String categoryName,String userName) {
+	public static int insertCategory(String categoryName,String userId) {
 
         //初期化
 
@@ -88,11 +88,11 @@ public class W0030Model {
 		        	//自動コミットを有効にする
 		        	connection.setAutoCommit(true);
 
-		        	System.out.println("UserNameに" + userName + "が入力されている。");
+		        	System.out.println("userIdに" + userId + "が入力されている。");
 
 		        	//カテゴリ名の追加
 		        	String insertSql = "INSERT INTO t_category (category_name,delete_flg,create_date,create_user,update_date,update_user)"
-		        			+ " VALUES ('" + categoryName + "',FALSE,current_timestamp,('" + userName +"'),current_timestamp,('" + userName +"'))";
+		        			+ " VALUES ('" + categoryName + "',FALSE,current_timestamp,('" + userId +"'),current_timestamp,('" + userId +"'))";
 		            //System.out.println("1:" + insertSql );
 
 		      	    insertCount = statement.executeUpdate(insertSql);

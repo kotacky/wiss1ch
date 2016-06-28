@@ -51,7 +51,7 @@
 
 
  	 			<div align="right">
-			<% out.print(session.getAttribute("userName")); %>
+			<% out.print(session.getAttribute("userId")); %>
     		<input style="margin-left:20px" type="button" class="button" name="logout" value="ログアウト" onClick="logOut();">
     	    </div>
 
@@ -64,7 +64,7 @@
 			<input type="text" name="categoryName"
 		 	maxlength="20" value="" placeholder="例：芸能">
 			<input type="button"  value="カテゴリ登録" onClick="Registration();">
-			<input type="hidden" name="userName" value=<%="\""+session.getAttribute("userName")+"\"" %>>
+			<input type="hidden" name="userId" value=<%="\""+session.getAttribute("userId")+"\"" %>>
 			</center></p>
 		</form>
 

@@ -13,34 +13,44 @@
         	    	 document.MyForm.action = "<%= request.getContextPath() %>/W0000Control"
         	         document.MyForm.submit();
         	       }else{
-      				 return;
+      				return;
       			   }
            }
            function Registration(){
-        	  if(!((document.MyForm.categoryName.value.trim()=="")||(document.MyForm.categoryName.value==null))){
-        		  document.MyForm.categoryName.value = document.MyForm.categoryName.value.trim()
-        		  document.MyForm.action = "<%= request.getContextPath() %>/W0030Control"
-        	      document.MyForm.submit();
-        	  }else{
-        		  alert("未記入です。");//値
-        		  return;
-        	  }
+        		   if(!((document.MyForm.categoryName.value.trim()=="")||(document.MyForm.categoryName.value==null))){
+        		     document.MyForm.categoryName.value = document.MyForm.categoryName.value.trim()
+        		     document.MyForm.action = "<%= request.getContextPath() %>/W0030Control"
+        	         document.MyForm.submit();
+        	  	   }else{
+        		    alert("未記入です。");//値
+        		    return;
+        	       }
            }
 
        </script>
  	 </head>
+	 <body>
 
- 	 <% try{ %>
+ 	<form name="MyForm" method="POST" action="#">
+
+	<% try{ %>
+		<% String sessionflag = session.getAttribute("adminFlg").toString();
+			System.out.println("W0030View管理者権限は" + sessionflag + "です。");
+			if(sessionflag.equals("f") ){
+			    //管理者権限が無い場合、ログイン画面に飛ばす
+			    RequestDispatcher dispatch =getServletContext().getRequestDispatcher("/view/W0010View.jsp");
+			    dispatch.forward(request, response);
+		    }%>
 		<% String insertFlag = request.getAttribute("insertFlag").toString(); %>
 		<% if("0".equals(insertFlag)){ %>
 			<H2><% out.print("カテゴリ名が重複しています。"); %></H2>
 			<% } %>
-		<% }catch(NullPointerException insertException){ %>
-	<% } %>
- 	 <body>
 
- 		<form name="MyForm" method="POST" action="#">
-			<div align="right">
+	<% }catch(NullPointerException insertException){ %>
+	<% } %>
+
+
+ 	 			<div align="right">
 			<% out.print(session.getAttribute("userName")); %>
     		<input style="margin-left:20px" type="button" class="button" name="logout" value="ログアウト" onClick="logOut();">
     	    </div>
@@ -59,3 +69,4 @@
 		</form>
 
 	</body>
+</html>

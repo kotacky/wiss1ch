@@ -51,7 +51,7 @@
 
 
  	 			<div align="right">
-			<% out.print(session.getAttribute("userId")); %>
+			<% out.print(session.getAttribute("userName")); %>
     		<input style="margin-left:20px" type="button" class="button" name="logout" value="ログアウト" onClick="logOut();">
     	    </div>
 

@@ -65,7 +65,7 @@
 
 			<div align="right">
 			<% out.print(session.getAttribute("userName")); %>
-    		<input style="margin-left:20px" type="button" class="button" name="logout" value="ログアウト" onClick="logOut();">
+    		<a style="margin-left:20px"class="button" name="logout"onClick="logOut();"><img src="<%= request.getContextPath() %>/view/img/153.142.124.217 (2).gif"></a>
     	    </div>
 
 		<div>

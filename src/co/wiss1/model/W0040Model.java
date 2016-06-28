@@ -13,7 +13,7 @@ import co.wiss1.common.DBAccessUtils;
 public class W0040Model {
 
 	public static List<HashMap<String, String>> getCommentList(String Id) {
-				System.out.println("引数は" + Id + "になります!!");
+				System.out.println("カテゴリIDは" + Id + "になります!!");
 		// コメント一覧を格納する箱
 			List<HashMap<String, String>> commentList = new ArrayList<HashMap<String, String>>();
 		// SQL実行結果格納用Set
@@ -88,7 +88,7 @@ public static int updateComment(String checkBox[] ) {	 												//コメン�
         connection.setAutoCommit(true);							 								//自動コミットを有効にする
         //ループ処理!checkBox[ ]文処理する。
         for( int i = 0; i < checkBox.length; i++) {
-        System.out.println("引数に" + checkBox[i] + "が入力されました!!");
+        System.out.println("CheckBoxに" + checkBox[i] + "が入力されました!!");
         String sql = "UPDATE t_post SET delete_flg = TRUE WHERE post_id = '"+ checkBox[i] + "'";
         System.out.println("checkBoxに!" + checkBox + "が入力されました!!");
         System.out.println(sql);
@@ -96,7 +96,7 @@ public static int updateComment(String checkBox[] ) {	 												//コメン�
     }
     }
 	catch (SQLException e){
-	System.err.println("SQL failed.");
+	System.err.println("削除SQL failed.");
 	e.printStackTrace ();																			//エラーの情報
 	}
 	finally{
@@ -115,12 +115,12 @@ return updateCount;
 
 
 
-public static int insertComment(String comment, String Id,String userId) {
+public static int insertComment(String comment, String categortyId,String userId,String userName) {
 
 				Connection connection = null;
 				Statement statement = null;
 				int insertCount = 0;
-				System.out.println("model引数は"+Id +"ですbabavava" );
+				System.out.println("model引数は"+ categortyId +"ですbabavava" );
 
 			try
 		{
@@ -131,8 +131,8 @@ public static int insertComment(String comment, String Id,String userId) {
 	        //自動コミットを有効にする
 	        	connection.setAutoCommit(true);
 	        	//コメントの追加
-	        	 String insertSql = "INSERT INTO t_post(post,category_id,delete_flg,user_id,create_date)"
-	             + " VALUES('" + comment + "','"+ Id +"',FALSE,'"+ userId +"',NOW())";
+	        	 String insertSql = "INSERT INTO t_post(post,category_id,user_name,delete_flg,user_id,create_date,create_user,update_date,update_user)"
+	             + " VALUES('" + comment + "','"+ categortyId +"','"+ userName +"',FALSE,'"+ userId +"',current_timestamp,'"+ userId +"',current_timestamp,'"+ userId +"')";
 	        	 System.out.println("1:" + insertSql);
 	             insertCount = statement.executeUpdate(insertSql);
 
@@ -146,7 +146,7 @@ public static int insertComment(String comment, String Id,String userId) {
 				}
 		 catch (SQLException e)
 	         {
-			System.err.println("SQL failed.");
+			System.err.println("投稿SQL failed.");
 			e.printStackTrace ();
 	         }
 		 finally{

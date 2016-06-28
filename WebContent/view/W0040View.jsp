@@ -7,6 +7,7 @@
 
         <link href="<%= request.getContextPath() %>/view/css/W0040.css" rel="stylesheet" type="text/css" />
         <meta charset="UTF-8">
+        <title>WISS1ch</title>
 
         <script type="text/javascript">
         	function logOut(){
@@ -20,12 +21,12 @@
         }
 
             function insert(command){
-				var l = document.MyForm.text.value.length;
+            	var l = document.MyForm.text.value.length;
 				alert(l);
 				if(l <= 0){
 					alert("未記入です！！！");
 				}
-			    if (l<=200 && 10 < l){
+			    if (l<=200 && 3 < l){
             	  myRet = confirm("投稿しますか？");
         		if(myRet == true ){
         		document.MyForm.actionId.value = command;
@@ -73,7 +74,7 @@
             <div align="right">
             <% out.print(session.getAttribute("userName")); %>
     		<a style="margin-left:20px"class="button" name="logout"onClick="logOut();">
-    		<img src="<%= request.getContextPath() %>/view/img/153.142.124.217 (1).gif"></a>
+    		<img src="<%= request.getContextPath() %>/view/img/153.142.124.217 (2).gif"></a>
             </div>
             <% String categoryName = request.getAttribute("Name").toString();%>
 			<% String sessionflag = session.getAttribute("adminFlg").toString();%>
@@ -117,10 +118,11 @@
 				<div class="margin">
 				<table>
                         <tr>
+
                            <th colspan=2><span style="margin-right: 13em;"></span>投稿内容<span style="margin-right: 8em;"></span>ユーザ名  <% out.print(UserName); %>
                             <div style="text-align : left">
                             <input type="checkbox"  <%=chk1 %> name="chkbox" style="width:17px;height:17px;" value="<%= commentId %>"onClick="chk();">
-                            <FONT size="4"><% out.print(comment); %></FONT>
+                            <FONT size="4"><% out.print(comment);%></FONT>
                             </div>
 
 
@@ -131,8 +133,8 @@
                         <% } %>
             	</table>
              	</div>
-			<P class="margin">入力文字数は ５０文字以上 ２００文字まで。<br>
-            コメント入力欄<textarea class="margin" input type="text"  id="text" name="text"  rows="4" cols="40"  wrap="hard"  placeholder="コメント記入欄"></textarea>
+			<P class="margin">入力文字数は 4文字以上 200文字まで。<br>
+            コメント入力欄<textarea class="margin" input type="text"  id="text" name="text"  rows="4" cols="40"  placeholder="コメント記入欄">&#13;</textarea>
 
             <input class="margin" type="submit" name="btn1" id="toukou" value ="投稿する" onClick="insert('insert');">
             <input class="margin" type="button" name="btn1" value ="削除する" onClick="update('update');">
@@ -143,7 +145,7 @@
             <input class="margin" type="hidden" name="Name" value="<%= categoryName %>">
             </P>
 			<%} catch(NullPointerException deleteException){ %>
-			コメント入力欄<textarea class="margin" input type="text"  id="text" name="text"  rows="4" cols="40"  wrap="hard" placeholder ="コメント記入欄"></textarea>
+			コメント入力欄<textarea class="margin" input type="text"  id="text" name="text"  rows="4" cols="40"   placeholder ="コメント記入欄"></textarea>
 			<input class="margin" type="submit" name="btn1" value ="投稿する" onClick="insert('insert');">
             <input class="margin" type="button" name="btn1" value ="削除する" onClick="update('update');">
             <input class="margin" type="hidden" name="actionId" value="">

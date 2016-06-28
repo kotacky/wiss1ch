@@ -21,10 +21,11 @@ public class W0030Control extends HttpServlet{
 	public void doPost(HttpServletRequest request, HttpServletResponse response)
 		throws IOException, ServletException{
 
-		  //sessionから取得したuserIdをNull対応
+		  //sessionから取得したuserNameをNull対応
 		  HttpSession session = request.getSession(true);
 		  try{
-			  String user = session.getAttribute("userId").toString();
+			  String user = session.getAttribute("userName").toString();
+			  System.out.println("SessionのuserNameが"+ user +"に入力されました");
 
 		//初期値
 		int ret = 0;

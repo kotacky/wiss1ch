@@ -21,10 +21,10 @@ public class W0030Control extends HttpServlet{
 	public void doPost(HttpServletRequest request, HttpServletResponse response)
 		throws IOException, ServletException{
 
-		  //sessionから取得したUserNameをNull対応
+		  //sessionから取得したuserIdをNull対応
 		  HttpSession session = request.getSession(true);
 		  try{
-			  String user = session.getAttribute("userName").toString();
+			  String user = session.getAttribute("userId").toString();
 
 		//初期値
 		int ret = 0;
@@ -35,16 +35,16 @@ public class W0030Control extends HttpServlet{
 			request.setCharacterEncoding("UTF-8");
 			String categoryName = request.getParameter("categoryName");
 			System.out.print("値に" + categoryName + "が入力されました。");
-			//ViewからuserNameを受け取る
-			String userName = request.getParameter("userName");
-			System.out.println("ControlのUserNameに" + userName + "が入力されている。");
+			//ViewからuserIdを受け取る
+			String userId = request.getParameter("userId");
+			System.out.println("ControlのuserIdに" + userId + "が入力されている。");
 
 				//Model重複チェックメソッドから重複カウントを受け取る
 				int getOverlapCount = W0030Model.getOverlapCount(categoryName);
 				System.out.print("重複カウント" + getOverlapCount + "が入力されました。");
 				if(getOverlapCount == 0){
 					//カテゴリ追加メソッドから挿入した桁数を受け取る
-					ret = W0030Model.insertCategory(categoryName,userName);
+					ret = W0030Model.insertCategory(categoryName,userId);
 				}else{
 					//getAttributeメソッドでrequestからViewが取得する //重複しています
 					request.setAttribute("getOverlapCount",getOverlapCount);

@@ -1,37 +1,43 @@
 h1 {
-  text-align: center;
-  padding: 1em 0;
-  color:#6A5ACD;
-  font-size: 50px;
+	text-align: center;
+	padding: 1em 0;
+	color:#6A5ACD;
+	font-size: 50px;
 }
 
-h2{
+h2 {
 	text-align:center;
 }
 
 body {
 	font-family: 'FontAwesome', sans-serif;
- 	color: #5e5e5e;
- 	font: 400 87.5%/1.5em 'Open Sans', sans-serif;
- 	background: #fdf8d9;
+	color: #5e5e5e;
+	font: 400 87.5%/1.5em 'Open Sans', sans-serif;
+	background: #fdf8d9;
 }
 
 textarea {
-    resize: none;
+	resize: none;
 }
 
-margin{
+margin {
 	text-align:center;
 }
 
+div {
+	word-break: break-all
+
+}
+
 table {
-margin-left:auto;margin-right:auto;
-border: solid 1px rgb(175, 136, 166);
-border-collapse: collapse;
-background-color:rgb(255, 254, 242);
-width: 40%;
-color:black;
+	margin-left:auto;margin-right:auto;
+	border: solid 1px rgb(175, 136, 166);
+	border-collapse: collapse;
+	background-color:rgb(255, 254, 242);
+	width: 40%;
+	color:black;
 	 }
-P.margin{
+
+P.margin {
 	text-align:center;
 }

@@ -11,7 +11,7 @@ public class W0030Model {
 
 	public static void main(String args[]){
 	    //insertcategory_name("音楽");
-	}
+	                   					  }
 
 
 	public static int getOverlapCount(String categoryName) {
@@ -48,12 +48,12 @@ public class W0030Model {
 	             	getOverlapCount = resultSet.getInt("cnt");
 		        	System.out.println("getOverlapCountに" + getOverlapCount + "が入力されました。");
 
-		         }
+		            }
 		         catch (SQLException e){
 
 		               System.err.println("重複SQL failed.");
 		               e.printStackTrace ();
-		         }
+		                         	   }
 		         finally {
 		 	        //データベースのクローズ
 		         	try {
@@ -62,11 +62,11 @@ public class W0030Model {
 		         	}
 		         	catch (Exception e){
 		         		System.out.println("Close failed.");
-		         	}
+		         					   }
 		         	System.out.println("一覧取得処理終了");
-		         }
+		         		 }
 		         return getOverlapCount;
-	}
+	                                                           }
 
 	public static int insertCategory(String categoryName,String userId) {
 
@@ -102,23 +102,23 @@ public class W0030Model {
 		            System.out.println ("次のsqlを実行します" + insertSql);
 
 
-		         }
+		         	 }
 		         catch (SQLException e) {
 
 		               System.err.println("追加SQL failed.");
 		               e.printStackTrace ();
-		         }
+		         						}
 		         finally {
 		 		     //データベースのクローズ
 		         	 try {
 		                 statement.close();
 		                 connection.close();
-		         	 }
+		         	 	 }
 		         	 catch (Exception e){
 		         	     System.out.println("Close failed.");
-		         	 }
+		         	 					}
 		         	 System.out.println("一覧取得処理終了");
-		         }
+		         		  }
 		         return insertCount;
-	}
-}
+																			}
+						}

@@ -3,19 +3,19 @@
 <!DOCTYPE html >
 <html lang="ja">
 	<head>
-		<meta charset="UTF-8">
-		<link href="<%= request.getContextPath() %>/view/css/W0030.css" rel="stylesheet" type="text/css" />
+	<meta charset="UTF-8">
+	<link href="<%= request.getContextPath() %>/view/css/W0030.css" rel="stylesheet" type="text/css" />
 	<title>WISS1ch</title>
-		<script type="text/javascript">
+	<script type="text/javascript">
            function logOut(){
         	   MyMessage = confirm("ログアウトします。よろしいですか？");
         	       if ( MyMessage == true ){
         	    	 document.MyForm.action = "<%= request.getContextPath() %>/W0000Control"
         	         document.MyForm.submit();
-        	       }else{
+        	      }else{
       				return;
-      			   }
-           }
+      			       }
+                            }
            function Registration(){
         		   if(!((document.MyForm.categoryName.value.trim()=="")||(document.MyForm.categoryName.value==null))){
         		     document.MyForm.categoryName.value = document.MyForm.categoryName.value.trim()
@@ -24,8 +24,8 @@
         	  	   }else{
         		    alert("未記入です。");//値
         		    return;
-        	       }
-           }
+        	            }
+                                  }
 
        </script>
  	 </head>
@@ -50,7 +50,7 @@
 	<% } %>
 
 
- 	 			<div align="right">
+ 	 		<div align="right">
 			<% out.print(session.getAttribute("userName")); %>
     		<a style="margin-left:20px"class="button" name="logout"onClick="logOut();"><img src="<%= request.getContextPath() %>/view/img/153.142.124.217 (2).gif"></a>
     	    </div>

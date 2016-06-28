@@ -1,11 +1,10 @@
 h1 {
-  text-align: center;
-  padding: 1em 0;
-  color:#6A5ACD;
-  font-size: 50px;
+	text-align: center;
+	padding: 1em 0;
+    color:#6A5ACD;
+    font-size: 50px;
 }
 
-/* body */
 body {
 	font-family: 'FontAwesome', sans-serif;
  	color: #5e5e5e;

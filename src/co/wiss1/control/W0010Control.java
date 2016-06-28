@@ -45,7 +45,7 @@ public class W0010Control extends HttpServlet {
 			  dispatch.forward(request, response);
 
 		  }else if(chk.equals("残念")){
-			    request.setAttribute("EMSG0004", "Idが違います!!");
+			    request.setAttribute("EMSG0001", "ユーザーが存在しません。");
 			    RequestDispatcher dispatch = request.getRequestDispatcher("/view/W0010View.jsp");
 			    dispatch.forward(request, response);
 		  }else{

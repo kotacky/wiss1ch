@@ -9,17 +9,34 @@
 	<title>WISS1ch</title>
 	<div style="bottom:40;">
 	<script type="text/javascript">
+
 	function login(){
-		var str = document.myForm.userId.value;
+		var str =  document.myForm.userId.value;
 		var str2 = document.myForm.password.value;
-		if (str == ""  && str2 ==""){
+		if(str == ""  && str2 ==""){
 			alert("パスワード又は、ユーザーIDを入力してください。");
-		}else if(str2 == ""){
-			alert("パスワードを入力してください。");
-		}else if (str2.length < 4){
+		}else if  ( str.match(/[^0-9a-zA-Z]/)){
+				alert('半角英数字以外の文字が含まれています。');
+		}else if (str2.length < 0){
+					alert("パスワードを入力して下さい。");
+			  if ( str.length < 4){
+							alert("ユーザーIDが短すぎます。");
+				}
+		}else if(str2.length <= 0){
+			alert("パスワードを入力して下さい。");
+
+		}else if(str.length < 4) {
 			alert("パスワードが短すぎます。");
-		}else if( str.length < 1){
-			alert("ユーザーIDが短すぎます。");
+		 }
+		else if ( str.length < 4){
+			if ( str.length <= 0){
+				alert("ユーザーIDを入力して下さい。");}
+			if ( st2r.length <= 0){
+				alert("パスワードを入力して下さい。");
+			}
+			else if(str2 <= 0 && 1<str){
+				alert("パスワードを入力して下さい。");
+			}
 		}else{
 			document.myForm.action = "<%= request.getContextPath() %>/W0010Control"
 			document.myForm.submit();
@@ -27,7 +44,7 @@
 	}
 	</script>
 </head>
-<body style="background-color:#fdf8d9">
+<body style>
 
             <h2><CENTER>
    		    <img src="<%= request.getContextPath() %>/view/img/wiss1ch.png">
@@ -36,7 +53,7 @@
 	<div class="form-wrapper">
 	<% try{ %>
 
-		<% String EMSG  = request.getAttribute("EMSG0004").toString(); %>
+		<% String EMSG  = request.getAttribute("EMSG0001").toString(); %>
 
 			<H3 style="margin-left:80px;color:red"><% out.print(EMSG); %></H3>
 	<% }catch(NullPointerException deleteException){ %>

@@ -5,7 +5,7 @@
 	<head>
 		<meta charset="UTF-8">
 		<link href="<%= request.getContextPath() %>/view/css/W0030.css" rel="stylesheet" type="text/css" />
-	<title>管理者画面</title>
+	<title>WISS1ch</title>
 		<script type="text/javascript">
            function logOut(){
         	   MyMessage = confirm("ログアウトします。よろしいですか？");
@@ -52,7 +52,7 @@
 
  	 			<div align="right">
 			<% out.print(session.getAttribute("userName")); %>
-    		<a style="margin-left:20px"class="button" name="logout"onClick="logOut();"><img src="<%= request.getContextPath() %>/view/img/153.142.124.217 (1).gif"></a>
+    		<a style="margin-left:20px"class="button" name="logout"onClick="logOut();"><img src="<%= request.getContextPath() %>/view/img/153.142.124.217 (2).gif"></a>
     	    </div>
 
     		<h1>

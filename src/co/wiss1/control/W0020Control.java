@@ -38,22 +38,21 @@ public class W0020Control extends HttpServlet {
 			  if ("Update".equals(actionId)){
 				  //ViewからchkBoxの値を受け取る
 				  for (int i = 0; i < checkBox.length; i++ ) {
-					  System.out.println(checkBox[i] + "<br>");
+				      System.out.println(checkBox[i] + "<br>");
 				  }
 
 				  //削除の項目を送る
 				  int delete = W0020Model.updateCategory(checkBox);
 				  if(delete >= 1){
-					  System.out.println("削除成功");
-					  request.setAttribute("delete",delete);
+				      System.out.println("削除成功");
+				      request.setAttribute("delete",delete);
 				  }else{
-					  System.out.println("削除失敗");
-					  request.setAttribute("delete",delete);
+				      System.out.println("削除失敗");
+				      request.setAttribute("delete",delete);
 				  }
 			  }
 
-			  // 初期表示 と削除後の再検索したカテゴリ一覧を取得
-			// カテゴリ一覧の取得
+			// 初期表示 と削除後の再検索したカテゴリ一覧を取得
 			List<HashMap<String, String>> categoryList = W0020Model.getCategoryList();
 			// カテゴリ一覧が空ではなく1件以上存在する場合、カテゴリ一覧をセット
 			if (categoryList != null && 0 < categoryList.size()) {

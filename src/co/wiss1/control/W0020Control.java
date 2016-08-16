@@ -17,6 +17,11 @@ import co.wiss1.model.W0020Model;
 // WebServlet
 @WebServlet("/W0020Control")
 public class W0020Control extends HttpServlet {
+	/**
+	 *
+	 */
+	private static final long serialVersionUID = 1L;
+
 	public void doPost(HttpServletRequest request, HttpServletResponse response)
 		throws IOException, ServletException {
 		System.out.println("doPost start");
@@ -33,8 +38,6 @@ public class W0020Control extends HttpServlet {
 			  String Id = request.getParameter("categoryId");
 			  System.out.print("引数は"+Id );
 
-			  String Id1 = request.getParameter("categoryId");
-			  System.out.print("+Id+" );
 
 			  // 削除
 
@@ -54,6 +57,9 @@ public class W0020Control extends HttpServlet {
 				      request.setAttribute("delete",delete);
 				  }
 			  }
+
+			  String Id1 = request.getParameter(categoryid);
+			  System.out.print(Id1);
 
 			// 初期表示 と削除後の再検索したカテゴリ一覧を取得
 			List<HashMap<String, String>> categoryList = W0020Model.getCategoryList(Id1);

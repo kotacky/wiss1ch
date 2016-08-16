@@ -13,7 +13,7 @@ import co.wiss1.common.DBAccessUtils;
 public class W0020Model {
 
 	public static void main (String args[]) {
-        List<HashMap<String, String>> categoryList = getCategoryList();
+        List<HashMap<String, String>> categoryList = getCategoryList(null);
         for (HashMap<String, String> categoryInfo : categoryList) {
             System.out.println("カテゴリID:[" + categoryInfo.get("categoryId") + "] カテゴリ名:[" + categoryInfo.get("categoryName") + "]");
         }
@@ -21,7 +21,7 @@ public class W0020Model {
 
 
 
-	public static List<HashMap<String, String>> getCategoryList() {
+	public static List<HashMap<String, String>> getCategoryList(String pullDown) {
 
 		// カテゴリ一覧を格納する箱
 		List<HashMap<String, String>> categoryList = new ArrayList<HashMap<String, String>>();
@@ -39,7 +39,7 @@ public class W0020Model {
 			statement = connection.createStatement();
 			// SQL文作成
 			StringBuffer sb = new StringBuffer();
-			sb.append("SELECT * FROM t_category WHERE delete_flg = 'FALSE' ORDER BY category_id");
+			sb.append("SELECT * FROM t_category WHERE  parent_category_id = '"+ pullDown +"' AND  delete_flg = 'FALSE'  ORDER BY category_id");
 			// SQL文実行
 			resultSet = statement.executeQuery(sb.toString());
 			// 実行結果の取得

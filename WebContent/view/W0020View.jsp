@@ -73,6 +73,15 @@
 			<h1>
    		    <img src="<%= request.getContextPath() %>/view/img/wiss1ch.png">
     		</h1>
+    		<FORM name=pull>
+			<SELECT name="pldw">
+			<OPTION value="0" selected>大カテゴリを選択</OPTION>
+			<OPTION value="1">16'新人</OPTION>
+			<OPTION value="2">Java</OPTION>
+			<OPTION value="3">野球</OPTION>
+			<option value="4">麻雀</option>
+			</SELECT>
+			</FORM>
 			<%-- テーブルの表示--%>
 			<table border="1">
 
@@ -81,12 +90,20 @@
 						<th>カテゴリ名</th>
 					</tr>
 			</CENTER>
+					<!-- 変更点 -->
 
-				    <%
-						// カテゴリ一覧を取得
-						List<HashMap<String,String>> categoryList = (List<HashMap<String,String>>)request.getAttribute("categoryList");
 
-					%>
+
+				   <!--  // カテゴリ一覧を取得-->
+				    <script type="text/JavaScript">
+					var event = document.getElementById('pldw');
+					event.onchange = function(){ // セレクトボックスに変更が加えられたら
+					var indx = document.pull.pldw.selectedIndex; // selectedImdexは「今」選択されているoptionを指す。返り値は数字。
+					var pulldw = document.pull.pldw.options[indx].value; // optionのvalueを取得
+						<%List<HashMap<String,String>> categoryList = (List<HashMap<String,String>>)request.getAttribute("categoryList");%>
+					}
+					</script>
+
 					<% String sessionflag = session.getAttribute("adminFlg").toString();
 
 					System.out.println("★権限は" + sessionflag + "です！！！★");

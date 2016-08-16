@@ -33,6 +33,8 @@ public class W0020Control extends HttpServlet {
 			  String Id = request.getParameter("categoryId");
 			  System.out.print("引数は"+Id );
 
+			  String Id1 = request.getParameter("categoryId");
+			  System.out.print("+Id+" );
 
 			  // 削除
 			  if ("Update".equals(actionId)){
@@ -53,7 +55,7 @@ public class W0020Control extends HttpServlet {
 			  }
 
 			// 初期表示 と削除後の再検索したカテゴリ一覧を取得
-			List<HashMap<String, String>> categoryList = W0020Model.getCategoryList();
+			List<HashMap<String, String>> categoryList = W0020Model.getCategoryList(Id1);
 			// カテゴリ一覧が空ではなく1件以上存在する場合、カテゴリ一覧をセット
 			if (categoryList != null && 0 < categoryList.size()) {
 				request.setAttribute("categoryList", categoryList);

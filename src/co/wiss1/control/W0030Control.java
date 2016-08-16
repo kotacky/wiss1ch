@@ -47,7 +47,7 @@ public class W0030Control extends HttpServlet{
 
 				if(getOverlapCount == 0){
 				    //カテゴリ追加メソッドから挿入した桁数を受け取る
-				    ret = W0030Model.insertCategory(categoryName,userId);
+				    ret = W0030Model.insertCategory(categoryName,userId, userId, getOverlapCount, userId);
 				}
 				else{
 				    //getAttributeメソッドでrequestからViewが取得する

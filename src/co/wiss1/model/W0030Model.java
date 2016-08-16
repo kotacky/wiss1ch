@@ -68,7 +68,7 @@ public class W0030Model {
 		         return getOverlapCount;
 	                                                           }
 
-	public static int insertCategory(String categoryName,String userId) {
+	public static int insertCategory(String categoryName,String userId, String insertSql, Object categoryid, String checkBox) {
 
         //初期化
 
@@ -95,11 +95,11 @@ public class W0030Model {
 		        	if (categoryid != null){
 
 		        	//カテゴリ名の追加
-		        	String insertSql = "INSERT INTO t_category (category_name,delete_flg,create_date,create_user,update_date,update_user)"
+		        	String insertSql1 = "INSERT INTO t_category (category_name,delete_flg,create_date,create_user,update_date,update_user)"
 		        			+ " VALUES ('" + categoryName + "',FALSE,current_timestamp,('" + userId +"'),current_timestamp,('" + userId +"'))";
 		            //System.out.println("1:" + insertSql );
 		        	}else{
-		        	String insertSql = "UPDATE t_category SET  category_name =('" + categoryName + "') , update_date = current_timestamp , update_user =('" + userId +"')  WHERE  category_id = ('"+ checkBox +"')"
+		        	String insertSql1 = "UPDATE t_category SET  category_name =('" + categoryName + "') , update_date = current_timestamp , update_user =('" + userId +"')  WHERE  category_id = ('"+ checkBox +"')";
 		        	}
 		      	    insertCount = statement.executeUpdate(insertSql);
 		            System.out.println(insertCount + " 行挿入しました。");

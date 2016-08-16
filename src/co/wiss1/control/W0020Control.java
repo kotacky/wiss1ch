@@ -22,7 +22,7 @@ public class W0020Control extends HttpServlet {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	public void doPost(HttpServletRequest request, HttpServletResponse response)
+	public void doPost(HttpServletRequest request, HttpServletResponse response, String categoryid)
 		throws IOException, ServletException {
 		System.out.println("doPost start");
 

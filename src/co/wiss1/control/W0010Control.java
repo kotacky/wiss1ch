@@ -41,7 +41,7 @@ public class W0010Control extends HttpServlet {
 			  session.setAttribute("userId",userId);
 			  session.setAttribute("userName",userName);
 			  session.setAttribute("adminFlg",adminFlg);
-			  RequestDispatcher dispatch = request.getRequestDispatcher("/W0020Control");
+			  RequestDispatcher dispatch = request.getRequestDispatcher("/W0011Control");
 			  dispatch.forward(request, response);
 
 		  }else if(chk.equals("残念")){

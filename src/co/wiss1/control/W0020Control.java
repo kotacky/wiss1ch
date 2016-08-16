@@ -37,6 +37,7 @@ public class W0020Control extends HttpServlet {
 			  System.out.print("+Id+" );
 
 			  // 削除
+
 			  if ("Update".equals(actionId)){
 				  //ViewからchkBoxの値を受け取る
 				  for (int i = 0; i < checkBox.length; i++ ) {

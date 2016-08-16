@@ -91,6 +91,7 @@ public class W0030Model {
 		        	System.out.println("userIdに" + userId + "が入力されている。");
 
 
+
 		        	if (categoryid != null){
 
 		        	//カテゴリ名の追加

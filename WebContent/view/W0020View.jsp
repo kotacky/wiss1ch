@@ -20,6 +20,7 @@
     			   }
          }
 
+
 		  function deletes(Command){
 			// チェックボックス要素をすべて取得する
 			var boxes = document.getElementsByName("chkbox");

@@ -23,6 +23,7 @@ public class W0020Model {
 
 	public static List<HashMap<String, String>> getCategoryList(String pullDown) {
 
+
 		// カテゴリ一覧を格納する箱
 		List<HashMap<String, String>> categoryList = new ArrayList<HashMap<String, String>>();
 		// SQL実行結果格納用Set

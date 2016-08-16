@@ -33,6 +33,7 @@ public class W0020Model {
 		// SQLステートメント
 		Statement statement = null;
 
+
 		try {
 			// DB接続
 			connection = DBAccessUtils.getConnection();

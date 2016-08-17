@@ -156,7 +156,6 @@
 											</div>
 											<div style="text-align : left">
 												<FONT size="4"><% out.print(OutputComment);%></FONT>
-    <%--                    					<FONT size="4"><% out.print(comment);%></FONT>  --%>
 											</div>
 											<div style="text-align : left">
 												<a href="#" name="good" value="<%= commentId %>" onClick="good('good');">G</a>　　　

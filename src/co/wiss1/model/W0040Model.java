@@ -241,7 +241,7 @@ public class W0040Model {
 
 
 	//コメント投稿(新) 必要データ：コメント、カテID、ユーザID、ユーザ名、イメージバイナリ、色情報
-	public static int insertCommentAddImg(String comment, String categoryId, String userId, String userName, byte Img, int color) {
+	public static int insertCommentAddImg(String comment, String categoryId, String userId, String userName, byte[] Img, int color) {
 
 		Connection connection = null;
 		Statement statement = null;

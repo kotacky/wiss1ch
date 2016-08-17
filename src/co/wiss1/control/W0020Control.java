@@ -22,7 +22,7 @@ public class W0020Control extends HttpServlet {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	public void doPost(HttpServletRequest request, HttpServletResponse response, String categoryid)
+	public void doPost(HttpServletRequest request, HttpServletResponse response)
 		throws IOException, ServletException {
 		System.out.println("doPost start");
 
@@ -58,11 +58,11 @@ public class W0020Control extends HttpServlet {
 				  }
 			  }
 
-			  String Id1 = request.getParameter(categoryid);
+			  String Id1 = request.getParameter("pullval");
 			  System.out.print(Id1);
 
 			// 初期表示 と削除後の再検索したカテゴリ一覧を取得
-			List<HashMap<String, String>> categoryList = W0020Model.getCategoryList(Id1);
+			List<HashMap<String, String>> categoryList = W0020Model.getCategoryList();
 			// カテゴリ一覧が空ではなく1件以上存在する場合、カテゴリ一覧をセット
 			if (categoryList != null && 0 < categoryList.size()) {
 				request.setAttribute("categoryList", categoryList);

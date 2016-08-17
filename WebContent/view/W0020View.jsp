@@ -58,6 +58,11 @@
 			  document.MyForm.action = "<%= request.getContextPath() %>/W0040Control"
 			  document.MyForm.submit();
 		  }
+		  function changepulldown(){
+			  var pullop = document.MyForm.pldw.selectedIndex;//selectedImdexは「今」選択されているoptionを指す。返り値は数字。
+			  var pullval = document.MyForm.pldw.options[pullop].value; // optionのvalueを取得
+			  alert(pullval)//オンチェンジ動作確認用、値拾う
+		  }
 		</script>
 	</head>
 
@@ -75,15 +80,13 @@
 				<h1>
    		   		<img src="<%= request.getContextPath() %>/view/img/wiss1ch.png">
     			</h1>
-    			<FORM name="pull">
-				<SELECT name="pldw">
-				<OPTION value="0" selected>大カテゴリを選択</OPTION>
+				<SELECT onchange= "changepulldown()"  name="pldw">
+				<OPTION value="0" selected disabled>大カテゴリを選択</OPTION>
 				<OPTION value="1">16'新人</OPTION>
 				<OPTION value="2">Java</OPTION>
 				<OPTION value="3">野球</OPTION>
 				<option value="4">麻雀</option>
 				</SELECT>
-				</FORM>
 
 				<%-- テーブルの表示--%>
 				<table border="1">
@@ -99,21 +102,9 @@
 
 				   <!--  // カテゴリ一覧を取得-->
 
-				    <script type="text/JavaScript">
-					var event = document.getElementById("pldw");
-					event.onchange = function(){ // セレクトボックスに変更が加えられたら
-					var indx = document.pull.pldw.selectedIndex; // selectedImdexは「今」選択されているoptionを指す。返り値は数字。
-					var categoryid = document.pull.pldw.options[indx].value; // optionのvalueを取得
-					<%String Id1 = request.getParameter("categoryid");%>
-
-					if(indx != 0 ){ // インデックスが0番でなかったら
 					<%List<HashMap<String,String>> categoryList = (List<HashMap<String,String>>)request.getAttribute("categoryList");%>
-					  }else{
-						alert("選択して下さい");
-							}
-					}
 
-					</script>
+
 
 					<% String sessionflag = session.getAttribute("adminFlg").toString();
 

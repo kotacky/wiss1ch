@@ -37,7 +37,7 @@ public class W0050Model {
 			statement = connection.createStatement();//SQLを
 			// SQL文作成
 			StringBuffer sb = new StringBuffer();//一時的に文字を保管する
-			sb.append("SELECT user_id, user_name, user_adress, admin_flg FROM t_user_info WHERE delete_flg = 'FALSE' ORDER BY user_id");//sbの箱SELECT * FROM t_category WHERE delete_flg = 'FALSE' ORDER BY category_idにいれる
+			sb.append("SELECT user_id, user_name, user_address, admin_flg FROM t_user_info WHERE delete_flg = 'FALSE' ORDER BY user_id");//sbの箱SELECT * FROM t_category WHERE delete_flg = 'FALSE' ORDER BY category_idにいれる
 			// SQL文実行
 			resultSet = statement.executeQuery(sb.toString());//resultSet実行した結executeQuery＝要求をＳＱＬとしてＤＢに投げる
 			// 実行結果の取得・次の行を呼ぶ
@@ -45,7 +45,7 @@ public class W0050Model {
 				HashMap<String, String> userInfo = new HashMap<String, String>();//カテゴリインフォを新しく作る
 				userInfo.put("userId", resultSet.getString("user_id"));//カテゴリー
 				userInfo.put("userName", resultSet.getString("user_name"));
-				userInfo.put("userAddress", resultSet.getString("user_adress"));
+				userInfo.put("userAddress", resultSet.getString("user_address"));
 				userInfo.put("userAdmin", resultSet.getString("admin_flg"));
 				userList.add(userInfo);
 				System.out.println(userInfo.get("userId"));

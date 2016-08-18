@@ -2,6 +2,8 @@
 <%@ page import = "java.util.HashMap"%>
 <%@ page import = "java.util.List" %>
 <%@ page import = "javax.servlet.http.HttpSession" %>
+<%@ page import = "java.net.URLEncoder" %>
+
 <!DOCTYPE html>
 <html lang="ja">
 	<head>
@@ -9,7 +11,8 @@
 		<link href="<%= request.getContextPath() %>/view/css/W0050.css" rel="stylesheet" type="text/css" />
 		<title>WISS1ch</title>
 
-		<script type="text/javascript">
+		<script type="text/javascript" >
+		<div id="map" style="width: 330px; height: 100px;"></div>
 		function logOut(){
 			MyMessage = confirm("ログアウトします。よろしいですか？");
 			if ( MyMessage == true ){
@@ -48,14 +51,28 @@
 				  document.MyForm.action = "<%= request.getContextPath() %>/view/W0050View.jsp"
 				  document.MyForm.submit();
 			  }
-			  function move(Command){
+			 <%--
+			 function move(Command){
 
 				  var values = Command.split(','); // , 区切;
 				  document.MyForm.Id.value = values[0];
 				  document.MyForm.Name.value = values[1];
-				  document.MyForm.action = "<%= request.getContextPath() %>/W0040Control"
+				  document.MyForm.action = "<%= request.getContextPath() %>/W0050Control"
 				  document.MyForm.submit();
 			  }
+			--%>
+			var map;
+			function initialize() {
+			    var mapOptions = {
+			        zoom: 15,
+			        center: new google.maps.LatLng(35.710285, 139.77714)
+			    };
+			    map = new google.maps.Map(document.getElementById('map'),
+			    mapOptions);
+			}
+
+			google.maps.event.addDomListener(window, 'load', initialize);
+
 		</script>
 	</head>
 
@@ -116,15 +133,38 @@
 							<% for (HashMap<String,String> userInfo : userList) { %>
 							<%String Id = userInfo.get("userId"); %>
 							<%String Name = userInfo.get("userName"); %>
+							<%String admin = userInfo.get("userAdmin");  %>
+							<%String addr = userInfo.get("userAddress");  %>
+							<%String encorded_addr = URLEncoder.encode(addr, "UTF-8"); %>
+
 							<tr>
 								<td><input type="checkbox" <%= chk1  %> name="chkbox" style="width:17px;height:17px;"value="<%= userInfo.get("userId") %>" onClick="chk();"></td>
-								<td><a onClick="move('<%=Id %>,<%=Name %>');"   href="#"  value=""  ><% out.print(userInfo.get("userId")); %></a></td>
+								<td><a href="#"  value=""  ><% out.print(userInfo.get("userId")); %></a></td>
 								<td><% out.print(userInfo.get("userName")); %></td>
-								<td><% out.print(userInfo.get("userAddress")); %></td>
-								<td><% out.print(userInfo.get("userAdmin")); %></td>
+								<td><a href="javascript:void(0);"	onclick=window.open("http://maps.google.co.jp/maps?q=<% out.print(encorded_addr);%>",'GoogleMap','width=700,height=400')> <% out.print(addr); %> </a></td>
+								<td>
+								<% if(admin.equals(str1)){
+									out.print("管理者");
+								}else{
+									out.print("一般");
+								}
+								%></td>
 
-								<% } %>
-							<% } %>
+
+					</Tr>
+	<% } %>
+<% } %>
+				</tbody>
+			</table>
+			<input type="hidden" name="process">
+			<input type="hidden" name="employeeAuthority" value="<%= session.getAttribute("employeeAuthority") %>">
+
+	</form>
+	<div id="footer">
+		<p id="copyright">Copyright (c) WISS1 Inc. All Rights Reserved.</p>
+	</div>
+</body>
+</html>
 							</tr>
 				</table>
 				<P>
@@ -133,9 +173,8 @@
 				<input type="hidden" name="actionId" value="">
 				<input type="hidden" name="Id" value="">
 				<input type="hidden" name="Name" value="">
-				</div>
-				<div id="map" style="width: 330px; height: 100px;"></div>
 				</P>
+
 			</form>
 		</body>
 </html>

@@ -31,14 +31,14 @@ public class W0040Model {
 				statement = connection.createStatement();
 			// SQL文作成
 				StringBuffer sb = new StringBuffer();
-				//コメント、投稿者名、コメントID、ユーザID、カテゴリ名[、画像バイナリ、いいね数]
-				sb.append("SELECT p.post,p.user_name,p.post_id,p.user_id,p.create_date,c.category_name "
-						// + ", p.img_bin, p.good_count "
+				//コメント、投稿者名、コメントID、ユーザID、カテゴリ名、いいね数[、画像バイナリ]
+				sb.append("SELECT p.post,p.user_name,p.post_id,p.user_id,p.create_date,c.category_name, p.good_count "
+						// + ", p.img_bin"
 						+ "FROM t_post p LEFT OUTER JOIN t_category c "
 						+ "ON c.category_id = p.category_id "
 						+ "WHERE p.category_id = '"+ Id +"' AND p.delete_flg = 'f'"
 						+ "ORDER BY p.post_id	");
-				System.out.println(sb);
+				System.out.println("SELECT");
 			// SQL文実行
 				resultSet = statement.executeQuery(sb.toString());
 			// 実行結果の取得
@@ -54,12 +54,13 @@ public class W0040Model {
 				commentInfo.put("Id", resultSet.getString("post_id"));
 				commentInfo.put("userId", resultSet.getString("user_id"));
 				//commentInfo.put("img_bin", resultSet.getString("img_bin"));
-				//commentInfo.put("good_count", resultSet.getString("good_count"));
+				commentInfo.put("good_count", resultSet.getString("good_count"));
 				commentList.add(commentInfo);
 				System.out.println("コメントIdは" + commentInfo.get("commentId") + "です" );
 				//System.out.println("ユーザ名は" + commentInfo.get("userName") + "です" );
 				//System.out.println("コメントは" + commentInfo.get("comment") + "です" );
 				//System.out.println("ユーザIdは" + commentInfo.get("userId") + "です" );
+				System.out.println("いいね数は" + commentInfo.get("good_count") + "です" );
 			}
 		} catch (SQLException e) {
 			System.out.println("リスト取得SQL実行処理失敗!!");
@@ -214,7 +215,7 @@ public class W0040Model {
 	        //コメントの追加
 	        String insertSql = "INSERT INTO t_post(post,category_id,user_name,delete_flg,user_id,create_date,create_user,update_date,update_user)"
 	        		+ " VALUES('" + comment + "','"+ categoryId +"','"+ userName +"',FALSE,'"+ userId +"',current_timestamp,'"+ userId +"',current_timestamp,'"+ userId +"')";
-	        System.out.println("1:" + insertSql);
+	        System.out.println("W0040M : INSERT");
 	        insertCount = statement.executeUpdate(insertSql);
 
 	        System.out.println("W40M 引数に" + comment + "が入力されました。");
@@ -240,7 +241,7 @@ public class W0040Model {
 	}
 
 
-	//コメント投稿(新) 必要データ：コメント、カテID、ユーザID、ユーザ名、イメージバイナリ、色情報
+	//コメント投稿(新) 必要データ：コメント、カテID、ユーザID、ユーザ名、色情報[イメージバイナリは後で]
 	public static int insertCommentAddImg(String comment, String categoryId, String userId, String userName, byte[] Img, int color) {
 
 		Connection connection = null;

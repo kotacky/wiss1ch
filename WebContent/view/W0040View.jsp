@@ -46,21 +46,25 @@
 			}
 
 	    	//いいね
-			function good(Command){
-				document.MyForm.actionId.value = Command;
-	    		MyMessage = confirm("いいねします");
-				//コメントIDをControlに渡したい
+			function good(cid){
+				document.MyForm.actionId.value = 'good';
+				document.MyForm.commentId.value = cid;
+	    		alert("いいねします ID:" + cid);
 				document.MyForm.action = "<%= request.getContextPath() %>/W0040Control"
 				document.MyForm.submit();
 			}
 
 	    	//単独論理削除
-			function soloupdate(Command){
-				document.MyForm.actionId.value = Command;
-	    		MyMessage = confirm("単独論削します");
-				//コメントIDをControlに渡したい
-				document.MyForm.action = "<%= request.getContextPath() %>/W0040Control"
-				document.MyForm.submit();
+			function soloupdate(cid){
+				document.MyForm.actionId.value = 'soloupdate';
+				document.MyForm.commentId.value = cid;
+	    		MyRet = confirm("単独削除します ID:" + cid);
+				if(myRet == true ){
+					document.MyForm.action = "<%= request.getContextPath() %>/W0040Control"
+					document.MyForm.submit();
+				}else{
+					alert("キャンセル");
+				}
 			}
 
 	    	//論理削除
@@ -92,6 +96,7 @@
 	</head>
     <body>
         <form name="MyForm" method="POST" action="#">
+			<input type="hidden" name="commentId">
             <div align="right">
             <% out.print(session.getAttribute("userName")); %>
     		<a style="margin-left:20px"class="button" name="logout"onClick="logOut();">
@@ -124,11 +129,11 @@
 					<%
 							for (HashMap<String,String> commentInfo : commentList) {
                                 String comment = commentInfo.get("comment");
-							//OutputCommentは改行をHTMLタグに変更しておく
                        			String OutputComment = comment.replaceAll("\n","<br>");
                                 String commentId = commentInfo.get("commentId");
                                 String commentUserId = commentInfo.get("userId");
                                 String UserName = commentInfo.get("userName");
+                                String good_count = commentInfo.get("good_count");
 							//Create_Dateを取得してPostDateへ
                                 String PostTime = commentInfo.get("PostTime");
 							//PostDateはミリ秒まで表示しているのでトリミング、ハイフンをスラッシュへ
@@ -157,9 +162,10 @@
 											<div style="text-align : left">
 												<FONT size="4"><% out.print(OutputComment);%></FONT>
 											</div>
-											<div style="text-align : left">
-												<a href="#" name="good" value="<%= commentId %>" onClick="good('good');">G</a>　　　
-												<a href="#" name="soloupdate" value="<%= commentId %>" onClick="soloupdate('soloupdate');">D</a>
+											<div style="text-align : right">
+													<input type="submit" name="commentBtn" value="ｲｲﾈ!" onClick="good(<%=commentId%>);">
+													<% out.print(good_count); %>
+													<input type="submit" name="deleteBtn" value="削除" onClick="soloupdate(<%=commentId%>);">
 											</div>
 										</th>
 										<br>
@@ -168,12 +174,17 @@
                             <% } %>
                         <% } %>
              	</div>
-			<P class="margin">投稿可能文字数は 4文字以上、200文字までです。<br>
+             	<br>
+			<P class="margin">投稿可能文字数は 4文字以上、200文字までです。
+			<div>
+				投稿者名<input type="text" id="postname" name="postname" size="20"></input>　　　　　　　　　　　　　　　
+			</div>
 			<div>
 				<%--何故か非初回投稿だけテキストボックスに改行コードが入っていたのを修正 --%>
 	            コメント入力欄<textarea class="margin" input type="text" onkeyup="ShowLength( 'nummoji' , value );"  id="text" name="text"  rows="4" cols="40"  placeholder="コメント記入欄"></textarea>
 				<span id="nummoji">0文字</span>
 			</div>
+			<input class="margin" type="file" name="btn1" size="50" id=imgfile" value="画像選択">　　　　　　
             <input class="margin" type="submit" name="btn1" id="toukou" value ="投稿する" onClick="insert('insert');">
             <input class="margin" type="button" name="btn1" value ="削除する" <% if (commentList == null) { out.print("disabled"); }%> onClick="update('update');">
             <input class="margin" type="hidden" name="actionId" value="">
@@ -188,6 +199,7 @@
 	            コメント入力欄<textarea class="margin" input type="text" onkeyup="ShowLength( 'nummoji' , value );"  id="text" name="text"  rows="4" cols="40"  placeholder="コメント記入欄"></textarea>
 				<span id="nummoji">0文字</span>
 			</div>
+			<input class="margin" type="file" name="btn1" id=imgfile" value="画像選択">
 			<input class="margin" type="submit" name="btn1" value ="投稿する" onClick="insert('insert');">
             <input class="margin" type="button" name="btn1" value ="削除する" <% if (commentList == null) { out.print("disabled"); }%> onClick="update('update');">
             <input class="margin" type="hidden" name="actionId" value="">

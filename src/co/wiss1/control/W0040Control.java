@@ -40,7 +40,6 @@ import co.wiss1.model.W0040Model;
 			request.setAttribute("Name",categoryName);
 			System.out.println("W40C カテゴリ名は"+categoryName +"です" );
 
-
 			String comment = request.getParameter("text");
 			System.out.println("W40C コメントは"+ comment +"です");
 
@@ -52,8 +51,7 @@ import co.wiss1.model.W0040Model;
 			if("good".equals(actionId)) {
 				System.out.println("*W40C GOODします。");
 				//いいね対象のコメントID。Viewから受け取る
-				String CommentID = "25";
-				//String CommentID = request.getParameter("good");				//NULLする
+				String CommentID = request.getParameter("commentId");
 				String userID = session.getAttribute("userId").toString();
 				System.out.println("*W40C いいねするコメントIDは" + CommentID + "です。");
 				System.out.println("*W40C いいねするユーザIDは" + userID + "です。");
@@ -98,7 +96,6 @@ import co.wiss1.model.W0040Model;
 				System.out.println("W40C 色番号は"+ Color +"です" );
 
 				int insertCount = W0040Model.insertCommentAddImg(comment,categoryId,userId,userName,Img,Color);
-
 				request.setAttribute("insertCount",insertCount);
 			}
 
@@ -106,8 +103,7 @@ import co.wiss1.model.W0040Model;
 			if("soloupdate".equals(actionId)) {
 				System.out.println("*W40C 単独論理削除します。");
 				//削除対象のコメントID。Viewから受け取る
-				String CommentID = "24";
-				//String CommentID = request.getParameter("good");				//NULLする
+				String CommentID = request.getParameter("commentId");
 				String userID = session.getAttribute("userId").toString();
 				System.out.println("*W40C 削除を行うコメントIDは" + CommentID + "です。");
 				System.out.println("*W40C 削除を行うユーザIDは" + userID + "です。");

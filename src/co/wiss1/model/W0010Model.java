@@ -30,7 +30,7 @@ public class W0010Model{
 			statement = connection.createStatement();
 			// SQL文作成
 			StringBuffer sb  = new StringBuffer();
-			sb.append("SELECT user_name, password, admin_flg FROM t_user_info WHERE user_id = '"+ userId + "'");
+			sb.append("SELECT user_name, password, admin_flg, font_color FROM t_user_info WHERE user_id = '"+ userId + "'");
 			// SQL文実行
 			resultSet = statement.executeQuery(sb.toString());
 
@@ -39,9 +39,11 @@ public class W0010Model{
 			userInfo.put("userName", resultSet.getString("user_name"));
 			userInfo.put("password", resultSet.getString("password"));
 			userInfo.put("adminFlg", resultSet.getString("admin_flg"));
+			userInfo.put("font_color", resultSet.getString("font_color"));
 			System.out.println(userInfo.get("userName"));
 			System.out.println(userInfo.get("password"));
 			System.out.println(userInfo.get("adminFlg"));
+			System.out.println(userInfo.get("font_color"));
 		}catch (PSQLException e) {
 			userInfo.put("残念", "残念");
 			System.out.println(userInfo + "■■■■■");

@@ -36,11 +36,14 @@ public class W0010Control extends HttpServlet {
 		  String userName = UserInfo.get("userName");
 		  String password = UserInfo.get("password");
 		  String adminFlg = UserInfo.get("adminFlg");
+		  String font_color = UserInfo.get("font_color");
 		  String chk = UserInfo.get("残念");
 		  if (hashedpassword.equals(password)){
 			  session.setAttribute("userId",userId);
 			  session.setAttribute("userName",userName);
 			  session.setAttribute("adminFlg",adminFlg);
+			  session.setAttribute("font_color", font_color);
+			  System.out.println("W0010C font_color=" + font_color + ";");
 			  RequestDispatcher dispatch = request.getRequestDispatcher("/W0011Control");
 			  dispatch.forward(request, response);
 

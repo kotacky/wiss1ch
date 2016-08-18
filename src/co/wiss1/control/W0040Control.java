@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import javax.servlet.http.Part;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -83,7 +84,11 @@ import co.wiss1.model.W0040Model;
 				String userId = request.getParameter("userId");
 				String userName = request.getParameter("userName");
 				String postName = request.getParameter("postName");
-				String blank = "";
+
+		        // <INPUT type="file" name="imgfile"> で指定したものを取得
+		        //Part part = request.getPart("imgfile");
+
+		        String blank = "";
 				String Name = userName;
 				System.out.println("W40C ユーザーIDは"+userId +"です" );
 				System.out.println("W40C ユーザー名は"+ userName +"です" );
@@ -91,8 +96,8 @@ import co.wiss1.model.W0040Model;
 
 				//byte型の初期化。今後View側で得た画像ファイルをここでInputStreamとかする
 				//今は仮に文字列をbyte[]に変換したものを利用
-				//FileInputStream→ByteArrayOutputStreamを利用
 				String str = comment;
+				//String str = part.toString();		//明らかにおかしい気がする
 				byte[] Img = str.getBytes("UTF-8");
 				String result = new String(Img, "UTF-8");
 				System.out.println("W40C byte[]に入れたデータは[" + result + "]です");

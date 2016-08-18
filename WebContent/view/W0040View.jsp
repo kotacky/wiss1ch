@@ -143,8 +143,6 @@
             <%  List<HashMap<String,String>> commentList = (List<HashMap<String,String>>)request.getAttribute("commentList"); %>
 
 				<% try { %>
-
-
 				<CENTER>
             		<h1>
    		    			<a href="#"  onclick=go_portal();><img src="<%= request.getContextPath() %>/view/img/wiss1ch.png"></a>
@@ -213,7 +211,7 @@
 	            コメント入力欄<textarea class="margin" input type="text" onkeyup="ShowLength( 'nummoji' , value );"  id="text" name="text"  rows="4" cols="40"  placeholder="コメント記入欄"></textarea>
 				<span id="nummoji">0文字</span>
 			</div>
-			<input class="margin" type="file" name="btn1" size="50" id=imgfile" value="画像選択">　　　　　　
+			<input class="margin" type="file" name="imgfile" size="50" id=imgfile" value="画像選択">　　　　　　
             <input class="margin" type="submit" name="btn1" id="toukou" value ="投稿する" onClick="newinsert('newinsert');">
             <input class="margin" type="button" name="btn1" value ="削除する" <% if (commentList == null) { out.print("disabled"); }%> onClick="update('update');">
             <input class="margin" type="hidden" name="actionId" value="">
@@ -228,11 +226,12 @@
 	            コメント入力欄<textarea class="margin" input type="text" onkeyup="ShowLength( 'nummoji' , value );"  id="text" name="text"  rows="4" cols="40"  placeholder="コメント記入欄"></textarea>
 				<span id="nummoji">0文字</span>
 			</div>
-			<input class="margin" type="file" name="btn1" id=imgfile" value="画像選択">
+			<input class="margin" type="file" name="imgfile" size="50" id=imgfile" value="画像選択">
 			<input class="margin" type="submit" name="btn1" value ="投稿する" onClick="newinsert('newinsert');">
             <input class="margin" type="button" name="btn1" value ="削除する" <% if (commentList == null) { out.print("disabled"); }%> onClick="update('update');">
             <input class="margin" type="hidden" name="actionId" value="">
             <input class="margin" type="hidden" name="Id" value="<%= Id %>">
+            <input class="margin" type="hidden" name="userId" value="<%= userId %>">
             <input class="margin" type="hidden" name="userName" value="<%= userName %>">
             <input class="margin" type="hidden" name="Name" value="<%= categoryName %>">
 			<% } %>

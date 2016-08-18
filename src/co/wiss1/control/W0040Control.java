@@ -82,20 +82,34 @@ import co.wiss1.model.W0040Model;
 
 				String userId = request.getParameter("userId");
 				String userName = request.getParameter("userName");
-				//byte型の初期化。今後View側で得た画像ファイルをここでInputStreamとかする
-				byte[] Img = new byte[1000];
-				//今は仮に1000Byte分の0Fillでテストする
-				Arrays.fill(Img, (byte)0);
-
-				//文字色指定。今はsessionに保存していないので仮に「１」とする
-				String ColorStr = "1";
-				//String ColorStr = session.getAttribute("font_color").toString();
-				int Color = Integer.parseInt(ColorStr);
+				String postName = request.getParameter("postName");
+				String blank = "";
+				String Name = userName;
 				System.out.println("W40C ユーザーIDは"+userId +"です" );
 				System.out.println("W40C ユーザー名は"+ userName +"です" );
-				System.out.println("W40C 色番号は"+ Color +"です" );
+				System.out.println("W40C 投稿者名は"+ postName +"です" );
 
-				int insertCount = W0040Model.insertCommentAddImg(comment,categoryId,userId,userName,Img,Color);
+				//byte型の初期化。今後View側で得た画像ファイルをここでInputStreamとかする
+				//今は仮に文字列をbyte[]に変換したものを利用
+				//FileInputStream→ByteArrayOutputStreamを利用
+				String str = comment;
+				byte[] Img = str.getBytes("UTF-8");
+				String result = new String(Img, "UTF-8");
+				System.out.println("W40C byte[]に入れたデータは[" + result + "]です");
+
+				//文字色指定
+				String ColorStr = session.getAttribute("font_color").toString();
+				System.out.println("W40C 色番号は"+ ColorStr +"です" );
+
+				//投稿者名変更
+				if(postName.equals(blank)){
+					Name = userName;
+				}else{
+					Name = postName;
+				}
+				System.out.println("W40C 表示される投稿名は"+ postName +"です" );
+
+				int insertCount = W0040Model.insertCommentAddImg(comment,categoryId,userId,Name,Img,ColorStr);
 				request.setAttribute("insertCount",insertCount);
 			}
 

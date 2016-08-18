@@ -34,10 +34,8 @@ public class W0050Model {
 			String check = "t";
 			if (admin.equals(check)){
 				sb.append("SELECT user_id, user_name, user_address, admin_flg FROM t_user_info WHERE delete_flg = 'FALSE' ORDER BY user_id");//sbの箱SELECT * FROM t_category WHERE delete_flg = 'FALSE' ORDER BY category_idにいれる
-
 			}else{
 				sb.append("SELECT user_id, user_name, user_address, admin_flg FROM t_user_info WHERE delete_flg = 'FALSE' and user_id = '" + Id + "' ORDER BY user_id ");//sbの箱SELECT * FROM t_category WHERE delete_flg = 'FALSE' ORDER BY category_idにいれる
-
 			}
 			// SQL文実行
 			System.out.println("W0050M ," + sb.toString());

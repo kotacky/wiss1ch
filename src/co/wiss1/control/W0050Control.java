@@ -19,18 +19,20 @@ import co.wiss1.model.W0050Model;
 public class W0050Control extends HttpServlet {
 	public void doPost(HttpServletRequest request, HttpServletResponse response)
 		throws IOException, ServletException {
-		System.out.println("doPost start");
+		System.out.println("W0050C doPost start");
 
 		  //sessionから取得したUserNameをNull対応
 		  HttpSession session = request.getSession(true);
 		  try{
 			  String user = session.getAttribute("userName").toString();
+			  String admin = session.getAttribute("adminFlg").toString();
+			  System.out.print("W0050C" );
 
 
 			  // アクションIDの取得
 			  String actionId = request.getParameter("actionId");
 			  String checkBox[] = request.getParameterValues("chkbox"); //Viewのchkboxの値を取得
-			  String Id = request.getParameter("userId");
+			  String Id = session.getAttribute("userId").toString();
 			  System.out.print("引数は"+Id );
 
 
@@ -53,7 +55,7 @@ public class W0050Control extends HttpServlet {
 			  }
 
 			// 初期表示 と削除後の再検索したユーザ一覧を取得
-			List<HashMap<String, String>> userList = W0050Model.getUserList();
+			List<HashMap<String, String>> userList = W0050Model.getUserList(admin,Id);
 //			System.out.println(userList());
 			// ユーザ一覧が空ではなく1件以上存在する場合、ユーザ一覧をセット
 			if (userList != null && 0 < userList.size()) {

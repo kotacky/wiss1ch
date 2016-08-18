@@ -12,14 +12,8 @@ import co.wiss1.common.DBAccessUtils;
 
 public class W0050Model {
 
-	public static void main (String args[]) {
-        List<HashMap<String, String>> userList = getUserList();//22行目に飛ぶ
-        for (HashMap<String, String> userInfo : userList) {
-            System.out.println("ユーザID:[" + userInfo.get("userId") + "] ユーザ名:[" + userInfo.get("userName") + "]");
-        }
-    }
-
-	public static List<HashMap<String, String>> getUserList() {
+	public static List<HashMap<String, String>> getUserList(String admin, String Id) {
+		System.out.println("W0050 getUserList ("+ admin +"," + Id + ")");
 
 		// ユーザ一覧を格納する箱
 		List<HashMap<String, String>> userList = new ArrayList<HashMap<String, String>>();
@@ -37,8 +31,16 @@ public class W0050Model {
 			statement = connection.createStatement();//SQLを
 			// SQL文作成
 			StringBuffer sb = new StringBuffer();//一時的に文字を保管する
-			sb.append("SELECT user_id, user_name, user_address, admin_flg FROM t_user_info WHERE delete_flg = 'FALSE' ORDER BY user_id");//sbの箱SELECT * FROM t_category WHERE delete_flg = 'FALSE' ORDER BY category_idにいれる
+			String check = "t";
+			if (admin.equals(check)){
+				sb.append("SELECT user_id, user_name, user_address, admin_flg FROM t_user_info WHERE delete_flg = 'FALSE' ORDER BY user_id");//sbの箱SELECT * FROM t_category WHERE delete_flg = 'FALSE' ORDER BY category_idにいれる
+
+			}else{
+				sb.append("SELECT user_id, user_name, user_address, admin_flg FROM t_user_info WHERE delete_flg = 'FALSE' and user_id = '" + Id + "' ORDER BY user_id ");//sbの箱SELECT * FROM t_category WHERE delete_flg = 'FALSE' ORDER BY category_idにいれる
+
+			}
 			// SQL文実行
+			System.out.println("W0050M ," + sb.toString());
 			resultSet = statement.executeQuery(sb.toString());//resultSet実行した結executeQuery＝要求をＳＱＬとしてＤＢに投げる
 			// 実行結果の取得・次の行を呼ぶ
 			while(resultSet.next()) {

@@ -12,7 +12,6 @@
 		<title>WISS1ch</title>
 
 		<script type="text/javascript" >
-		<div id="map" style="width: 330px; height: 100px;"></div>
 		function logOut(){
 			MyMessage = confirm("ログアウトします。よろしいですか？");
 			if ( MyMessage == true ){

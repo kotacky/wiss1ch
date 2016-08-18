@@ -25,7 +25,33 @@
 				}
 			}
 
-	    	//投稿(挿入)
+	    	//ポータル帰還
+			function go_portal(){
+				document.MyForm.action = "<%= request.getContextPath() %>/W0011Control"
+				document.MyForm.submit();
+			}
+
+	    	//投稿(挿入) 新版
+			function newinsert(command){
+				var l = document.MyForm.text.value.length;
+				//alert(l);
+				if(l <= 3){
+					alert("文字数が不足しています");
+				}else if (l<=200){
+					myRet = confirm("投稿しますか？");
+					if(myRet == true ){
+						document.MyForm.actionId.value = command;
+						document.MyForm.action = "<%= request.getContextPath() %>/W0040Control"
+						document.MyForm.submit();
+					}else if(myRet == false){
+						alert("キャンセルされました");
+					}
+				}else if (l > 200){
+					alert("200文字以内で入力してください");
+				}
+			}
+
+	    	//投稿(挿入) 旧版
 			function insert(command){
 				var l = document.MyForm.text.value.length;
 				//alert(l);
@@ -106,10 +132,12 @@
 			<% String sessionflag = session.getAttribute("adminFlg").toString();%>
 			<% String userId = session.getAttribute("userId").toString();%>
 			<% String userName = session.getAttribute("userName").toString();%>
+			<% String user_font_color = session.getAttribute("font_color").toString();%>
             <% String chk1 = null ;%>
             <% String chk2 = "t";%>
             <% String Id; %>
             <% Id = request.getAttribute("Id").toString(); %>
+    		<% out.print(user_font_color); %>
 
 
             <%  List<HashMap<String,String>> commentList = (List<HashMap<String,String>>)request.getAttribute("commentList"); %>
@@ -119,7 +147,7 @@
 
 				<CENTER>
             		<h1>
-   		    			<img src="<%= request.getContextPath() %>/view/img/wiss1ch.png">
+   		    			<a href="#"  onclick=go_portal();><img src="<%= request.getContextPath() %>/view/img/wiss1ch.png"></a>
     				</h1>
             		<%-- コメントの表示--%>
 					<table style="">
@@ -134,6 +162,7 @@
                                 String commentUserId = commentInfo.get("userId");
                                 String UserName = commentInfo.get("userName");
                                 String good_count = commentInfo.get("good_count");
+                                String post_font_color = commentInfo.get("font_color");
 							//Create_Dateを取得してPostDateへ
                                 String PostTime = commentInfo.get("PostTime");
 							//PostDateはミリ秒まで表示しているのでトリミング、ハイフンをスラッシュへ
@@ -160,24 +189,24 @@
 												ユーザ名  <% out.print(UserName); %>
 											</div>
 											<div style="text-align : left">
-												<FONT size="4"><% out.print(OutputComment);%></FONT>
+												<FONT size="4" color="<%out.print(post_font_color);%>"><% out.print(OutputComment);%></FONT>
 											</div>
 											<div style="text-align : right">
-													<input type="submit" name="commentBtn" value="ｲｲﾈ!" onClick="good(<%=commentId%>);">
-													<% out.print(good_count); %>
-													<input type="submit" name="deleteBtn" value="削除" onClick="soloupdate(<%=commentId%>);">
+
+												<input type="submit" name="commentBtn" value="ｲｲﾈ!" onClick="good(<%=commentId%>);">
+												<% out.print(good_count); %>　　
+												<input type="submit" name="deleteBtn" value="削除" onClick="soloupdate(<%=commentId%>);">
 											</div>
 										</th>
 										<br>
 									</tr>
 								</table>
+             					</div>
                             <% } %>
                         <% } %>
-             	</div>
-             	<br>
 			<P class="margin">投稿可能文字数は 4文字以上、200文字までです。
 			<div>
-				投稿者名<input type="text" id="postname" name="postname" size="20"></input>　　　　　　　　　　　　　　　
+				投稿者名<input type="text" id="postName" name="postName" size="20"></input>　　　　　　　　　　　　　　　
 			</div>
 			<div>
 				<%--何故か非初回投稿だけテキストボックスに改行コードが入っていたのを修正 --%>
@@ -185,7 +214,7 @@
 				<span id="nummoji">0文字</span>
 			</div>
 			<input class="margin" type="file" name="btn1" size="50" id=imgfile" value="画像選択">　　　　　　
-            <input class="margin" type="submit" name="btn1" id="toukou" value ="投稿する" onClick="insert('insert');">
+            <input class="margin" type="submit" name="btn1" id="toukou" value ="投稿する" onClick="newinsert('newinsert');">
             <input class="margin" type="button" name="btn1" value ="削除する" <% if (commentList == null) { out.print("disabled"); }%> onClick="update('update');">
             <input class="margin" type="hidden" name="actionId" value="">
             <input class="margin" type="hidden" name="Id" value="<%= Id %>">
@@ -200,7 +229,7 @@
 				<span id="nummoji">0文字</span>
 			</div>
 			<input class="margin" type="file" name="btn1" id=imgfile" value="画像選択">
-			<input class="margin" type="submit" name="btn1" value ="投稿する" onClick="insert('insert');">
+			<input class="margin" type="submit" name="btn1" value ="投稿する" onClick="newinsert('newinsert');">
             <input class="margin" type="button" name="btn1" value ="削除する" <% if (commentList == null) { out.print("disabled"); }%> onClick="update('update');">
             <input class="margin" type="hidden" name="actionId" value="">
             <input class="margin" type="hidden" name="Id" value="<%= Id %>">

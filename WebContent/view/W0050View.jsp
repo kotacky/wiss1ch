@@ -21,6 +21,11 @@
 				return;
 			}
          }
+
+		function user_Regist(){
+			document.MyForm.action = "<%= request.getContextPath() %>/W0060Control"
+			document.MyForm.submit();
+		}
 		 function deletes(Command){
 				// チェックボックス要素をすべて取得する
 				var boxes = document.getElementsByName("chkbox");
@@ -45,11 +50,6 @@
 					 alert("チェックボックスが未入力です。");
 				  }
 			     }
-
-			  function Regist(){
-				  document.MyForm.action = "<%= request.getContextPath() %>/view/W0050View.jsp"
-				  document.MyForm.submit();
-			  }
 			 <%--
 			 function move(Command){
 
@@ -60,18 +60,6 @@
 				  document.MyForm.submit();
 			  }
 			--%>
-			var map;
-			function initialize() {
-			    var mapOptions = {
-			        zoom: 15,
-			        center: new google.maps.LatLng(35.710285, 139.77714)
-			    };
-			    map = new google.maps.Map(document.getElementById('map'),
-			    mapOptions);
-			}
-
-			google.maps.event.addDomListener(window, 'load', initialize);
-
 		</script>
 	</head>
 
@@ -167,7 +155,7 @@
 							</tr>
 				</table>
 				<P>
-				<input type="button"  <%=chk1 %> value="ユーザ登録" onClick="Regist();" >
+				<input type="button"  value="ユーザ登録" onClick=user_Regist();></td>
 				<input type="button"  <%=chk1 %> value="ユーザ削除" onClick="deletes('Update');">
 				<input type="hidden" name="actionId" value="">
 				<input type="hidden" name="Id" value="">

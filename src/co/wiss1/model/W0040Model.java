@@ -1,6 +1,10 @@
 package co.wiss1.model;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -32,8 +36,7 @@ public class W0040Model {
 			// SQL文作成
 				StringBuffer sb = new StringBuffer();
 				//コメント、投稿者名、コメントID、ユーザID、カテゴリ名、いいね数[、画像バイナリ]
-				sb.append("SELECT p.post, p.user_name, p.post_id, p.user_id, p.create_date, c.category_name, p.good_count, p.font_color "
-						// + ", p.img_bin"
+				sb.append("SELECT p.post, p.user_name, p.post_id, p.user_id, p.create_date, c.category_name, p.good_count, p.font_color, p.img_bin "
 						+ "FROM t_post p LEFT OUTER JOIN t_category c "
 						+ "ON c.category_id = p.category_id "
 						+ "WHERE p.category_id = '"+ Id +"' AND p.delete_flg = 'f' "
@@ -42,9 +45,8 @@ public class W0040Model {
 			// SQL文実行
 				resultSet = statement.executeQuery(sb.toString());
 
-
 				String color;
-				String colorcode = "#000000";
+				String colorcode = null;
 			// 実行結果の取得
 			while(resultSet.next()) {
 				//Idはpost_idを獲得
@@ -57,10 +59,34 @@ public class W0040Model {
 				commentInfo.put("comment", resultSet.getString("post"));
 				commentInfo.put("Id", resultSet.getString("post_id"));
 				commentInfo.put("userId", resultSet.getString("user_id"));
-				//commentInfo.put("img_bin", resultSet.getString("img_bin"));
 				commentInfo.put("good_count", resultSet.getString("good_count"));
-				//文字色の実装
 
+				//画像のチェック
+		        InputStream in = null;
+		        ByteArrayOutputStream baos = null;
+		        byte[] buf = new byte[65536];
+		        int size;
+		        try {
+		        	//InputStreamにはsizeが無いので一度ByteArrayOutputStreamへ
+		        	baos = new ByteArrayOutputStream();
+		        	in = resultSet.getBinaryStream("img_bin");
+		        	while((size = in.read(buf, 0, buf.length)) != -1) {
+		        		baos.write(buf, 0, size);
+		        	}
+					byte[] bytedata = new byte[(int) baos.size()];
+		        	in.read(bytedata, 0, bytedata.length); 		// に、入力する
+		        	System.out.println("W40C inputstream:size["+ bytedata.length +"]");
+		        } catch ( IOException e) {
+		        }finally {
+		        	try {
+		        		in.close();
+		        		baos.close();
+		        	} catch( IOException e){
+		        	} finally {
+		        	}
+		        }
+
+				//文字色の実装
 				color = resultSet.getString("font_color");
 				System.out.println(color);
 
@@ -251,7 +277,7 @@ public class W0040Model {
 
 
 	//コメント投稿(旧)
-	public static int insertComment(String comment, String categoryId,String userId,String userName) {
+	public static int insertComment(String comment, String categoryId,String userId,String userName, String color) {
 		Connection connection = null;
 		Statement statement = null;
 		int insertCount = 0;
@@ -265,8 +291,8 @@ public class W0040Model {
 	        //自動コミットを有効にする
 	        connection.setAutoCommit(true);
 	        //コメントの追加
-	        String insertSql = "INSERT INTO t_post(post,category_id,user_name,delete_flg,user_id,create_date,create_user,update_date,update_user)"
-	        		+ " VALUES('" + comment + "','"+ categoryId +"','"+ userName +"',FALSE,'"+ userId +"',current_timestamp,'"+ userId +"',current_timestamp,'"+ userId +"')";
+	        String insertSql = "INSERT INTO t_post(post,category_id,user_name,delete_flg,user_id,create_date,create_user,update_date,update_user,font_color)"
+	        		+ " VALUES('" + comment + "','"+ categoryId +"','"+ userName +"',FALSE,'"+ userId +"',current_timestamp,'"+ userId +"',current_timestamp,'"+ userId +"','"+ color + "')";
 	        System.out.println("W0040M : INSERT");
 	        insertCount = statement.executeUpdate(insertSql);
 
@@ -313,7 +339,11 @@ public class W0040Model {
 			String insertSql = "INSERT INTO t_post(post,category_id,user_name,delete_flg,user_id,create_date,create_user,update_date,update_user,img_bin,font_color)"
 					+ " VALUES('" + comment + "','"+ categoryId +"','"+ userName +"',FALSE,'"+ userId +"',current_timestamp,'"+ userId +"',current_timestamp,'"+ userId +"','" + Img + "'::bytea," + color + ")" ;
 			System.out.println("insertCommentAddImgSQL: " + insertSql);
-
+/*
+			PreparedStatement ps = conn.prepareStatement("INSERT INTO images VALUES (?, ?)");
+			ps.setString(1, "ファイル名");
+			ps.setBinaryStream(2, "inpustream", "ファイルの長さ");
+*/
 			//SQLの実行
 			insertCount = statement.executeUpdate(insertSql);
 

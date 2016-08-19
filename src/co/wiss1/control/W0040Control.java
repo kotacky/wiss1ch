@@ -4,7 +4,7 @@ import java.awt.image.BufferedImage;
 import java.io.BufferedOutputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
+import java.io.InputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -72,19 +72,21 @@ import co.wiss1.model.W0040Model;
 			}
 
 
-			// 既存登録
+			// コメント登録(旧版)
 			if ("insert".equals(actionId)) {
 				System.out.println("W40C insertします。");
 
 				String userId = request.getParameter("userId");
 				String userName = request.getParameter("userName");
+				//文字色指定(sessionから取得)
+				String ColorStr = session.getAttribute("font_color").toString();
 				System.out.println("W40C ユーザーIDは"+userId +"です" );
 				System.out.println("W40C ユーザー名は"+ userName +"です" );
+				System.out.println("W40C 色番号は"+ ColorStr +"です" );
 
-				int insertCount = W0040Model.insertComment(comment,categoryId,userId,userName);
+				int insertCount = W0040Model.insertComment(comment,categoryId,userId,userName,ColorStr);
 				request.setAttribute("insertCount",insertCount);
 			}
-
 
 			// 新版コメント登録
 			if ("newinsert".equals(actionId)) {
@@ -96,24 +98,6 @@ import co.wiss1.model.W0040Model;
 				System.out.println("W40C ユーザーIDは"+userId +"です" );
 				System.out.println("W40C ユーザー名は"+ userName +"です" );
 				System.out.println("W40C 投稿者名は"+ postName +"です" );
-
-		        // <INPUT type="file" name="imgfile"> で指定したものを取得
-				final String files = "imgfile";
-		        Part part = request.getPart(files);
-
-				//byte型の初期化。View側で得た画像ファイルを入れられれば
-				//String byteInputStr = part.toString();		//なんか違う
-				String byteInputStr = postName;
-				byte[] ImgByte = byteInputStr.getBytes("UTF-8");
-
-				//byte[] partstr = part.getContent();
-		        SimpleDateFormat datetime = new SimpleDateFormat("yyyyMMddHHmmss");
-		        String upfilename = "upload" + datetime.toString();
-				System.out.println("W40C up-file-name[" + upfilename + "]");
-		        part.write("upfilename");
-
-				//String partstr = part.toString();
-				//System.out.println("W40C strデータは[" + partstr + "]です");
 
 				//文字色指定(sessionから取得)
 				String ColorStr = session.getAttribute("font_color").toString();
@@ -131,8 +115,50 @@ import co.wiss1.model.W0040Model;
 				}
 				System.out.println("W40C 表示される投稿名は"+ Name +"です" );
 
-				int insertCount = W0040Model.insertCommentAddImg(comment,categoryId,userId,Name,ImgByte,ColorStr);
-				request.setAttribute("insertCount",insertCount);
+
+		        // <INPUT type="file" name="imgfile"> で指定したものを取得
+				final String files = "imgfile";
+		        Part part = request.getPart(files);
+
+		        byte[] data = new byte[(int) part.getSize()];   // byte配列を作成
+		        InputStream in = null;
+		        try {
+		        	in = part.getInputStream(); // ストリームからbyte配列
+		        	in.read(data, 0, data.length); 		// に、入力する
+		        	System.out.println("W40C inputstream:data[" + data + "]");
+
+		        	String result = new String(data, "UTF-8");
+		        	System.out.println("W40C result: " + result);
+
+		        	//16進数でデータを表示
+		        	System.out.println("W40C HEXDATA:");
+		        	int i;
+		        	for(i=0; i<data.length; i++){
+		        		System.out.print(Integer.toHexString(data[i]));
+		        	}
+		        	System.out.println("\nW40C HEXDATA:");
+
+		        	//byte型の初期化。View側で得た画像ファイルを入れられれば
+		        	//String byteInputStr = part.toString();		//なんか違う
+		        	//String byteInputStr = postName;
+		        	//byte[] ImgByte = byteInputStr.getBytes("UTF-8");
+
+		        	//byte[] partstr = part.getContent();
+		        	//SimpleDateFormat datetime = new SimpleDateFormat("yyyyMMddHHmmss");
+		        	//String upfilename = "upload" + datetime.toString();
+		        	//System.out.println("W40C up-file-name[" + upfilename + "]");
+		        	//part.write("upfilename");
+
+		        	//String partstr = part.toString();
+		        	//System.out.println("W40C strデータは[" + partstr + "]です");
+
+		        } catch (IOException ex) {
+		        	int insertCount = W0040Model.insertComment(comment, categoryId, userId, Name, ColorStr);
+		        } finally{
+		        	in.close();
+		        }
+		        int insertCount = W0040Model.insertCommentAddImg(comment,categoryId,userId,Name,data,ColorStr);
+		        request.setAttribute("insertCount",insertCount);
 			}
 
 			// コメントの単独削除

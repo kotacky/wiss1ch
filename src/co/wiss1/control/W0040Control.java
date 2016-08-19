@@ -1,24 +1,33 @@
 package co.wiss1.control;
 
+import java.awt.image.BufferedImage;
+import java.io.BufferedOutputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
-import javax.servlet.http.Part;
+import java.text.SimpleDateFormat;
 
+import javax.imageio.ImageIO;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.servlet.http.Part;
 
 import co.wiss1.model.W0040Model;
 
 // WebServlet
 @WebServlet("/W0040Control")
+@MultipartConfig(location="")
 	public class W0040Control extends HttpServlet {
 	public void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException {
@@ -84,37 +93,45 @@ import co.wiss1.model.W0040Model;
 				String userId = request.getParameter("userId");
 				String userName = request.getParameter("userName");
 				String postName = request.getParameter("postName");
-
-		        // <INPUT type="file" name="imgfile"> で指定したものを取得
-		        //Part part = request.getPart("imgfile");
-
-		        String blank = "";
-				String Name = userName;
 				System.out.println("W40C ユーザーIDは"+userId +"です" );
 				System.out.println("W40C ユーザー名は"+ userName +"です" );
 				System.out.println("W40C 投稿者名は"+ postName +"です" );
 
-				//byte型の初期化。今後View側で得た画像ファイルをここでInputStreamとかする
-				//今は仮に文字列をbyte[]に変換したものを利用
-				String str = comment;
-				//String str = part.toString();		//明らかにおかしい気がする
-				byte[] Img = str.getBytes("UTF-8");
-				String result = new String(Img, "UTF-8");
-				System.out.println("W40C byte[]に入れたデータは[" + result + "]です");
+		        // <INPUT type="file" name="imgfile"> で指定したものを取得
+				final String files = "imgfile";
+		        Part part = request.getPart(files);
 
-				//文字色指定
+				//byte型の初期化。View側で得た画像ファイルを入れられれば
+				//String byteInputStr = part.toString();		//なんか違う
+				String byteInputStr = postName;
+				byte[] ImgByte = byteInputStr.getBytes("UTF-8");
+
+				//byte[] partstr = part.getContent();
+		        SimpleDateFormat datetime = new SimpleDateFormat("yyyyMMddHHmmss");
+		        String upfilename = "upload" + datetime.toString();
+				System.out.println("W40C up-file-name[" + upfilename + "]");
+		        part.write("upfilename");
+
+				//String partstr = part.toString();
+				//System.out.println("W40C strデータは[" + partstr + "]です");
+
+				//文字色指定(sessionから取得)
 				String ColorStr = session.getAttribute("font_color").toString();
 				System.out.println("W40C 色番号は"+ ColorStr +"です" );
-
 				//投稿者名変更
+				//Name:投稿される名前
+				//blank:比較用空文字列
+				//Name:Modelに渡す投稿者名
+		        String blank = "";
+				String Name;
 				if(postName.equals(blank)){
 					Name = userName;
 				}else{
 					Name = postName;
 				}
-				System.out.println("W40C 表示される投稿名は"+ postName +"です" );
+				System.out.println("W40C 表示される投稿名は"+ Name +"です" );
 
-				int insertCount = W0040Model.insertCommentAddImg(comment,categoryId,userId,Name,Img,ColorStr);
+				int insertCount = W0040Model.insertCommentAddImg(comment,categoryId,userId,Name,ImgByte,ColorStr);
 				request.setAttribute("insertCount",insertCount);
 			}
 

@@ -32,11 +32,11 @@ public class W0040Model {
 			// SQL文作成
 				StringBuffer sb = new StringBuffer();
 				//コメント、投稿者名、コメントID、ユーザID、カテゴリ名、いいね数[、画像バイナリ]
-				sb.append("SELECT p.post,p.user_name,p.post_id,p.user_id,p.create_date,c.category_name, p.good_count, p.font_color "
+				sb.append("SELECT p.post, p.user_name, p.post_id, p.user_id, p.create_date, c.category_name, p.good_count, p.font_color "
 						// + ", p.img_bin"
 						+ "FROM t_post p LEFT OUTER JOIN t_category c "
 						+ "ON c.category_id = p.category_id "
-						+ "WHERE p.category_id = '"+ Id +"' AND p.delete_flg = 'f'"
+						+ "WHERE p.category_id = '"+ Id +"' AND p.delete_flg = 'f' "
 						+ "ORDER BY p.post_id	");
 				System.out.println("W0040M getCommentList:" + sb.toString());
 			// SQL文実行

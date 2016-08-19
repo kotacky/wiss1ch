@@ -121,7 +121,7 @@
 		</script>
 	</head>
     <body>
-        <form name="MyForm" method="POST" action="#">
+        <form name="MyForm" enctype="multipart/form-data" method="POST" action="#">
 			<input type="hidden" name="commentId">
             <div align="right">
             <% out.print(session.getAttribute("userName")); %>
@@ -182,7 +182,7 @@
 											<div style="text-align : left">
 												<input type="checkbox"  <%=chk1 %> name="chkbox" style="width:17px;height:17px;" value="<%= commentId %>"onClick="chk();">
 												<span style="margin-right: 1em;"></span>
-												投稿時間: <%out.print(OutputPostTime); %>
+												投稿時間: <% out.print(OutputPostTime); %>
 												<span style="margin-right: 3em;"></span>
 												ユーザ名  <% out.print(UserName); %>
 											</div>
@@ -211,7 +211,7 @@
 	            コメント入力欄<textarea class="margin" input type="text" onkeyup="ShowLength( 'nummoji' , value );"  id="text" name="text"  rows="4" cols="40"  placeholder="コメント記入欄"></textarea>
 				<span id="nummoji">0文字</span>
 			</div>
-			<input class="margin" type="file" name="imgfile" size="50" id=imgfile" value="画像選択">　　　　　　
+			<input class="margin" type="file" name="imgfile" accept='image/*' size="50" id=imgfile" value="画像選択">　　　　　　
             <input class="margin" type="submit" name="btn1" id="toukou" value ="投稿する" onClick="newinsert('newinsert');">
             <input class="margin" type="button" name="btn1" value ="削除する" <% if (commentList == null) { out.print("disabled"); }%> onClick="update('update');">
             <input class="margin" type="hidden" name="actionId" value="">
@@ -226,7 +226,7 @@
 	            コメント入力欄<textarea class="margin" input type="text" onkeyup="ShowLength( 'nummoji' , value );"  id="text" name="text"  rows="4" cols="40"  placeholder="コメント記入欄"></textarea>
 				<span id="nummoji">0文字</span>
 			</div>
-			<input class="margin" type="file" name="imgfile" size="50" id=imgfile" value="画像選択">
+			<input class="margin" type="file" name="imgfile" accept='image/*' size="50" id=imgfile" value="画像選択">
 			<input class="margin" type="submit" name="btn1" value ="投稿する" onClick="newinsert('newinsert');">
             <input class="margin" type="button" name="btn1" value ="削除する" <% if (commentList == null) { out.print("disabled"); }%> onClick="update('update');">
             <input class="margin" type="hidden" name="actionId" value="">

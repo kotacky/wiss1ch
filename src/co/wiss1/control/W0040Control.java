@@ -122,6 +122,7 @@ import co.wiss1.model.W0040Model;
 
 		        byte[] data = new byte[(int) part.getSize()];   // byte配列を作成
 		        InputStream in = null;
+		        int insertCount = 0;
 		        try {
 		        	in = part.getInputStream(); // ストリームからbyte配列
 		        	in.read(data, 0, data.length); 		// に、入力する
@@ -153,12 +154,11 @@ import co.wiss1.model.W0040Model;
 		        	//System.out.println("W40C strデータは[" + partstr + "]です");
 
 		        } catch (IOException ex) {
-		        	int insertCount = W0040Model.insertComment(comment, categoryId, userId, Name, ColorStr);
 		        } finally{
-		        	in.close();
 		        }
-		        int insertCount = W0040Model.insertCommentAddImg(comment,categoryId,userId,Name,data,ColorStr);
+		        insertCount = W0040Model.insertCommentAddImg(comment, categoryId, userId, Name, in, data.length, ColorStr);
 		        request.setAttribute("insertCount",insertCount);
+		        in.close();
 			}
 
 			// コメントの単独削除

@@ -1,18 +1,11 @@
 package co.wiss1.control;
 
-import java.awt.image.BufferedImage;
-import java.io.BufferedOutputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.InputStream;
+import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
-import java.text.SimpleDateFormat;
 
-import javax.imageio.ImageIO;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -142,7 +135,7 @@ import co.wiss1.model.W0040Model;
 		        } catch (IOException ex) {
 		        } finally{
 		        }
-		        insertCount = W0040Model.insertCommentAddImg(comment, categoryId, userId, Name, data, data.length, ColorStr);
+		        insertCount = W0040Model.insertCommentAddImg(comment, categoryId, userId, Name, data, ColorStr);
 		        request.setAttribute("insertCount",insertCount);
 		        in.close();
 			}
@@ -178,8 +171,10 @@ import co.wiss1.model.W0040Model;
 
 			// 初期表示
 			List<HashMap<String, String>> commentList = W0040Model.getCommentList(categoryId);
+			List<HashMap<String, BufferedImage>> ImgList = W0040Model.getImgList(categoryId);
 			if (commentList != null && 0 < commentList.size()) {
 				request.setAttribute("commentList", commentList);
+				request.setAttribute("ImgList", ImgList);
 			}
 			RequestDispatcher dispatch =getServletContext().getRequestDispatcher("/view/W0040View.jsp");
 		    dispatch.forward(request, response);

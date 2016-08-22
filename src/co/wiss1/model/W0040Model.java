@@ -1,8 +1,8 @@
 package co.wiss1.model;
 
-import java.io.ByteArrayOutputStream;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -11,6 +11,8 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
+import javax.imageio.ImageIO;
 
 import co.wiss1.common.DBAccessUtils;
 
@@ -36,7 +38,7 @@ public class W0040Model {
 			// SQL文作成
 				StringBuffer sb = new StringBuffer();
 				//コメント、投稿者名、コメントID、ユーザID、カテゴリ名、いいね数、画像バイナリ
-				sb.append("SELECT p.post, p.user_name, p.post_id, p.user_id, p.create_date, c.category_name, p.good_count, p.font_color, p.img_bin "
+				sb.append("SELECT p.post, p.user_name, p.post_id, p.user_id, p.create_date, c.category_name, p.good_count, p.font_color "
 						+ "FROM t_post p LEFT OUTER JOIN t_category c "
 						+ "ON c.category_id = p.category_id "
 						+ "WHERE p.category_id = '"+ Id +"' AND p.delete_flg = 'f' "
@@ -60,11 +62,6 @@ public class W0040Model {
 				commentInfo.put("Id", resultSet.getString("post_id"));
 				commentInfo.put("userId", resultSet.getString("user_id"));
 				commentInfo.put("good_count", resultSet.getString("good_count"));
-
-				//画像のチェック
-		        byte[] Imgbyte = resultSet.getBytes("img_bin");
-
-		        												//ここまで通った
 
 				//文字色の実装
 				color = resultSet.getString("font_color");
@@ -139,6 +136,71 @@ public class W0040Model {
 		return commentList;
 	}
 
+	//画像データ一覧の取得
+	public static List<HashMap<String, BufferedImage>> getImgList(String Id) {
+		// 画像一覧を格納する二次元文字列配列
+			List<HashMap<String, BufferedImage>> ImgList = new ArrayList<HashMap<String, BufferedImage>>();
+		// SQL実行結果格納用Set
+			ResultSet resultSet = null;
+		// DB接続コネクション
+			Connection connection = null;
+		// SQLステートメント
+			Statement statement = null;
+
+		try {
+			// DB接続
+				connection = DBAccessUtils.getConnection();
+			// SQL実行準備
+				statement = connection.createStatement();
+			// SQL文作成
+				StringBuffer sb = new StringBuffer();
+				//画像バイナリだけ
+				sb.append("SELECT p.img_bin "
+						+ "FROM t_post p LEFT OUTER JOIN t_category c "
+						+ "ON c.category_id = p.category_id "
+						+ "WHERE p.category_id = '"+ Id +"' AND p.delete_flg = 'f' "
+						+ "ORDER BY p.post_id	");
+				System.out.println("W0040M getImgList:" + sb.toString());
+			// SQL文実行
+				resultSet = statement.executeQuery(sb.toString());
+
+				String color;
+				String colorcode = null;
+			// 実行結果の取得
+			while(resultSet.next()) {
+				//Idはpost_idを獲得
+				HashMap<String, BufferedImage> ImgInfo = new HashMap<String, BufferedImage>();
+
+				//画像の取得とImgInfoへのput
+		        byte[] Imgbyte = resultSet.getBytes("img_bin");
+		        BufferedImage bimg = ImageIO.read(new ByteArrayInputStream(Imgbyte));
+		        ImgInfo.put("Imgbyte", bimg);
+				System.out.println("W0040M getImgSize:" + Imgbyte.length);
+
+		        //イメージリストにイメージインフォを送る
+				ImgList.add(ImgInfo);
+			}
+		} catch (SQLException e) {
+			System.out.println("リスト取得SQL実行処理失敗!!");
+			e.printStackTrace();
+		} catch (IOException e){
+			System.out.println("ImageIOエラー発生");
+			e.printStackTrace();
+		} finally {
+			try {
+				// もろもろクローズ処理
+				resultSet.close();
+				statement.close();
+				connection.close();
+			} catch (Exception e) {
+
+				System.err.println("クローズ処理失敗!!");
+				e.printStackTrace ();
+			}
+		}
+		//作ったコメントリストを返す
+		return ImgList;
+	}
 
 	//いいね
 	public static int goodComment(String CommentId, String userId) {
@@ -300,7 +362,7 @@ public class W0040Model {
 
 
 	//コメント投稿(新) 必要データ：コメント、カテID、ユーザID、ユーザ名、色情報[イメージバイナリは後で]
-	public static int insertCommentAddImg(String comment, String categoryId, String userId, String userName, byte[] Img, int length, String color) {
+	public static int insertCommentAddImg(String comment, String categoryId, String userId, String userName, byte[] Img, String color) {
 
 		Connection connection = null;
 		Statement statement = null;
@@ -327,8 +389,6 @@ public class W0040Model {
 			//パラメタ付SQL文の作成
 			PreparedStatement ps = connection.prepareStatement(insertSql + ",img_bin" + insertSqlEnd + insertValues + ", ?" + insertSqlEnd);
 			ps.setBytes(1, Img);
-			//添付されるバイナリ列の長さを表示
-			System.out.println("insertCommentAddImg:"+ length );
 
 			//SQLの実行
 			insertCount = ps.executeUpdate();

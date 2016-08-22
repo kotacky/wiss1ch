@@ -7,34 +7,25 @@
 	<link href="<%= request.getContextPath() %>/view/css/W0060.css" rel="stylesheet" type="text/css" />
 	<title>WISS1ch</title>
 	<script type="text/javascript">
-	<%
+
 	//リクエストパラメータの文字コードを指定
-	request.setCharacterEncoding("UTF-8");
-
-	//リクエストパラメータの取得
-	String regflg = request.getParameter("regflg"); //登録ボタン押下時  =1  違うときは　=0;
-	%>
-		function handan(regflg){
-        if(regflg == 1){
-            document.getElementById("regflg").innerHTML = "FALSE";
-         } else {
-            document.getElementById("regflg").innerHTML = "TRUE";
-         }
-       }
-           function logOut(){
-        	   MyMessage = confirm("ログアウトします。よろしいですか？");
-        	       if ( MyMessage == true ){
-        	    	 document.MyForm.action = "<%= request.getContextPath() %>/W0000Control"
-        	         document.MyForm.submit();
-        	      }else{
-      				return;
-      			       }
-                            }
-
-			function Registration(){
-					  document.MyForm.action = "<%= request.getContextPath() %>/view/W0060Control.java"
-					  document.MyForm.submit();
+		request.setCharacterEncoding("UTF-8");
+		function logOut(){
+			MyMessage = confirm("ログアウトします。よろしいですか？");
+			if ( MyMessage == true ){
+				document.MyForm.action = "<%= request.getContextPath() %>/W0000Control"
+				document.MyForm.submit();
+			}else{
+				return;
 			}
+         }
+
+		function Registration(){
+			alert('追加します。');
+			document.MyForm.actionId.value = 'Registration';
+			document.MyForm.action = "<%= request.getContextPath() %>/W0060Control"
+			document.MyForm.submit();
+		}
 
        </script>
  	 </head>
@@ -56,23 +47,23 @@
 
 					<tr>
 						<td>ユーザーID(半角英数字)：</td>
-						<td><input required pattern=^[0-9A-Za-z]+$ type=text name=user_IDsize=20 disabled="regflg"  maxlength=></td>
+						<td><input required pattern="^[0-9A-Za-z]+$" type="text" name="userId" size="20"   maxlength="10"></td>
 					</tr>
 					<tr>
 						<td>ユーザー名(全角文字)：</td>
-						<td><input required pattern=[^\x20-\x7E]* type=text name=User_name size=20 maxlength=10></td>
+						<td><input required pattern="[^\x20-\x7E]*" type="text" name="userName" size="20" maxlength="10"></td>
 					</tr>
 					<tr>
 						<td>住所：</td>
-						<td><textarea required name=User_address cols=30 rows=3></textarea></td>
+						<td><textarea required name="userAddress" cols="30" rows="3"></textarea></td>
 					</tr>
 					<tr>
 						<td>パスワード(半角文字　8字以上)：</td>
-						<td><input required pattern=^([a-zA-Z0-9]{8,})$ type=password name=pass_word size=20 maxlength=40></td>
+						<td><input required pattern="^([a-zA-Z0-9]{8,})$" type="password" name="passWord" size="20" maxlength="40"></td>
 					</tr>
 					<tr>
 						<td>確認用パスワード(半角文字　8字以上)：</td>
-						<td><input required pattern=^([a-zA-Z0-9]{8,})$ type=password name=confirmtion_password size=20 maxlength=40></td>
+						<td><input required pattern="^([a-zA-Z0-9]{8,})$" type="password" name="conPassword" size="20" maxlength="40"></td>
 					</tr>
 					<tr>
 						<td>文字色：</td>
@@ -94,7 +85,9 @@
 						</td>
 					</tr>
 				</table> <br></br>　
-						<input type="button" value="登録"　onclick="Registration();">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button type="reset">キャンセル</button>
+						<input type="submit" value="登録" onClick="Registration();">
+						<input type="reset" value="キャンセル">
+						<input type = "hidden" name = "actionId" value = "">
 			</CENTER>
 	</form>
 	</body>

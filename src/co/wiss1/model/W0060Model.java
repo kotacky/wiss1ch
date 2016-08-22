@@ -12,60 +12,11 @@ import co.wiss1.common.DBAccessUtils;
 
 public class W0060Model {
 
-	public static void main(String args[]){
-	                   					  }
+	public static List<HashMap<String, String>> getUserList(String userId) {
+		System.out.println("W0060 getUserList (" + userId + ")");
 
-
-	//登録時　入力された新規ユーザーの情報をDBへ登録
-	public static int insertCount(String logined_user_Id, String user_Id, String User_name,String pass_word,String User_address) {
-
-        //初期化
-
-        // DB接続コネクション
-		Connection connection = null;
-		// SQLステートメント
-		Statement statement = null;
-
-		int insertCount = 0;
-
-		try {
-			// テーブル照会実行
-		    connection = DBAccessUtils.getConnection();//ＤＢに接続
-		    statement = connection.createStatement();//ＳＱＬ文をＤＢに送信
-
-		    //自動コミットを有効にする
-		    connection.setAutoCommit(true);
-
-		    System.out.println(user_Id + "でログインしています");
-
-		    //ユーザー情報の追加
-		    String insertSql = "INSERT INTO t_user_info (user_name,user_id,password,user_address,create_date,create_user,update_date,update_user)"
-		    		+ " VALUES (('" + User_name + "'),('" + user_Id +"'),('" + pass_word + "'),('" + User_address + "'),current_timestamp,('" + logined_user_Id + "'),current_timestamp,('" + logined_user_Id +"'))";
-		    System.out.println("W0060M :" + insertSql );
-
-		    insertCount = statement.executeUpdate(insertSql);
-		    System.out.println(insertCount + " 行挿入しました。");
-		}catch (SQLException e) {
-			System.err.println("追加SQL failed.");
-			e.printStackTrace ();
-		}finally {
-			//データベースのクローズ
-			try {
-				statement.close();
-				connection.close();
-			}catch (Exception e){
-				System.out.println("Close failed.");
-			}
-			System.out.println("一覧取得処理終了");
-		}
-		return insertCount;
-	}
-
-    //ユーザー変更時の処理 IDからユーザー情報（ID、名前、住所、文字色）取得
-	public static List<HashMap<String, String>> getuserinfo(String user_Id) {
-		System.out.println("ユーザーIDは" +user_Id + "になります!!");
-		// コメント一覧を格納する箱
-		List<HashMap<String, String>> getuserinfolist = new ArrayList<HashMap<String, String>>();
+		// ユーザ一覧を格納する箱
+		List<HashMap<String, String>> userList = new ArrayList<HashMap<String, String>>();
 		// SQL実行結果格納用Set
 		ResultSet resultSet = null;
 		// DB接続コネクション
@@ -75,91 +26,85 @@ public class W0060Model {
 
 		try {
 			// DB接続
-			connection = DBAccessUtils.getConnection();
+			connection = DBAccessUtils.getConnection();//DB接続申請
 			// SQL実行準備
-			statement = connection.createStatement();
+			statement = connection.createStatement();//SQLを
 			// SQL文作成
-			 String selectSql = ("SELECT user_id, user_address, user_name, password, font_color "
-					+ "FROM t_user_info "
-					+ "WHERE user_id = '"+ user_Id +"' AND p.delete_flg = 'f'"
-					);
-			 System.out.println("W0060M :" + selectSql );
+			StringBuffer sb = new StringBuffer();
+			//sb.append("SELECT user_id);
 			// SQL文実行
-			resultSet = statement.executeQuery(selectSql);
-			}catch (SQLException e){
-				// TODO 自動生成された catch ブロック
-				System.out.println("ユーザー情報取得失敗");
-				e.printStackTrace();
-			}finally {
-				//データベースのクローズ
-	         	try {
-	         		statement.close();
-	         		connection.close();
-	         	}catch (Exception e){
-	         		System.out.println("Close failed.");
-	         	}
-	         	System.out.println("一覧取得処理終了");
+			System.out.println("W0060M ," + sb.toString());
+			sb.append("SELECT user_id, user_name, user_address, password FROM t_user_info WHERE delete_flg = FALSE");
+			System.out.println("W0060M getUsertList:" + sb.toString());
+			resultSet = statement.executeQuery(sb.toString());//resultSet実行した結executeQuery＝要求をＳＱＬとしてＤＢに投げる
+			// 実行結果の取得・次の行を呼ぶ
+			while(resultSet.next()) {
+				HashMap<String, String> userInfo = new HashMap<String, String>();
+				userInfo.put("userId", resultSet.getString("user_id"));
+				userInfo.put("userName", resultSet.getString("user_name"));
+				userInfo.put("userAddress", resultSet.getString("user_address"));
+				userInfo.put("passWord", resultSet.getString("password"));
+				userList.add(userInfo);
+				System.out.println(userInfo.get("userId"));
+				System.out.println(userInfo.get("userName"));
+				System.out.println(userInfo.get("userAddress"));
+				System.out.println(userInfo.get("passWord"));
 			}
-		return getuserinfolist;
-	}
-
-
-	//ユーザー変更時の処理　ユーザーが入力した変更情報をDBへ送る
-	public static int user_update (String user_name, String userId, String user_address, String password, String font_color){
-		//初期化
-
-		// SQL実行結果格納用Set
-		ResultSet resultSet = null;
-		// DB接続コネクション
-		Connection connection = null;
-		// SQLステートメント
-		Statement statement = null;
-
-		int getuser_id = 0;
-
-		try {
-			// テーブル照会実行
-			connection = DBAccessUtils.getConnection();//ＤＢに接続
-			statement = connection.createStatement();//ＳＱＬ文をＤＢに送信
-
-			//自動コミットを有効にする
-			connection.setAutoCommit(true);
-
-			//TODO パスワードをSHA-1変換(W0010Model?Control参照)
-
-
-
-
-
-
-
-			//ユーザー変更情報をDBへ送る。
-			String update_userinfo_SQL = "UPDATE t_user_info SET user_name = '" + user_name +
-					"', user_address = '" + user_address + "', update_date = current_timestamp," +
-					"update_user = '" + userId + "', password = '" + password +
-					"', font_color = '" + font_color + "WHERE user_ID = '" + userId + "'";
-
-			System.out.println("W0060M update:" + update_userinfo_SQL);
-			getuser_id = statement.executeUpdate(update_userinfo_SQL);
-			System.out.println(getuser_id + " 行挿入しました。");
-
-			//どのようなSQL文が入っているか出力
-			System.out.println ("次のsqlを実行します" + update_userinfo_SQL);
-
-
 		} catch (SQLException e) {
-			System.err.println("追加SQL failed.");
-			e.printStackTrace ();
+			System.out.println("カテゴリ一覧SQL実行処理失敗!!");
+			e.printStackTrace();//どういうバグがあって落ちたのかログを保存する
 		} finally {
-			//データベースのクローズ
 			try {
+				// もろもろクローズ処理
+				resultSet.close();
 				statement.close();
 				connection.close();
-			} catch (Exception e){
-				System.out.println("Close failed.");
+			} catch (Exception e) {
+				System.err.println("クローズ処理失敗!!");
+				e.printStackTrace ();
 			}
-			System.out.println("一覧取得処理終了");
 		}
-		return getuser_id;
+		return userList;
 	}
+
+
+	public static int registarUser(String userId, String userName, String userAddress, String passWord, String conPassword) {
+		Connection connection = null;
+		Statement statement = null;
+		int insertCount = 0;
+		System.out.println("W40M 引数は"+ userId +"です" );
+
+		try{
+			// コメント一覧照会実行
+			connection = DBAccessUtils.getConnection();													//DBへ接続
+			statement = connection.createStatement();													//Statementを取得するためのコード
+
+	        //自動コミットを有効にする
+	        connection.setAutoCommit(true);
+	        //コメントの追加
+	        String insertSql = "INSERT INTO t_user_info (user_id, user_name, user_address, password, delete_flg, admin_flg, create_date, update_date)"
+	        		+ " VALUES ('" + userId + "','"+ userName +"','"+ userAddress +"','"+ passWord +"', FALSE, FALSE, current_timestamp, current_timestamp)";
+	        System.out.println("W0060M : INSERT");
+	        insertCount = statement.executeUpdate(insertSql);
+
+	        System.out.println(insertSql);
+
+		}catch (SQLException e){
+			System.err.println("ユーザ登録SQL failed.");
+			e.printStackTrace ();
+		}finally{
+			try {
+	 		// もろもろクローズ処理
+				statement.close();
+				connection.close();
+			} catch (Exception e) {
+
+				System.err.println("クローズ処理失敗!!");
+				e.printStackTrace ();
+			}
+		}
+		return insertCount;
+	}
+
 }
+

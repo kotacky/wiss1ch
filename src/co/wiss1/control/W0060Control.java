@@ -1,7 +1,8 @@
 package co.wiss1.control;
 
 import java.io.IOException;
-import java.util.function.Function;
+import java.util.HashMap;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -11,117 +12,80 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.catalina.Session;
+import org.apache.catalina.realm.RealmBase;
 
+import co.wiss1.model.W0040Model;
 import co.wiss1.model.W0060Model;
 
 @WebServlet("/W0060Control")
-public class W0060Control
-extends HttpServlet{
+public class W0060Control extends HttpServlet{
 
-	//リクエストパラメータの取得
-		String regflg = getInitParameter("regflg");
+    public static void main (String args[]) {
+
+    }
 
 	public void doPost(HttpServletRequest request, HttpServletResponse response)
 		throws IOException, ServletException{
-
-		String regflg = request.getParameter("regflg");
-
+			request.setCharacterEncoding("UTF-8");
 			//sessionから取得したuserNameをNull対応
 			HttpSession session = request.getSession(true);
-			String reg = "";
-			{
 			try{
 			    String user = session.getAttribute("userName").toString();
-			    System.out.println("SessionのuserNameが"+ user +"に入力されました");
-			    if (regflg == reg ){  //ここでユーザーの新規登録か変更かを判定。
+			    System.out.println("W0060C SessionのuserNameが"+ user +"に入力されました");
+			    String actionId = request.getParameter("actionId");
+			  //初期値
+			  //int ret = 0;
+			  if ("Registration".equals(actionId)) {
+					System.out.println("W0060C insertします。");
 
-			   //登録時の処理
-			   //初期値
-			  int ret = 0;
+					String userId = request.getParameter("userId");
+					String userName = request.getParameter("userName");
+					String userAddress = request.getParameter("userAddress");
+					String passWord = request.getParameter("passWord");
+					String conPassword = request.getParameter("conPassword");
+					System.out.println("W0060C ユーザーIDは"+userId +"です" );
+					System.out.println("W0060C ユーザー名は"+ userName +"です" );
+					System.out.println("W0060C 住所は"+ userAddress +"です" );
+					System.out.println("W0060C パスワードは"+ passWord +"です" );
+					System.out.println("W0060C パスワードは"+ conPassword +"です" );
 
+					 // パスワードをハッシュ化
+				    String hashedpassword = RealmBase.Digest(passWord, "SHA-1", "Windows-31J");
+					int registar = W0060Model.registarUser(userId,userName,userAddress,hashedpassword,conPassword);
+					request.setAttribute("registar",registar);
+				}
+			  /*
 			  //Viewからフォーム入力の値を受け取る
 				//UTF-8にエンコード
 				request.setCharacterEncoding("UTF-8");
-				String user_Id = request.getParameter("User_ID");
-				System.out.print("値に" + user_Id + "が入力されました。");
+				String userId = request.getParameter("userId");
+				String userName = request.getParameter("userName");
+				String userAddress = request.getParameter("userAddress");
+				String passWord = request.getParameter("passWord");
+				String conPassword = request.getParameter("conPassword");
 
-				//Viewから新規登録情報を受け取る
-				String userId = request.getParameter("User_ID");
-				System.out.println("ControlのuserIdに" + userId + "が入力されている。");
+				System.out.println("ユーザIDに" + userId + "が入力されました。");
+				System.out.println("ユーザ名に" + userName + "が入力されました。");
+				System.out.println("住所に" + userAddress + "が入力されました。");
+				System.out.println("パスワードに" + passWord + "が入力されました。");
+				System.out.println("確認用パスワードに" + conPassword + "が入力されました。");
 
-				String Username = request.getParameter("user_Name");
-				System.out.print("値に" + Username + "が入力されました。");
 
-				String Useraddress = request.getParameter("User_address");
-				System.out.print("値に" + Useraddress + "が入力されました。");
 
-				String Password = request.getParameter("pass_word");
-				System.out.print("値に" + Password + "が入力されました。");
-
-				String ConfirmtionPassword = request.getParameter("confirmtion_password");
-				System.out.print("値に" + ConfirmtionPassword + "が入力されました。");
-
-				String Fontcolor = request.getParameter("font_color");
-				 int FontColor = Integer.valueOf(Fontcolor).intValue();      //FontColorのデータを数値データに変換
-				System.out.print("値に" + FontColor + "が入力されました。");
-
-				if(Password == ConfirmtionPassword)
-				{ret = W0060Model.insertCount(userId, Username, Password, Fontcolor);}
-				else{
-					return;
+				//if() ユーザ登録ボタンを押した時
+				//List<HashMap<String, String>> userList = W0060Model.getBlank(userId);
+				// ユーザ情報変更の初期表示
+				List<HashMap<String, String>> userList = W0060Model.getUserList(userId);
+				if (userList != null && 0 < userList.size()) {
+					request.setAttribute("userList", userList);
 				}
-				    //Viewの画面に戻す
-				if(ret == 1){
-				    //登録成功
-				    request.setAttribute("insertFlag",1);
-				    RequestDispatcher dispatch =getServletContext().getRequestDispatcher("/W0050View.jsp");
-				    dispatch.forward(request, response);
-							 }
-				else{
-				    //登録失敗
-				    request.setAttribute("insertFlag",0);
-				    RequestDispatcher dispatch =getServletContext().getRequestDispatcher("/view/W0060View.jsp");
-				    dispatch.forward(request, response);
-					 }
+				*/
 
-
-
-
-											}
-
-
-//更新時の処理
-	else{
-		  //初期値
-		  int ret1 = 0;
-
-		  //ModelからユーザーIDを元にDB上の情報を受け取る
-			//UTF-8にエンコード
-			request.setCharacterEncoding("UTF-8");
-			//String user_Id = W0060Model.selectsql("User_ID");
-			//System.out.print("値に" + user_Id + "が入力されました。");
-
-			//Viewから新規登録情報を受け取る
-			String userId = request.getParameter("User_ID");
-			System.out.println("ControlのuserIdに" + userId + "が入力されている。");
-
-			String Username = request.getParameter("user_Name");
-			System.out.print("値に" + Username + "が入力されました。");
-
-			String Useraddress = request.getParameter("User_address");
-			System.out.print("値に" + Useraddress + "が入力されました。");
-
-			String Fontcolor = request.getParameter("font_color");
-			 int FontColor = Integer.valueOf(Fontcolor).intValue();      //FontColorのデータを数値データに変換
-			System.out.print("値に" + FontColor + "が入力されました。");
-
-	}
-			}
-			    catch(NullPointerException W0060nullException){
-					  RequestDispatcher dispatch =getServletContext().getRequestDispatcher("/view/W0010View.jsp");
-					  dispatch.forward(request, response);}
-					return;
-			}
+				RequestDispatcher dispatch = getServletContext().getRequestDispatcher("/view/W0060View.jsp");
+			    dispatch.forward(request, response);
+			}catch(NullPointerException W0030nullException){
+				 RequestDispatcher dispatch = getServletContext().getRequestDispatcher("/view/W0010View.jsp");
+				 dispatch.forward(request, response);
 			}
 	}
+}

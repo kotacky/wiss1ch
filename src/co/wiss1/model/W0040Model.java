@@ -35,7 +35,7 @@ public class W0040Model {
 				statement = connection.createStatement();
 			// SQL文作成
 				StringBuffer sb = new StringBuffer();
-				//コメント、投稿者名、コメントID、ユーザID、カテゴリ名、いいね数[、画像バイナリ]
+				//コメント、投稿者名、コメントID、ユーザID、カテゴリ名、いいね数、画像バイナリ
 				sb.append("SELECT p.post, p.user_name, p.post_id, p.user_id, p.create_date, c.category_name, p.good_count, p.font_color, p.img_bin "
 						+ "FROM t_post p LEFT OUTER JOIN t_category c "
 						+ "ON c.category_id = p.category_id "
@@ -61,32 +61,11 @@ public class W0040Model {
 				commentInfo.put("userId", resultSet.getString("user_id"));
 				commentInfo.put("good_count", resultSet.getString("good_count"));
 
-/* ここを入れると今は落ちる
 				//画像のチェック
-		        InputStream in = null;
-		        ByteArrayOutputStream baos = null;
-		        byte[] buf = new byte[65536];
-		        int size;
-		        try {
-		        	//InputStreamにはsizeが無いので一度ByteArrayOutputStreamへ
-		        	baos = new ByteArrayOutputStream();
-		        	in = resultSet.getBinaryStream("img_bin");
-		        	while((size = in.read(buf, 0, buf.length)) != -1) {
-		        		baos.write(buf, 0, size);
-		        	}
-					byte[] bytedata = new byte[(int) baos.size()];
-		        	in.read(bytedata, 0, bytedata.length); 		// に、入力する
-		        	System.out.println("W40C inputstream:size["+ bytedata.length +"]");
-		        } catch ( IOException e) {
-		        }finally {
-		        	try {
-		        		in.close();
-		        		baos.close();
-		        	} catch( IOException e){
-		        	} finally {
-		        	}
-		        }
-*/
+		        byte[] Imgbyte = resultSet.getBytes("img_bin");
+
+		        												//ここまで通った
+
 				//文字色の実装
 				color = resultSet.getString("font_color");
 				System.out.println(color);
@@ -321,7 +300,7 @@ public class W0040Model {
 
 
 	//コメント投稿(新) 必要データ：コメント、カテID、ユーザID、ユーザ名、色情報[イメージバイナリは後で]
-	public static int insertCommentAddImg(String comment, String categoryId, String userId, String userName, InputStream Img, int length, String color) {
+	public static int insertCommentAddImg(String comment, String categoryId, String userId, String userName, byte[] Img, int length, String color) {
 
 		Connection connection = null;
 		Statement statement = null;
@@ -347,7 +326,7 @@ public class W0040Model {
 
 			//パラメタ付SQL文の作成
 			PreparedStatement ps = connection.prepareStatement(insertSql + ",img_bin" + insertSqlEnd + insertValues + ", ?" + insertSqlEnd);
-			ps.setBinaryStream(1, Img, length);
+			ps.setBytes(1, Img);
 			//添付されるバイナリ列の長さを表示
 			System.out.println("insertCommentAddImg:"+ length );
 

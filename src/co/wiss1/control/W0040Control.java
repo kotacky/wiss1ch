@@ -128,8 +128,8 @@ import co.wiss1.model.W0040Model;
 		        	in.read(data, 0, data.length); 		// に、入力する
 		        	System.out.println("W40C inputstream:data[" + data + "]");
 
-		        	String result = new String(data, "UTF-8");
-		        	System.out.println("W40C result: " + result);
+		        	//String result = new String(data, "UTF-8");
+		        	//System.out.println("W40C result: " + result);
 
 		        	//16進数でデータを表示
 		        	System.out.println("W40C HEXDATA:");
@@ -139,24 +139,10 @@ import co.wiss1.model.W0040Model;
 		        	}
 		        	System.out.println("\nW40C HEXDATA:");
 
-		        	//byte型の初期化。View側で得た画像ファイルを入れられれば
-		        	//String byteInputStr = part.toString();		//なんか違う
-		        	//String byteInputStr = postName;
-		        	//byte[] ImgByte = byteInputStr.getBytes("UTF-8");
-
-		        	//byte[] partstr = part.getContent();
-		        	//SimpleDateFormat datetime = new SimpleDateFormat("yyyyMMddHHmmss");
-		        	//String upfilename = "upload" + datetime.toString();
-		        	//System.out.println("W40C up-file-name[" + upfilename + "]");
-		        	//part.write("upfilename");
-
-		        	//String partstr = part.toString();
-		        	//System.out.println("W40C strデータは[" + partstr + "]です");
-
 		        } catch (IOException ex) {
 		        } finally{
 		        }
-		        insertCount = W0040Model.insertCommentAddImg(comment, categoryId, userId, Name, in, data.length, ColorStr);
+		        insertCount = W0040Model.insertCommentAddImg(comment, categoryId, userId, Name, data, data.length, ColorStr);
 		        request.setAttribute("insertCount",insertCount);
 		        in.close();
 			}

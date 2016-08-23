@@ -26,13 +26,18 @@
 			document.MyForm.action = "<%= request.getContextPath() %>/W0060Control"
 			document.MyForm.submit();
 		}
-		 function deletes(Command){
-				// チェックボックス要素をすべて取得する
-				var boxes = document.getElementsByName("chkbox");
-				// チェックボックスの個数を取得する
-			    var cnt = boxes.length;
 
-				var flg = 0;  //flg:チェックの判定用
+		function go_portal(){
+			document.MyForm.action = "<%= request.getContextPath() %>/W0011Control"
+			document.MyForm.submit();
+		}
+		function deletes(Command){
+			// チェックボックス要素をすべて取得する
+			var boxes = document.getElementsByName("chkbox");
+			// チェックボックスの個数を取得する
+			var cnt = boxes.length;
+			//flg:チェックの判定用
+			var flg = 0;
 				for(var i=0; i < cnt; i++) {
 			    	if(boxes.item(i).checked) {
 			    	    flg = 1;
@@ -45,11 +50,11 @@
 						document.MyForm.action = "<%= request.getContextPath() %>/W0050Control"
 						document.MyForm.submit();
 					  }
-				   }
-				 if(flg ==0){
+				}
+				if(flg ==0){
 					 alert("チェックボックスが未入力です。");
 				  }
-			     }
+			    }
 			 <%--
 			 function move(Command){
 
@@ -70,13 +75,12 @@
 				<div align="right">
 				<% out.print(session.getAttribute("userName")); %>
 	    		<a style="margin-left:20px"class="button" name="logout"onClick="logOut();"><img src="<%= request.getContextPath() %>/view/img/153.142.124.217 (2).gif"></a>
-	    	    </div>
-
-			<div>
+	    		</div>
+	    		<input type="button"  value="戻る"  posion: absolute; left: 20px; top: 0px; onClick= back();>
 				<CENTER>
 				<h1>
-	   		    <a href ="javascript:window.open('https://www.google.co.jp/maps/');"><img src="<%= request.getContextPath() %>/view/img/wiss1ch.png"></a>
-	    		</h1>
+	   		    <a href="#"  onclick=go_portal();><img src="<%= request.getContextPath() %>/view/img/wiss1ch.png"></a>
+	   		    </h1>
 	    		<font size="8">ユーザリスト</font><br><br>
 
 				<%-- テーブルの表示--%>
@@ -147,8 +151,8 @@
 			<input type="hidden" name="employeeAuthority" value="<%= session.getAttribute("employeeAuthority") %>">
 
 	</form>
-	<div id="footer">
-		<p id="copyright">Copyright (c) WISS1 Inc. All Rights Reserved.</p>
+			<div id="footer">
+			<p id="copyright">Copyright (c) WISS1 Inc. All Rights Reserved.</p>
 	</div>
 </body>
 </html>

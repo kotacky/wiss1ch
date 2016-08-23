@@ -42,8 +42,8 @@ public class W0050Model {
 			resultSet = statement.executeQuery(sb.toString());//resultSet実行した結executeQuery＝要求をＳＱＬとしてＤＢに投げる
 			// 実行結果の取得・次の行を呼ぶ
 			while(resultSet.next()) {
-				HashMap<String, String> userInfo = new HashMap<String, String>();//カテゴリインフォを新しく作る
-				userInfo.put("userId", resultSet.getString("user_id"));//カテゴリー
+				HashMap<String, String> userInfo = new HashMap<String, String>();
+				userInfo.put("userId", resultSet.getString("user_id"));
 				userInfo.put("userName", resultSet.getString("user_name"));
 				userInfo.put("userAddress", resultSet.getString("user_address"));
 				userInfo.put("userAdmin", resultSet.getString("admin_flg"));
@@ -79,6 +79,7 @@ public class W0050Model {
 		int UpdateCount = 0;
 
 		try
+
         {
             // ユーザ一覧照会実行
         	connection = DBAccessUtils.getConnection();												//DBへ接続
@@ -103,7 +104,7 @@ public class W0050Model {
 		System.err.println("ユーザ削除のSQL failed.");
 		e.printStackTrace ();																		//エラーの情報
 		}
-		finally{
+	 	finally{
 		}
 	return UpdateCount;
 	}

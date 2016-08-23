@@ -76,7 +76,7 @@
 				<% out.print(session.getAttribute("userName")); %>
 	    		<a style="margin-left:20px"class="button" name="logout"onClick="logOut();"><img src="<%= request.getContextPath() %>/view/img/153.142.124.217 (2).gif"></a>
 	    		</div>
-	    		<input type="button"  value="戻る"  posion: absolute; left: 20px; top: 0px; onClick= back();>
+	    		<input type="button"  value="戻る"  style="position: absolute; left: 20px; top: 0px;" onClick="javascript:history.back();">
 				<CENTER>
 				<h1>
 	   		    <a href="#"  onclick=go_portal();><img src="<%= request.getContextPath() %>/view/img/wiss1ch.png"></a>

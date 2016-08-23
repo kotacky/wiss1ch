@@ -40,9 +40,12 @@
 
 	    	//投稿(挿入) 新版
 			function newinsert(command){
+	    		var k = document.MyForm.text.value.trim();
 				var l = document.MyForm.text.value.length;
-				//alert(l);
-				if(l <= 3){
+				alert("|" + k + "|" + ":" + k.length );
+				if(k <= 3){
+					alert("文字数が不足しています");
+				}else if(l <= 3){
 					alert("文字数が不足しています");
 				}else if (l<=200){
 					myRet = confirm("投稿しますか？");
@@ -90,8 +93,8 @@
 	    	//単独論理削除
 			function soloupdate(cid){
 				document.MyForm.commentId.value = cid;
-	    		MyRet = confirm("単独削除しますか？ ID:" + cid);
-				if(myRet == true ){
+				var myRet = confirm("単独削除しますか？");
+				if(myRet == true){
 					document.MyForm.actionId.value = 'soloupdate';
 					document.MyForm.action = "<%= request.getContextPath() %>/W0040Control"
 					document.MyForm.submit();
@@ -154,7 +157,7 @@
 				<% try { %>
 				<CENTER>
             		<h1>
-   		    			<a href="#"  onclick=go_portal();><img src="<%= request.getContextPath() %>/view/img/wiss1ch.png"></a>
+   		    			<a href="#"  onClick="go_portal();"><img src="<%= request.getContextPath() %>/view/img/wiss1ch.png"></a>
     				</h1>
             		<%-- コメントの表示--%>
 					<table style="">

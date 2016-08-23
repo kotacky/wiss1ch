@@ -67,7 +67,7 @@
 
 		//追加した関数
 		function changepulldown(){
-			var pullop = document.MyForm.pldw.selectedIndex;//selectedImdexは「今」選択されているoptionを指す。返り値は数字。
+			var pullop = document.MyForm.pldw.selectedIndex;//selectedIndexは「今」選択されているoptionを指す。返り値は数字。
 			var pullval = document.MyForm.pldw.options[pullop].value; // optionのvalueを取得
 			//alert(pullval)//オンチェンジ動作確認用、値拾う
 			document.MyForm.action = "<%= request.getContextPath() %>/W0020Control"
@@ -82,7 +82,7 @@
 			<% out.print(session.getAttribute("userName")); %>
     		<a style="margin-left:20px"class="button" name="logout"onClick="logOut();"><img src="<%= request.getContextPath() %>/view/img/153.142.124.217 (2).gif"></a>
    	    </div>
-
+	    	<input type="button"  value="戻る"  style="position: absolute; left: 20px; top: 0px;" onClick="javascript:history.back();">
 		<div>
 			<CENTER>
 				<h1>

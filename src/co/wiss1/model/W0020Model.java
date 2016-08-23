@@ -40,7 +40,7 @@ public class W0020Model {
 			statement = connection.createStatement();
 			// SQL文作成
 			StringBuffer sb = new StringBuffer();
-			sb.append("SELECT * FROM t_category WHERE parent_category_id = " + parent + "AND delete_flg = 'FALSE'  ORDER BY category_id");
+			sb.append("SELECT * FROM t_category WHERE parent_category_id = " + parent + " AND delete_flg = 'FALSE'  ORDER BY category_id");
 			System.out.println(sb);
 			// SQL文実行
 			resultSet = statement.executeQuery(sb.toString());

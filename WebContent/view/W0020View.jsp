@@ -10,82 +10,90 @@
 		<title>WISS1ch</title>
 
 		<script type="text/javascript">
-		 function logOut(){
-      	   MyMessage = confirm("ログアウトします。よろしいですか？");
-      	       if ( MyMessage == true ){
-      	    	 document.MyForm.action = "<%= request.getContextPath() %>/W0000Control"
-      	         document.MyForm.submit();
-      	       }else{
-    				 return;
-    			   }
-         }
+		function logOut(){
+			MyMessage = confirm("ログアウトします。よろしいですか？");
+      	    if ( MyMessage == true ){
+				document.MyForm.action = "<%= request.getContextPath() %>/W0000Control"
+				document.MyForm.submit();
+			}else{
+				return;
+			}
+		}
 
 
-		  function deletes(Command){
+		function deletes(Command){
 			// チェックボックス要素をすべて取得する
 			var boxes = document.getElementsByName("chkbox");
 			// チェックボックスの個数を取得する
-		    var cnt = boxes.length;
+			var cnt = boxes.length;
 
 			var flg = 0;  //flg:チェックの判定用
 			for(var i=0; i < cnt; i++) {
-		    	if(boxes.item(i).checked) {
-		    	    flg = 1;
-		       }
-		    }
+				if(boxes.item(i).checked) {
+					flg = 1;
+				}
+			}
 			if(flg > 0){
-			  MyMessage = confirm("削除しますか");
-		  		if ( MyMessage == true ){
-		  			document.MyForm.actionId.value = Command;
+				MyMessage = confirm("削除しますか");
+				if ( MyMessage == true ){
+					document.MyForm.actionId.value = Command;
 					document.MyForm.action = "<%= request.getContextPath() %>/W0020Control"
 					document.MyForm.submit();
-				  }
-			   }
-			 if(flg ==0){
-				 alert("チェックボックスが未入力です。");
-			  }
-		     }
+				}
+			}
+			if(flg ==0){
+				alert("チェックボックスが未入力です。");
+			}
+		}
 
-		  function Regist(){
-			  document.MyForm.action = "<%= request.getContextPath() %>/view/W0030View.jsp"
-			  document.MyForm.submit();
-		  }
-		  function move(Command){
+		function Regist(){
+			document.MyForm.action = "<%= request.getContextPath() %>/view/W0030View.jsp"
+			document.MyForm.submit();
+		}
 
-			  var values = Command.split(','); // , 区切;
-			  document.MyForm.Id.value = values[0];
-			  document.MyForm.Name.value = values[1];
-			  document.MyForm.action = "<%= request.getContextPath() %>/W0040Control"
-			  document.MyForm.submit();
-		  }
-		  function changepulldown(){
-			  var pullop = document.MyForm.pldw.selectedIndex;//selectedImdexは「今」選択されているoptionを指す。返り値は数字。
-			  var pullval = document.MyForm.pldw.options[pullop].value; // optionのvalueを取得
-			  alert(pullval)//オンチェンジ動作確認用、値拾う
-		  }
+		function move(Command){
+			var values = Command.split(','); // , 区切;
+			document.MyForm.Id.value = values[0];
+			document.MyForm.Name.value = values[1];
+			document.MyForm.action = "<%= request.getContextPath() %>/W0040Control"
+			document.MyForm.submit();
+		}
+
+    	//ポータル帰還
+		function go_portal(){
+			document.MyForm.action = "<%= request.getContextPath() %>/W0011Control"
+			document.MyForm.submit();
+		}
+
+		//追加した関数
+		function changepulldown(){
+			var pullop = document.MyForm.pldw.selectedIndex;//selectedImdexは「今」選択されているoptionを指す。返り値は数字。
+			var pullval = document.MyForm.pldw.options[pullop].value; // optionのvalueを取得
+			//alert(pullval)//オンチェンジ動作確認用、値拾う
+			document.MyForm.action = "<%= request.getContextPath() %>/W0020Control"
+			document.MyForm.submit();
+		}
 		</script>
 	</head>
 
 	<body>
 	<form name="MyForm" method="POST" action="<%= request.getContextPath() %>/W0000Control">
-
-			<div align="right">
+		<div align="right">
 			<% out.print(session.getAttribute("userName")); %>
     		<a style="margin-left:20px"class="button" name="logout"onClick="logOut();"><img src="<%= request.getContextPath() %>/view/img/153.142.124.217 (2).gif"></a>
-    	    </div>
+   	    </div>
 
 		<div>
-
 			<CENTER>
 				<h1>
-   		   		<img src="<%= request.getContextPath() %>/view/img/wiss1ch.png">
+   		    	<a href="#"  onclick=go_portal();><img src="<%= request.getContextPath() %>/view/img/wiss1ch.png"></a>
     			</h1>
 				<SELECT onchange= "changepulldown()"  name="pldw">
-				<OPTION value="0" selected disabled>大カテゴリを選択</OPTION>
-				<OPTION value="1">16'新人</OPTION>
-				<OPTION value="2">Java</OPTION>
-				<OPTION value="3">野球</OPTION>
-				<option value="4">麻雀</option>
+					<OPTION value="0" selected disabled>大カテゴリを選択</OPTION>
+					<OPTION value="1">16'新人</OPTION>
+					<OPTION value="2">Java</OPTION>
+					<OPTION value="3">野球</OPTION>
+					<OPTION value="4">麻雀</option>
 				</SELECT>
 
 				<%-- テーブルの表示--%>
@@ -100,47 +108,42 @@
 
 
 
-				   <!--  // カテゴリ一覧を取得-->
+					<!--  // カテゴリ一覧を取得-->
 
 					<%List<HashMap<String,String>> categoryList = (List<HashMap<String,String>>)request.getAttribute("categoryList");%>
+					<%
+						String sessionflag = session.getAttribute("adminFlg").toString();
+						System.out.println("★権限は" + sessionflag + "です！！！★");
 
-
-
-					<% String sessionflag = session.getAttribute("adminFlg").toString();
-
-					System.out.println("★権限は" + sessionflag + "です！！！★");
-
-					   String chk1 = null;
-					   String chk2 = null;
-		  			  String str1 = "t";
-		    		  if(sessionflag.equals(str1) ){
-		    		      String str2 = "true";
-		    		      chk1 = str2;
-		    		  }else{
-		    			  String str2 = "disabled";
-		    			  chk1 = str2;
-
-		    		     }	%>
-
+						String chk1 = null;
+						String chk2 = null;
+				  		String str1 = "t";
+				    	if(sessionflag.equals(str1) ){
+				    		String str2 = "true";
+				    		chk1 = str2;
+				    	}else{
+				    		String str2 = "disabled";
+				    		chk1 = str2;
+						}
+				    %>
 					<% if (categoryList != null) { %>
 
 						<% for (HashMap<String,String> categoryInfo : categoryList) { %>
-						<%String Id = categoryInfo.get("categoryId"); %>
-						<%String Name = categoryInfo.get("categoryName"); %>
-						<tr>
-							<td><input type="checkbox" <%= chk1  %> name="chkbox" style="width:17px;height:17px;"value="<%= categoryInfo.get("categoryId") %>" onClick="chk();"></td>
-							<td><a onClick="move('<%=Id %>,<%=Name %>');"   href="#"  value=""  ><% out.print(categoryInfo.get("categoryName")); %></a></td>
-
-							<% } %>
+								<%String Id = categoryInfo.get("categoryId"); %>
+								<%String Name = categoryInfo.get("categoryName"); %>
+								<tr>
+									<td><input type="checkbox" <%= chk1  %> name="chkbox" style="width:17px;height:17px;"value="<%= categoryInfo.get("categoryId") %>" onClick="chk();"></td>
+									<td><a onClick="move('<%=Id %>,<%=Name %>');"   href="#"  value=""  ><% out.print(categoryInfo.get("categoryName")); %></a></td>
 						<% } %>
-						</tr>
-			</table>
+					<% } %>
+					</tr>
+				</table>
 			<P>
-			<input type="button"  <%=chk1 %> value="カテゴリ登録" onClick="Regist();" >
-			<input type="button"  <%=chk1 %> value="カテゴリ削除" onClick="deletes('Update');">
-			<input type="hidden" name="actionId" value="">
-			<input type="hidden" name="Id" value="">
-			<input type="hidden" name="Name" value="">
+				<input type="button"  <%=chk1 %> value="カテゴリ登録" onClick="Regist();" >
+				<input type="button"  <%=chk1 %> value="カテゴリ削除" onClick="deletes('Update');">
+				<input type="hidden" name="actionId" value="">
+				<input type="hidden" name="Id" value="">
+				<input type="hidden" name="Name" value="">
 			</div>
 			</P>
 		</form>

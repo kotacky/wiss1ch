@@ -12,18 +12,17 @@ import co.wiss1.common.DBAccessUtils;
 
 public class W0020Model {
 
+	/*
 	public static void main () {
         List<HashMap<String, String>> categoryList = getCategoryList();
         for (HashMap<String, String> categoryInfo : categoryList) {
             System.out.println("カテゴリID:[" + categoryInfo.get("categoryId") + "] カテゴリ名:[" + categoryInfo.get("categoryName") + "]");
         }
     }
+	*/
 
 
-
-	public static List<HashMap<String, String>> getCategoryList() {
-
-
+	public static List<HashMap<String, String>> getCategoryList(String parent) {
 		// カテゴリ一覧を格納する箱
 		List<HashMap<String, String>> categoryList = new ArrayList<HashMap<String, String>>();
 		// SQL実行結果格納用Set
@@ -32,7 +31,7 @@ public class W0020Model {
 		Connection connection = null;
 		// SQLステートメント
 		Statement statement = null;
-
+		System.out.println("W0020M parent: " + parent);
 
 		try {
 			// DB接続
@@ -41,7 +40,8 @@ public class W0020Model {
 			statement = connection.createStatement();
 			// SQL文作成
 			StringBuffer sb = new StringBuffer();
-			sb.append("SELECT * FROM t_category WHERE  delete_flg = 'FALSE'  ORDER BY category_id");
+			sb.append("SELECT * FROM t_category WHERE parent_category_id = " + parent + "AND delete_flg = 'FALSE'  ORDER BY category_id");
+			System.out.println(sb);
 			// SQL文実行
 			resultSet = statement.executeQuery(sb.toString());
 			// 実行結果の取得
@@ -71,29 +71,31 @@ public class W0020Model {
 	}
 
 
-
-	public static int updateCategory(String checkBox[]) {	 										//カテゴリ削除
-
+	//カテゴリ削除
+	public static int updateCategory(String checkBox[]) {
 		//List<HashMap<String, String>> categoryList = categoryList<HashMap<String, String>>() ;
 		//ResultSet resultSet = null;
 		Connection connection = null;
 		Statement statement = null;
 		int UpdateCount = 0;
 
-		try
-        {
+		try{
             // カテゴリ一覧照会実行
-        	connection = DBAccessUtils.getConnection();												//DBへ接続
-        	statement = connection.createStatement();												//Statementを取得するためのコード
-
-            connection.setAutoCommit(true);							 								//自動コミットを有効にする
+			//DBへ接続
+        	connection = DBAccessUtils.getConnection();
+        	//Statementを取得するためのコード
+        	statement = connection.createStatement();
+        	//自動コミットを有効にする
+            connection.setAutoCommit(true);
             for (int i = 0; i < checkBox.length; i++ ) {
-            String sql = "UPDATE t_category SET delete_flg = 'TRUE' WHERE category_id =  '"+ checkBox[i] +"'";
+            	String sql = "UPDATE t_category SET delete_flg = 'TRUE' WHERE category_id =  '"+ checkBox[i] +"'";
 
             	System.out.println("checkBoxに" + checkBox[i] + "が入力されました。");
             	UpdateCount = statement.executeUpdate (sql);
             	System.out.println(sql);
-            	if(UpdateCount >= 1){																	//削除が成功しているかどうかの確認
+
+            	//削除が成功しているかどうかの確認
+            	if(UpdateCount >= 1){
                 	System.out.println("削除成功");
                 }
                 else{
@@ -109,5 +111,4 @@ public class W0020Model {
 		}
 	return UpdateCount;
 	}
-
 }

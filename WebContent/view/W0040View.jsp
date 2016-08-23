@@ -89,13 +89,13 @@
 
 	    	//単独論理削除
 			function soloupdate(cid){
-				document.MyForm.actionId.value = 'soloupdate';
 				document.MyForm.commentId.value = cid;
-	    		MyRet = confirm("単独削除します ID:" + cid);
+	    		MyRet = confirm("単独削除しますか？ ID:" + cid);
 				if(myRet == true ){
+					document.MyForm.actionId.value = 'soloupdate';
 					document.MyForm.action = "<%= request.getContextPath() %>/W0040Control"
 					document.MyForm.submit();
-				}else{
+				}else if(myRet == false){
 					alert("キャンセル");
 				}
 			}
@@ -135,6 +135,7 @@
     		<a style="margin-left:20px"class="button" name="logout"onClick="logOut();">
     		<img src="<%= request.getContextPath() %>/view/img/153.142.124.217 (2).gif"></a>
             </div>
+            <input type="button"  value="戻る"  style="position: absolute; left: 20px; top: 0px;" onClick="javascript:history.back();">
             <% String categoryName = request.getAttribute("Name").toString();%>
 			<% String sessionflag = session.getAttribute("adminFlg").toString();%>
 			<% String userId = session.getAttribute("userId").toString();%>
@@ -144,7 +145,7 @@
             <% String chk2 = "t";%>
             <% String Id; %>
             <% Id = request.getAttribute("Id").toString(); %>
-    		<% out.print(user_font_color); %>
+    		<% //out.print(user_font_color); %>
 
 
             <%  List<HashMap<String,String>> commentList = (List<HashMap<String,String>>)request.getAttribute("commentList"); %>
@@ -209,7 +210,7 @@
 											<div style = "text-align : right">
 												<input type="submit" name="commentBtn" value="ｲｲﾈ!" onClick="good(<%=commentId%>);">
 												<% out.print(good_count); %>　　
-												<input type="submit" name="deleteBtn" value="削除" onClick="soloupdate(<%=commentId%>);">
+												<input type="submit" <%=chk1 %> name="deleteBtn" value="削除" onClick="soloupdate(<%=commentId%>);">
 											</div>
 										</th>
 										<br>

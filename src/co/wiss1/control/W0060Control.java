@@ -53,6 +53,8 @@ public class W0060Control extends HttpServlet{
 				    String hashedpassword = RealmBase.Digest(passWord, "SHA-1", "Windows-31J");
 					int registar = W0060Model.registarUser(userId,userName,userAddress,hashedpassword,conPassword);
 					request.setAttribute("registar",registar);
+				}else{
+					
 				}
 			  /*
 			  //Viewからフォーム入力の値を受け取る

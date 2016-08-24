@@ -47,8 +47,30 @@
 		}
 
 		function Regist(){
-			document.MyForm.action = "<%= request.getContextPath() %>/view/W0030View.jsp"
-			document.MyForm.submit();
+			// チェックボックス要素をすべて取得する
+			var boxes = document.getElementsByName("chkbox");
+			// チェックボックスの個数を取得する
+			var cnt = boxes.length;
+
+			var flg = 0;
+			for(var i=0; i < cnt; i++) {
+				if(boxes.item(i).checked) {
+					flg = flg + 1;
+				}
+			}
+			if(flg==0){
+				//登録モードで移行
+				document.MyForm.actionId.value = 'start';
+				document.MyForm.action = "<%= request.getContextPath() %>/W0030Control"
+				document.MyForm.submit();
+			}else if(flg == 1){
+				//変更モードで移行
+				document.MyForm.actionId.value = 'update1st';
+				document.MyForm.action = "<%= request.getContextPath() %>/W0030Control"
+				document.MyForm.submit();
+			}else{
+				alert("2個以上のカテゴリ情報変更は出来ません。");
+			}
 		}
 
 		function move(Command){
@@ -78,6 +100,7 @@
 
 	<body>
 	<form name="MyForm" method="POST" action="<%= request.getContextPath() %>/W0000Control">
+		<input type="hidden" name="categoryId">
 		<div align="right">
 			<% out.print(session.getAttribute("userName")); %>
     		<a style="margin-left:20px"class="button" name="logout"onClick="logOut();"><img src="<%= request.getContextPath() %>/view/img/153.142.124.217 (2).gif"></a>

@@ -31,6 +31,7 @@
 			document.MyForm.action = "<%= request.getContextPath() %>/W0011Control"
 			document.MyForm.submit();
 		}
+
 		function deletes(Command){
 			// チェックボックス要素をすべて取得する
 			var boxes = document.getElementsByName("chkbox");
@@ -140,8 +141,6 @@
 									out.print("一般");
 								}
 								%></td>
-
-
 					</Tr>
 	<% } %>
 <% } %>

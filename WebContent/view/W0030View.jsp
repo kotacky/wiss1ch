@@ -25,20 +25,24 @@
 				document.MyForm.submit();
 	    	}
 
+	    	//カテゴリ登録・更新
 			function Registration(updateflag){
-        		alert(updateflag);
+        		//alert(updateflag);
 				//空白のみと無記入をはじく
 	        	if(!((document.MyForm.categoryName.value.trim()=="")||(document.MyForm.categoryName.value==null))){
-	        		alert(document.MyForm.categoryName.value);
+	        		//alert(document.MyForm.categoryName.value);
+	        		//空白を除去
 	        		document.MyForm.categoryName.value = document.MyForm.categoryName.value.trim()
 	        		if(updateflag == "1"){
-		        		alert("update:" + document.MyForm.categoryName.value);
+	        			//flagが1の場合更新
+		        		//alert("update:" + document.MyForm.categoryName.value);
 		        		document.MyForm.actionId.value = 'update';
 	        		}else{
-		        		alert("insert:" + document.MyForm.categoryName.value);
+	        			//flagが0の場合新規登録
+		        		//alert("insert:" + document.MyForm.categoryName.value);
 		        		document.MyForm.actionId.value = 'insert';
 	        		}
-	        		alert("actionID : " + document.MyForm.actionId.value);
+	        		//alert("actionID : " + document.MyForm.actionId.value);
 	        		document.MyForm.action = "<%= request.getContextPath() %>/W0030Control"
 	        	    document.MyForm.submit();
 	        	}else{

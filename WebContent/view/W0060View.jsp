@@ -21,10 +21,8 @@
          }
 
 		function Registration(){
-			alert('追加します。');
-			document.MyForm.actionId.value = 'Registration';
-			document.MyForm.action = "<%= request.getContextPath() %>/W0060Control"
-			document.MyForm.submit();
+		    document.MyForm.actionId.value = 'Registration';
+     		document.MyForm.action = "<%= request.getContextPath() %>/W0060Control"
 		}
 
        </script>
@@ -32,10 +30,10 @@
 	 <body>
 
  	<form name="MyForm" method="POST" action="#">
-
+ 	<fieldset>
  	 		<div align="right">
 			<% out.print(session.getAttribute("userName")); %>
-    		<a style="margin-left:20px"class="button" name="logout"onClick="logOut();"><img src="<%= request.getContextPath() %>/view/img/153.142.124.217 (2).gif"></a>
+    		<a style="margin-left:20px"class="button" name="logout" onClick="logOut();"><img src="<%= request.getContextPath() %>/view/img/153.142.124.217 (2).gif"></a>
     	    </div>
 
     		<h1>
@@ -47,23 +45,23 @@
 
 					<tr>
 						<td>ユーザーID(半角英数字)：</td>
-						<td><input required pattern="^[0-9A-Za-z]+$" type="text" name="userId" size="20"   maxlength="10"></td>
+						<td><input  type="text" name="userId" size="20" maxlength="10" required></td>
 					</tr>
 					<tr>
 						<td>ユーザー名(全角文字)：</td>
-						<td><input required pattern="[^\x20-\x7E]*" type="text" name="userName" size="20" maxlength="10"></td>
+						<td><input  type="text" name="userName" size="20" maxlength="10"required></td>
 					</tr>
 					<tr>
 						<td>住所：</td>
-						<td><textarea required name="userAddress" cols="30" rows="3"></textarea></td>
+						<td><textarea name=userAddress cols="30" rows="3" required></textarea></td>
 					</tr>
 					<tr>
 						<td>パスワード(半角文字　8字以上)：</td>
-						<td><input required pattern="^([a-zA-Z0-9]{8,})$" type="password" name="passWord" size="20" maxlength="40"></td>
+						<td><input type="password" name="passWord" size="20" maxlength="40" required></td>
 					</tr>
 					<tr>
 						<td>確認用パスワード(半角文字　8字以上)：</td>
-						<td><input required pattern="^([a-zA-Z0-9]{8,})$" type="password" name="conPassword" size="20" maxlength="40"></td>
+						<td><input type="password" name="conPassword" size="20" maxlength="40" required></td>
 					</tr>
 					<tr>
 						<td>文字色：</td>
@@ -85,10 +83,11 @@
 						</td>
 					</tr>
 				</table> <br></br>　
-						<input type="submit" value="登録" onClick="Registration();">
-						<input type="reset" value="キャンセル">
-						<input type = "hidden" name = "actionId" value = "">
+						<input type="submit" value="登録" onClick="Registration()">
+
+						<input type ="hidden" name ="actionId" value ="">
 			</CENTER>
+	</fieldset>
 	</form>
 	</body>
 </html>

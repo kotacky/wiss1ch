@@ -25,14 +25,24 @@
 				document.MyForm.submit();
 	    	}
 
-			function Registration(){
+			function Registration(updateflag){
+        		alert(updateflag);
 				//空白のみと無記入をはじく
 	        	if(!((document.MyForm.categoryName.value.trim()=="")||(document.MyForm.categoryName.value==null))){
+	        		alert(document.MyForm.categoryName.value);
 	        		document.MyForm.categoryName.value = document.MyForm.categoryName.value.trim()
+	        		if(updateflag == "1"){
+		        		alert("update:" + document.MyForm.categoryName.value);
+		        		document.MyForm.actionId.value = 'update';
+	        		}else{
+		        		alert("insert:" + document.MyForm.categoryName.value);
+		        		document.MyForm.actionId.value = 'insert';
+	        		}
+	        		alert("actionID : " + document.MyForm.actionId.value);
 	        		document.MyForm.action = "<%= request.getContextPath() %>/W0030Control"
 	        	    document.MyForm.submit();
 	        	}else{
-	        		alert("未記入です。");//値
+	        		alert("未記入です。");//エラー表示
 	        		return;
 	        	}
 	        }
@@ -43,7 +53,7 @@
 				var pullop = document.MyForm.pldw.selectedIndex;
 				// optionのvalueを取得
 				var pullval = document.MyForm.pldw.options[pullop].value;
-				alert(pullval)//オンチェンジ動作確認用、値拾う
+				//alert(pullval)//オンチェンジ動作確認用、値拾う
 			}
 
 		</script>
@@ -54,7 +64,7 @@
 
 		<% try{ %>
 			<% String sessionflag = session.getAttribute("adminFlg").toString();
-				System.out.println("W0030View管理者権限は" + sessionflag + "です。");
+				System.out.println("W0030V 管理者権限は" + sessionflag + "です。");
 				if(sessionflag.equals("f") ){
 			    	//管理者権限が無い場合、ログイン画面に飛ばす
 			    	RequestDispatcher dispatch =getServletContext().getRequestDispatcher("/view/W0010View.jsp");
@@ -62,6 +72,7 @@
 		    	}
 		    %>
 			<% String insertFlag = request.getAttribute("insertFlag").toString(); %>
+			<% System.out.println("W0030V insertFLAG=" + insertFlag); %>
 			<% if("0".equals(insertFlag)){ %>
 				<H2><% out.print("カテゴリ名が重複しています。"); %></H2>
 			<% } %>
@@ -71,17 +82,19 @@
 
  	 	<div align="right">
 			<% out.print(session.getAttribute("userName")); %>
+			<% String upflag = request.getAttribute("update_flag").toString(); %>
+			<% String cid = request.getAttribute("categoryId").toString(); %>
     		<a style="margin-left:20px"class="button" name="logout"onClick="logOut();"><img src="<%= request.getContextPath() %>/view/img/153.142.124.217 (2).gif"></a>
     	</div>
 
-		<input type="button"  value="戻る"  style="position: absolute; left: 20px; top: 0px;" onClick="javascript:history.back();">
+		<input type="button" value="戻る" style="position: absolute; left: 20px; top: 0px;" onClick="javascript:history.back();">
 
     	<h1>
    			<a href="#"  onclick=go_portal();><img src="<%= request.getContextPath() %>/view/img/wiss1ch.png"></a>
     	</h1>
 
       	<p><center><B><span style="font-size:16px">管理者画面</span></B></center></p>
-		<p><center><B><span style="font-size:16px">カテゴリの追加</span></B><br>
+		<p><center><B><span style="font-size:16px">カテゴリの<% if(upflag.equals("1")){ out.print("変更"); }else{ out.print("追加");}  %></span></B><br>
 				<SELECT onchange= "changepulldown()"  name="pldw">
 					<OPTION value="0" selected disabled>大カテゴリを選択</OPTION>
 					<OPTION value="1">16'新人</OPTION>
@@ -89,9 +102,11 @@
 					<OPTION value="3">野球</OPTION>
 					<OPTION value="4">麻雀</option>
 				</SELECT>
-			<input type="text" name="categoryName" maxlength="20" value="" placeholder="例：芸能">
-			<input type="button"  value="カテゴリ登録" onClick="Registration();">
+			<input type="text" required name="categoryName" maxlength="20" value="" placeholder="例：芸能">
+			<input type="button" value="カテゴリ<% if(upflag.equals("1")){ out.print("変更"); }else{ out.print("追加");}  %>" onClick="Registration(<%= upflag%>);">
+			<input type="hidden" name="actionId" value="">
 			<input type="hidden" name="userId" value=<%="\""+session.getAttribute("userId")+"\"" %>>
+			<input type="hidden" name="categoryId" value="<% out.print(cid); %>">
 		</center></p>
 		</form>
 	</body>

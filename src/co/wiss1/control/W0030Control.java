@@ -50,12 +50,16 @@ public class W0030Control extends HttpServlet{
 					//Viewから親カテゴリIDを受け取る
 					String parentId = request.getParameter("pldw");
 					System.out.println("W0030C ParentID:" + parentId + "が入力されている。");
+					if(parentId==null){
+						//エラーを吐く(？)
+						ret = 0;
+					}
 
 					//Model重複チェックメソッドから重複カウントを受け取る
 					int getOverlapCount = W0030Model.getOverlapCount(categoryName);
 					System.out.println("W0030C :重複カウント" + getOverlapCount + "が入力されました。");
 
-					if(getOverlapCount == 0){
+					if(getOverlapCount==0 && parentId==null){
 					    //カテゴリ追加メソッドから挿入した桁数を受け取る
 					    ret = W0030Model.insertCategory(categoryName, parentId, userId);
 					}

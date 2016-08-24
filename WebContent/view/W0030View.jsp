@@ -78,7 +78,7 @@
 			<% String insertFlag = request.getAttribute("insertFlag").toString(); %>
 			<% System.out.println("W0030V insertFLAG=" + insertFlag); %>
 			<% if("0".equals(insertFlag)){ %>
-				<H2><% out.print("カテゴリ名が重複しています。"); %></H2>
+				<H2><% out.print("カテゴリ名が重複しているか、大カテゴリが選択されていません。"); %></H2>
 			<% } %>
 
 		<% }catch(NullPointerException insertException){ %>
@@ -99,7 +99,7 @@
 
       	<p><center><B><span style="font-size:16px">管理者画面</span></B></center></p>
 		<p><center><B><span style="font-size:16px">カテゴリの<% if(upflag.equals("1")){ out.print("変更"); }else{ out.print("追加");}  %></span></B><br>
-				<SELECT onchange= "changepulldown()"  name="pldw">
+				<SELECT <% if(upflag.equals("1")){ out.print("disabled");} %> onchange= "changepulldown()"  name="pldw">
 					<OPTION value="0" selected disabled>大カテゴリを選択</OPTION>
 					<OPTION value="1">16'新人</OPTION>
 					<OPTION value="2">Java</OPTION>

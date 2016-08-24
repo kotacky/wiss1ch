@@ -104,7 +104,7 @@ public class W0030Model {
 	}
 
 
-	public static int updateCategory(String categoryName, String parentId,String categoryId, String userId){
+	public static int updateCategory(String categoryName, String parentId, String categoryId, String userId){
 
 		// DB接続コネクション
 		Connection connection = null;

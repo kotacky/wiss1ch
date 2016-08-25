@@ -22,15 +22,16 @@
 			}
          }
 
+		function go_portal(){
+			document.MyForm.action = "<%= request.getContextPath() %>/W0011Control"
+			document.MyForm.submit();
+		}
+
 		function user_Regist(){
 			document.MyForm.action = "<%= request.getContextPath() %>/W0060Control"
 			document.MyForm.submit();
 		}
 
-		function go_portal(){
-			document.MyForm.action = "<%= request.getContextPath() %>/W0011Control"
-			document.MyForm.submit();
-		}
 
 		function deletes(Command){
 			// チェックボックス要素をすべて取得する
@@ -56,16 +57,16 @@
 					 alert("チェックボックスが未入力です。");
 				  }
 			    }
-			 <%--
-			 function move(Command){
+		 function move(Command){
+			var values = Command.split(','); // , 区切;
+			document.MyForm.userId.value = values[0];
+			document.MyForm.userName.value = values[1];
+			document.MyForm.userAddress.value = values[2];
+			document.MyForm.actionId.value = 'move';
+			document.MyForm.action = "<%= request.getContextPath() %>/W0060Control"
+			document.MyForm.submit();
+		}
 
-				  var values = Command.split(','); // , 区切;
-				  document.MyForm.Id.value = values[0];
-				  document.MyForm.Name.value = values[1];
-				  document.MyForm.action = "<%= request.getContextPath() %>/W0050Control"
-				  document.MyForm.submit();
-			  }
-			--%>
 		</script>
 	</head>
 
@@ -123,17 +124,17 @@
 						<% if (userList != null) { %>
 
 							<% for (HashMap<String,String> userInfo : userList) { %>
-							<%String Id = userInfo.get("userId"); %>
-							<%String Name = userInfo.get("userName"); %>
+							<%String userId = userInfo.get("userId"); %>
+							<%String userName = userInfo.get("userName"); %>
 							<%String admin = userInfo.get("userAdmin");  %>
-							<%String addr = userInfo.get("userAddress");  %>
-							<%String encorded_addr = URLEncoder.encode(addr, "UTF-8"); %>
+							<%String userAddress = userInfo.get("userAddress");  %>
+							<%String encorded_addr = URLEncoder.encode(userAddress, "UTF-8"); %>
 
 							<tr>
 								<td><input type="checkbox" <%= chk1  %> name="chkbox" style="width:17px;height:17px;"value="<%= userInfo.get("userId") %>" onClick="chk();"></td>
-								<td><a href="#"  value=""  ><% out.print(userInfo.get("userId")); %></a></td>
+								<td><a onClick="move('<%=userId %>,<%=userName %>,<%=userAddress %>');"   href="#"  value=""  ><% out.print(userInfo.get("userName")); %></a></td>
 								<td><% out.print(userInfo.get("userName")); %></td>
-								<td><a href="javascript:void(0);"	onclick=window.open("http://maps.google.co.jp/maps?q=<% out.print(encorded_addr);%>",'GoogleMap','width=700,height=400')> <% out.print(addr); %> </a></td>
+								<td><a href="javascript:void(0);"	onclick=window.open("http://maps.google.co.jp/maps?q=<% out.print(encorded_addr);%>",'GoogleMap','width=700,height=400')> <% out.print(userAddress); %> </a></td>
 								<td>
 								<% if(admin.equals(str1)){
 									out.print("管理者");
@@ -161,8 +162,10 @@
 				<input type="button"  value="ユーザ登録" onClick=user_Regist();></td>
 				<input type="button"  <%=chk1 %> value="ユーザ削除" onClick="deletes('Update');">
 				<input type="hidden" name="actionId" value="">
-				<input type="hidden" name="Id" value="">
-				<input type="hidden" name="Name" value="">
+				<input type="hidden" name="userId" value="">
+				<input type="hidden" name="userName" value="">
+				<input type="hidden" name="userAddress" value="">
+
 				</P>
 
 			</form>

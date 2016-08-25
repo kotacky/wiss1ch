@@ -14,6 +14,7 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.catalina.realm.RealmBase;
 
+import co.wiss1.model.W0030Model;
 import co.wiss1.model.W0040Model;
 import co.wiss1.model.W0060Model;
 
@@ -34,7 +35,28 @@ public class W0060Control extends HttpServlet{
 			    System.out.println("W0060C SessionのuserNameが"+ user +"に入力されました");
 			    String actionId = request.getParameter("actionId");
 			  //初期値
-			  //int ret = 0;
+			  int ret = 0;
+
+			  request.setAttribute("updateFlg", 0);
+
+
+			  if("move".equals(actionId)) {
+				  request.setAttribute("updateFlg", 1);
+
+				  String userId = request.getParameter("userId");
+				  String userName = request.getParameter("userName");
+				  String userAddress = request.getParameter("userAddress");
+				  System.out.println("moveからやってきた！！");
+				  System.out.println("W0060C ユーザーIDは"+userId +"です" );
+				  System.out.println("W0060C ユーザー名は"+ userName +"です" );
+				  System.out.println("W0060C 住所は"+ userAddress +"です" );
+
+				  request.setAttribute("userId", userId);
+				  request.setAttribute("userName", userName);
+				  request.setAttribute("userAddress", userAddress);
+			  }
+
+
 			  if ("Registration".equals(actionId)) {
 					System.out.println("W0060C insertします。");
 
@@ -53,41 +75,13 @@ public class W0060Control extends HttpServlet{
 				    String hashedpassword = RealmBase.Digest(passWord, "SHA-1", "Windows-31J");
 					int registar = W0060Model.registarUser(userId,userName,userAddress,hashedpassword,conPassword);
 					request.setAttribute("registar",registar);
-				}else{
-					
 				}
-			  /*
-			  //Viewからフォーム入力の値を受け取る
-				//UTF-8にエンコード
-				request.setCharacterEncoding("UTF-8");
-				String userId = request.getParameter("userId");
-				String userName = request.getParameter("userName");
-				String userAddress = request.getParameter("userAddress");
-				String passWord = request.getParameter("passWord");
-				String conPassword = request.getParameter("conPassword");
+			  RequestDispatcher dispatch = getServletContext().getRequestDispatcher("/view/W0060View.jsp");
+			  dispatch.forward(request, response);
 
-				System.out.println("ユーザIDに" + userId + "が入力されました。");
-				System.out.println("ユーザ名に" + userName + "が入力されました。");
-				System.out.println("住所に" + userAddress + "が入力されました。");
-				System.out.println("パスワードに" + passWord + "が入力されました。");
-				System.out.println("確認用パスワードに" + conPassword + "が入力されました。");
-
-
-
-				//if() ユーザ登録ボタンを押した時
-				//List<HashMap<String, String>> userList = W0060Model.getBlank(userId);
-				// ユーザ情報変更の初期表示
-				List<HashMap<String, String>> userList = W0060Model.getUserList(userId);
-				if (userList != null && 0 < userList.size()) {
-					request.setAttribute("userList", userList);
-				}
-				*/
-
-				RequestDispatcher dispatch = getServletContext().getRequestDispatcher("/view/W0060View.jsp");
-			    dispatch.forward(request, response);
 			}catch(NullPointerException W0030nullException){
-				 RequestDispatcher dispatch = getServletContext().getRequestDispatcher("/view/W0010View.jsp");
-				 dispatch.forward(request, response);
+				RequestDispatcher dispatch = getServletContext().getRequestDispatcher("/view/W0010View.jsp");
+				dispatch.forward(request, response);
 			}
 	}
 }

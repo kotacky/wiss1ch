@@ -72,7 +72,7 @@ public class W0060Model {
 		Connection connection = null;
 		Statement statement = null;
 		int insertCount = 0;
-		System.out.println("W40M 引数は"+ userId +"です" );
+		System.out.println("W60M 引数は"+ userId +"です" );
 
 		try{
 			// コメント一覧照会実行
@@ -86,7 +86,6 @@ public class W0060Model {
 	        		+ " VALUES ('" + userId + "','"+ userName +"','"+ userAddress +"','"+ passWord +"', FALSE, FALSE, current_timestamp, current_timestamp)";
 	        System.out.println("W0060M : INSERT");
 	        insertCount = statement.executeUpdate(insertSql);
-
 	        System.out.println(insertSql);
 
 		}catch (SQLException e){
@@ -105,6 +104,41 @@ public class W0060Model {
 		}
 		return insertCount;
 	}
+	public static int updateUser(String userId,String userName, String userAddress, String passWord) {
+		Connection connection = null;
+		Statement statement = null;
+		int updateCount = 0;
+
+		try{
+			// コメント一覧照会実行
+			connection = DBAccessUtils.getConnection();													//DBへ接続
+			statement = connection.createStatement();													//Statementを取得するためのコード
+
+	        //自動コミットを有効にする
+	        connection.setAutoCommit(true);
+	        //コメントの追加
+	        String updateSql = "UPDATE t_user_info" + "SET user_name = userName,userAddress = User_address,update_date=current_timestamp,update_user=userId password = passWord," + "WHERE user_ID = userid";
+	        System.out.println("W0060M : update");
+	        updateCount = statement.executeUpdate(updateSql);
+	        System.out.println(updateSql);
+
+		}catch (SQLException e){
+			System.err.println("ユーザ情報変更SQL failed.");
+			e.printStackTrace ();
+		}finally{
+			try {
+	 		// もろもろクローズ処理
+				statement.close();
+				connection.close();
+			} catch (Exception e) {
+
+				System.err.println("クローズ処理失敗!!");
+				e.printStackTrace ();
+			}
+		}
+		return updateCount;
+	}
+
 
 }
 

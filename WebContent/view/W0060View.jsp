@@ -25,6 +25,7 @@
      		document.MyForm.action = "<%= request.getContextPath() %>/W0060Control"
 		}
 
+
        </script>
  	 </head>
 	 <body>
@@ -33,27 +34,31 @@
  	<fieldset>
  	 		<div align="right">
 			<% out.print(session.getAttribute("userName")); %>
+			<% String updateFlg = request.getAttribute("updateFlg").toString(); %>
+			<% String userId = request.getAttribute("userId").toString(); %>
+			<% String userName = request.getAttribute("userName").toString(); %>
+			<% String userAddress = request.getAttribute("userAddress").toString(); %>
     		<a style="margin-left:20px"class="button" name="logout" onClick="logOut();"><img src="<%= request.getContextPath() %>/view/img/153.142.124.217 (2).gif"></a>
     	    </div>
 
     		<h1>
    		    <img src="<%= request.getContextPath() %>/view/img/wiss1ch.png">
     		</h1>
-			<CENTER><font size=6>ユーザー登録入力画面</font></CENTER><br></br>
+			<CENTER><font size=6>ユーザー<% if(updateFlg.equals("1")){ out.print("変更"); }else{ out.print("登録");}  %>入力画面</font></CENTER><br></br>
 			<CENTER>
 				<table border="1">
 
 					<tr>
 						<td>ユーザーID(半角英数字)：</td>
-						<td><input  type="text" name="userId" size="20" maxlength="10" required></td>
+						<td><input <% if (updateFlg.equals("1")) { out.print("disabled");}%> value="<% if (updateFlg.equals("1")) { out.print(userId);}%>"  type="text" name="userId" size="20" maxlength="10" required></td>
 					</tr>
 					<tr>
 						<td>ユーザー名(全角文字)：</td>
-						<td><input  type="text" name="userName" size="20" maxlength="10"required></td>
+						<td><input  type="text" name="userName" value="<% if (updateFlg.equals("1")) { out.print(userName);}%>" size="20" maxlength="10"required></td>
 					</tr>
 					<tr>
 						<td>住所：</td>
-						<td><textarea name=userAddress cols="30" rows="3" required></textarea></td>
+						<td><textarea name=userAddress value="<% if (updateFlg.equals("1")) { out.print(userAddress);}%>" cols="30" rows="3" required></textarea></td>
 					</tr>
 					<tr>
 						<td>パスワード(半角文字　8字以上)：</td>

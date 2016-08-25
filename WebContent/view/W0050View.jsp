@@ -133,7 +133,7 @@
 
 							<tr>
 								<td><input type="checkbox" <%= chk1  %> name="chkbox" style="width:17px;height:17px;"value="<%= userInfo.get("userId") %>" onClick="chk();"></td>
-								<td><a onClick="move('<%=userId %>,<%=userName %>,<%=userAddress %>');"   href="#"  value=""  ><% out.print(userInfo.get("userName")); %></a></td>
+								<td><a onClick="move('<%=userId %>,<%=userName %>,<%=userAddress %>');"   href="#"  value=""  ><% out.print(userInfo.get("userId")); %></a></td>
 								<td><% out.print(userInfo.get("userName")); %></td>
 								<td><a href="javascript:void(0);"	onclick=window.open("http://maps.google.co.jp/maps?q=<% out.print(encorded_addr);%>",'GoogleMap','width=700,height=400')> <% out.print(userAddress); %> </a></td>
 								<td>

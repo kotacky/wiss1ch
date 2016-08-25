@@ -68,7 +68,7 @@
 					</tr>
 					<tr>
 						<td>住所：</td>
-						<td><textarea name=userAddress value="<% if (updateFlg.equals("1")) { out.print(userAddress);}%>" cols="30" rows="3" required></textarea></td>
+						<td><textarea name=userAddress value="<% if (updateFlg.equals("1")) { out.print(userAddress);}%>" cols="30" rows="3" required><% if (updateFlg.equals("1")) { out.print(userAddress);}%></textarea></td>
 					</tr>
 					<tr>
 						<td>パスワード(半角文字　8字以上)：</td>

@@ -9,7 +9,6 @@
 	<script type="text/javascript">
 
 	//リクエストパラメータの文字コードを指定
-		request.setCharacterEncoding("UTF-8");
 		function logOut(){
 			MyMessage = confirm("ログアウトします。よろしいですか？");
 			if ( MyMessage == true ){
@@ -20,16 +19,27 @@
 			}
          }
 
-		function Registration(){
-		    document.MyForm.actionId.value = 'Registration';
-     		document.MyForm.action = "<%= request.getContextPath() %>/W0060Control"
-		}
+		function Registration(Update){
+				alert(Update);
+     			if(Update == "1"){
+        			//flagが1の場合更新
+	        		alert("update:");
+	        		document.MyForm.actionId.value = 'update';
+	        		document.MyForm.hiddenUserid.value = document.MyForm.userId.value;
+        		}else{
+        			//flagが0の場合新規登録
+	        		alert("insert:");
+	        		document.MyForm.actionId.value = 'Registration';
+        		}
+        		//alert("actionID : " + document.MyForm.actionId.value);
+        		document.MyForm.action = "<%= request.getContextPath() %>/W0060Control"
+        	   // document.MyForm.submit();
+  		}
 
 
        </script>
  	 </head>
 	 <body>
-
  	<form name="MyForm" method="POST" action="#">
  	<fieldset>
  	 		<div align="right">
@@ -88,9 +98,11 @@
 						</td>
 					</tr>
 				</table> <br></br>　
-						<input type="submit" value="登録" onClick="Registration()">
+						<input type="submit" value=<% if(updateFlg.equals("1")){ out.print("変更"); }else{ out.print("登録");}  %> onClick="Registration(<%= updateFlg%>)">
 
 						<input type ="hidden" name ="actionId" value ="">
+						<input type ="hidden" name ="hiddenUserid" value ="">
+
 			</CENTER>
 	</fieldset>
 	</form>

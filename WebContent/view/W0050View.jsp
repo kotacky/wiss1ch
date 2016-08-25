@@ -28,6 +28,7 @@
 		}
 
 		function user_Regist(){
+			document.MyForm.actionId.value = 'userRegist';
 			document.MyForm.action = "<%= request.getContextPath() %>/W0060Control"
 			document.MyForm.submit();
 		}

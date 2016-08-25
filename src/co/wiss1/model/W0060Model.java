@@ -68,7 +68,7 @@ public class W0060Model {
 	}
 
 
-	public static int registarUser(String userId, String userName, String userAddress, String passWord, String conPassword) {
+	public static int registarUser(String loginUser, String userId, String userName, String userAddress, String passWord, String conPassword) {
 		Connection connection = null;
 		Statement statement = null;
 		int insertCount = 0;
@@ -82,11 +82,10 @@ public class W0060Model {
 	        //自動コミットを有効にする
 	        connection.setAutoCommit(true);
 	        //コメントの追加
-	        String insertSql = "INSERT INTO t_user_info (user_id, user_name, user_address, password, delete_flg, admin_flg, create_date, update_date)"
-	        		+ " VALUES ('" + userId + "','"+ userName +"','"+ userAddress +"','"+ passWord +"', FALSE, FALSE, current_timestamp, current_timestamp)";
-	        System.out.println("W0060M : INSERT");
-	        insertCount = statement.executeUpdate(insertSql);
-	        System.out.println(insertSql);
+	        String insertSql = "INSERT INTO t_user_info (user_id, user_name, user_address, password, delete_flg, admin_flg, create_date, update_date, create_user, update_user)"
+	        		+ " VALUES ('" + userId + "','"+ userName +"','"+ userAddress +"','"+ passWord +"', FALSE, FALSE, current_timestamp, current_timestamp, '" + loginUser + "', '" + loginUser +"')";
+	        System.out.println("W0060M :" + insertSql);
+	        insertCount = statement.executeUpdate (insertSql);
 
 		}catch (SQLException e){
 			System.err.println("ユーザ登録SQL failed.");
@@ -104,7 +103,7 @@ public class W0060Model {
 		}
 		return insertCount;
 	}
-	public static int updateUser(String userId,String userName, String userAddress, String passWord) {
+	public static int updateUser(String loginUser ,String userId,String userName, String userAddress, String passWord, String conPassword) {
 		Connection connection = null;
 		Statement statement = null;
 		int updateCount = 0;
@@ -116,11 +115,12 @@ public class W0060Model {
 
 	        //自動コミットを有効にする
 	        connection.setAutoCommit(true);
+
 	        //コメントの追加
-	        String updateSql = "UPDATE t_user_info" + "SET user_name = userName,userAddress = User_address,update_date=current_timestamp,update_user=userId password = passWord," + "WHERE user_ID = userid";
-	        System.out.println("W0060M : update");
-	        updateCount = statement.executeUpdate(updateSql);
-	        System.out.println(updateSql);
+	        String updateSql = "UPDATE t_user_info SET user_name ='" + userName + "' , user_address ='" + userAddress +"', password ='" + passWord + "', update_date = current_timestamp , update_user ='" + loginUser +"'  WHERE  user_id = '"+ userId +"';";
+
+	        System.out.println("W0060M : " + updateSql );
+	        updateCount = statement.executeUpdate( updateSql );
 
 		}catch (SQLException e){
 			System.err.println("ユーザ情報変更SQL failed.");

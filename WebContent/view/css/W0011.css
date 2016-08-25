@@ -1,0 +1,13 @@
+h1 {
+	text-align: center;
+	padding: 1em 0;
+    color:#6A5ACD;
+    font-size: 50px;
+}
+
+body {
+	font-family: 'FontAwesome', sans-serif;
+ 	color: #5e5e5e;
+ 	font: 400 87.5%/1.5em 'Open Sans', sans-serif;
+ 	background: #fdf8d9;
+}

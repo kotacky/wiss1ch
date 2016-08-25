@@ -6,7 +6,7 @@
 <html lang="ja">
 	<head>
 		<meta charset="UTF-8" />
-		<link href="<%= request.getContextPath() %>/view/css/W0010.css" rel="stylesheet" type="text/css" />
+		<link href="<%= request.getContextPath() %>/view/css/W0011.css" rel="stylesheet" type="text/css" />
 		<title>WISS1ch</title>
 
 		<script type="text/javascript">
@@ -48,7 +48,7 @@
 					<!-- Wiss1chロゴ画像表示 -->
 				    <img src="<%= request.getContextPath() %>/view/img/wiss1ch.png">
     			</h1>
-    			<font color=#44FF00 size=5>WISS1ちゃんねる メニュー</font>
+    			<font color=#0074bf size=5>WISS1ちゃんねる ポータルメニュー</font>
 				</CENTER>
 			</div>
 			<br><br>

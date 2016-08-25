@@ -1,12 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ page import = "java.util.HashMap"%>
 <%@ page import = "java.util.List" %>
-<%@ page import = "java.awt.image.BufferedImage" %>
-<%@ page import = "java.awt.Graphics2D" %>
-<%@ page import = "java.io.ByteArrayInputStream" %>
-<%@ page import = "java.io.File" %>
-<%@ page import = "javax.imageio.ImageIO" %>
-<%@ page import = "javax.swing.ImageIcon" %>
 <%@ page import = "javax.xml.bind.DatatypeConverter" %>
 <!DOCTYPE html>
 <html lang=ja>
@@ -42,24 +36,20 @@
 			function newinsert(command){
 	    		var k = document.MyForm.text.value.trim();
 				var l = document.MyForm.text.value.length;
-				alert("|" + k + "|" + ":" + k.length );
+				//alert("|" + k + "|" + k.length );
 				if(k <= 3){
 					alert("文字数が不足しています");
 				}else if(l <= 3){
 					alert("文字数が不足しています");
 				}else if (l<=200){
-					//if(document.Myform.imgfile.type == 'image/*'){
-						myRet = confirm("投稿しますか？");
-						if(myRet == true ){
-							document.MyForm.actionId.value = command;
-							document.MyForm.action = "<%= request.getContextPath() %>/W0040Control"
-							document.MyForm.submit();
-						}else if(myRet == false){
-							alert("キャンセルされました");
-						}
-					//}else{
-					//	alert("許可されていないファイルが選択されています");
-					//}
+					myRet = confirm("投稿しますか？");
+					if(myRet == true ){
+						document.MyForm.actionId.value = command;
+						document.MyForm.action = "<%= request.getContextPath() %>/W0040Control"
+						document.MyForm.submit();
+					}else if(myRet == false){
+						alert("キャンセルされました");
+					}
 				}else if (l > 200){
 					alert("200文字以内で入力してください");
 				}
@@ -133,6 +123,7 @@
 				}
 			}
 		</script>
+
 	</head>
     <body>
         <form name="MyForm" enctype="multipart/form-data" method="POST" action="#">
@@ -173,7 +164,13 @@
 							for (j=0; j<k; j++) {
 								HashMap<String,String> commentInfo = commentList.get(j);
 								String comment = commentInfo.get("comment");
-								String OutputComment = comment.replaceAll("\n","<br>");
+								String OutputComment = comment.replaceAll("\n","<br>")
+																.replaceAll("&","&amp;")
+																.replaceAll("<","&lt;")
+																.replaceAll(">","&gt;")
+																.replaceAll("\"","&quot;")
+																.replaceAll("\'","&#39;");
+
 								String commentId = commentInfo.get("commentId");
 								String commentUserId = commentInfo.get("userId");
 								String UserName = commentInfo.get("userName");

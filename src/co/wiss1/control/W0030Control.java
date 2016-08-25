@@ -22,7 +22,7 @@ public class W0030Control extends HttpServlet{
 			HttpSession session = request.getSession(true);
 			try{
 			    String user = session.getAttribute("userName").toString();
-			    System.out.println("W0030C :SessionのuserNameが"+ user +"に入力されました");
+			    System.out.println("W0030C :SessionからuserName:"+ user +"を受け取りました");
 
 			    //初期値
 			    int ret = -1;
@@ -34,7 +34,7 @@ public class W0030Control extends HttpServlet{
 
 				// アクションIDの取得
 				String actionId = request.getParameter("actionId");
-				System.out.println("W0030C : actionIdは" + actionId + "です");
+				System.out.println("W0030C :actionIdは" + actionId + "です");
 
 				//登録する処理INSERT
 				if("insert".equals(actionId)) {
@@ -45,13 +45,13 @@ public class W0030Control extends HttpServlet{
 
 					//ViewからuserIdを受け取る
 					String userId = request.getParameter("userId");
-					System.out.println("W0030C USERID:" + userId + "が入力されている。");
+					System.out.println("W0030C USERID:" + userId + "が入力されました。");
 
 					//Viewから親カテゴリIDを受け取る
 					String parentId = request.getParameter("pldw");
-					System.out.println("W0030C ParentID:" + parentId + "が入力されている。");
+					System.out.println("W0030C ParentID:" + parentId + "が入力されました。");
 					if(parentId==null){
-						//エラーを吐く(？)
+						//エラーを吐く
 						ret = 0;
 					}
 

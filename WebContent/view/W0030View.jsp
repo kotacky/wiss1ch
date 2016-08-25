@@ -97,8 +97,8 @@
    			<a href="#"  onclick=go_portal();><img src="<%= request.getContextPath() %>/view/img/wiss1ch.png"></a>
     	</h1>
 
-      	<p><center><B><span style="font-size:16px">管理者画面</span></B></center></p>
-		<p><center><B><span style="font-size:16px">カテゴリの<% if(upflag.equals("1")){ out.print("変更"); }else{ out.print("追加");}  %></span></B><br>
+		<p><center><B><span style="font-size:22px">カテゴリの<% if(upflag.equals("1")){ out.print("変更"); }else{ out.print("追加");}  %></span></B>
+		<br><br>
 				<SELECT <% if(upflag.equals("1")){ out.print("disabled");} %> onchange= "changepulldown()"  name="pldw">
 					<OPTION value="0" selected disabled>大カテゴリを選択</OPTION>
 					<OPTION value="1">16'新人</OPTION>

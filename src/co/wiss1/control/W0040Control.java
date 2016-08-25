@@ -171,10 +171,10 @@ import co.wiss1.model.W0040Model;
 
 			// 初期表示
 			List<HashMap<String, String>> commentList = W0040Model.getCommentList(categoryId);
-			List<HashMap<String, BufferedImage>> ImgList = W0040Model.getImgList(categoryId);
+			HashMap<String, String> imgInfo = W0040Model.getImgList(categoryId);
 			if (commentList != null && 0 < commentList.size()) {
 				request.setAttribute("commentList", commentList);
-				request.setAttribute("ImgList", ImgList);
+				request.setAttribute("imgInfo", imgInfo);
 			}
 			RequestDispatcher dispatch =getServletContext().getRequestDispatcher("/view/W0040View.jsp");
 		    dispatch.forward(request, response);

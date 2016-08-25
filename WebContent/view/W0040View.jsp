@@ -48,14 +48,18 @@
 				}else if(l <= 3){
 					alert("文字数が不足しています");
 				}else if (l<=200){
-					myRet = confirm("投稿しますか？");
-					if(myRet == true ){
-						document.MyForm.actionId.value = command;
-						document.MyForm.action = "<%= request.getContextPath() %>/W0040Control"
-						document.MyForm.submit();
-					}else if(myRet == false){
-						alert("キャンセルされました");
-					}
+					//if(document.Myform.imgfile.type == 'image/*'){
+						myRet = confirm("投稿しますか？");
+						if(myRet == true ){
+							document.MyForm.actionId.value = command;
+							document.MyForm.action = "<%= request.getContextPath() %>/W0040Control"
+							document.MyForm.submit();
+						}else if(myRet == false){
+							alert("キャンセルされました");
+						}
+					//}else{
+					//	alert("許可されていないファイルが選択されています");
+					//}
 				}else if (l > 200){
 					alert("200文字以内で入力してください");
 				}
@@ -152,7 +156,7 @@
 
 
             <%  List<HashMap<String,String>> commentList = (List<HashMap<String,String>>)request.getAttribute("commentList"); %>
-            <%  List<HashMap<String,BufferedImage>> ImgList = (List<HashMap<String,BufferedImage>>)request.getAttribute("ImgList"); %>
+            <% HashMap<String,String> imgInfo = (HashMap<String,String>)request.getAttribute("imgInfo"); %>
 
 				<% try { %>
 				<CENTER>
@@ -187,12 +191,6 @@
 								} else {
 									chk1 ="disabled";
 								}
-
-								HashMap<String,BufferedImage> ImgInfo = ImgList.get(j);
-								BufferedImage Imgbyte = ImgInfo.get("img_bin");
-								boolean result = false;
-								//Graphics2D g = Imgbyte.createGraphics();
-								//g.drawImage(Imgbyte, null, 10, 10);
 					%>
 
 								<div class="margin">
@@ -209,6 +207,10 @@
 											</div>
 											<div style = "text-align : left">
 												<FONT size="4" color="<%out.print(post_font_color);%>"><% out.print(OutputComment);%></FONT>
+											</div>
+											<div style = "text-align : left">
+												<% String imgtext = imgInfo.get(commentId);%>
+												<img style="<% if(imgtext.length() == 0){out.print("display:none");}%>" width="150px" height="100px" src="data:image/png;base64,<%= imgInfo.get(commentId) %>">
 											</div>
 											<div style = "text-align : right">
 												<input type="submit" name="commentBtn" value="ｲｲﾈ!" onClick="good(<%=commentId%>);">
@@ -230,7 +232,7 @@
 	            コメント入力欄<textarea class="margin" input type="text" onkeyup="ShowLength( 'nummoji' , value );"  id="text" name="text"  rows="4" cols="40"  placeholder="コメント記入欄"></textarea>
 				<span id="nummoji">0文字</span>
 			</div>
-			<input class="margin" type="file" name="imgfile" accept='image/png' size="50" id=imgfile" value="画像選択">　　　　　　
+			<input class="margin" type="file" name="imgfile" accept='image/*' size="50" id=imgfile" value="画像選択">　　　　　　
             <input class="margin" type="submit" name="btn1" id="toukou" value ="投稿する" onClick="newinsert('newinsert');">
             <input class="margin" type="button" name="btn1" value ="削除する" <% if (commentList == null) { out.print("disabled"); }%> onClick="update('update');">
             <input class="margin" type="hidden" name="actionId" value="">
@@ -244,7 +246,7 @@
 	            コメント入力欄<textarea class="margin" input type="text" onkeyup="ShowLength( 'nummoji' , value );"  id="text" name="text"  rows="4" cols="40"  placeholder="コメント記入欄"></textarea>
 				<span id="nummoji">0文字</span>
 			</div>
-			<input class="margin" type="file" name="imgfile" accept='image/png' size="50" id=imgfile" value="画像選択">
+			<input class="margin" type="file" name="imgfile" accept='image/*' size="50" id=imgfile" value="画像選択">
 			<input class="margin" type="submit" name="btn1" value ="投稿する" onClick="newinsert('newinsert');">
             <input class="margin" type="button" name="btn1" value ="削除する" <% if (commentList == null) { out.print("disabled"); }%> onClick="update('update');">
             <input class="margin" type="hidden" name="actionId" value="">

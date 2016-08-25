@@ -1,8 +1,5 @@
 package co.wiss1.model;
 
-import java.awt.image.BufferedImage;
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -11,8 +8,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
-import javax.imageio.ImageIO;
+import com.sun.org.apache.xml.internal.security.utils.Base64;
 
 import co.wiss1.common.DBAccessUtils;
 
@@ -137,54 +133,46 @@ public class W0040Model {
 	}
 
 	//画像データ一覧の取得
-	public static List<HashMap<String, BufferedImage>> getImgList(String Id) {
-		// 画像一覧を格納する二次元文字列配列
-			List<HashMap<String, BufferedImage>> ImgList = new ArrayList<HashMap<String, BufferedImage>>();
-		// SQL実行結果格納用Set
-			ResultSet resultSet = null;
-		// DB接続コネクション
-			Connection connection = null;
-		// SQLステートメント
-			Statement statement = null;
+	public static HashMap<String, String> getImgList(String Id) {
+	// 画像一覧を格納する二次元文字列配列
+		HashMap<String, String> imgInfo = new HashMap<String, String>();
+	// SQL実行結果格納用Set
+		ResultSet resultSet = null;
+	// DB接続コネクション
+		Connection connection = null;
+	// SQLステートメント
+		Statement statement = null;
 
 		try {
-			// DB接続
-				connection = DBAccessUtils.getConnection();
-			// SQL実行準備
-				statement = connection.createStatement();
-			// SQL文作成
-				StringBuffer sb = new StringBuffer();
-				//画像バイナリだけ
-				sb.append("SELECT p.img_bin "
-						+ "FROM t_post p LEFT OUTER JOIN t_category c "
-						+ "ON c.category_id = p.category_id "
-						+ "WHERE p.category_id = '"+ Id +"' AND p.delete_flg = 'f' "
-						+ "ORDER BY p.post_id	");
-				System.out.println("W0040M getImgList:" + sb.toString());
-			// SQL文実行
-				resultSet = statement.executeQuery(sb.toString());
+		// DB接続
+			connection = DBAccessUtils.getConnection();
+		// SQL実行準備
+			statement = connection.createStatement();
+		// SQL文作成
+			StringBuffer sb = new StringBuffer();
+		//画像バイナリだけ
+			sb.append("SELECT p.post_id, p.img_bin "
+					+ "FROM t_post p LEFT OUTER JOIN t_category c "
+					+ "ON c.category_id = p.category_id "
+					+ "WHERE p.category_id = '"+ Id +"' AND p.delete_flg = 'f' "
+					+ "ORDER BY p.post_id	");
+			System.out.println("W0040M getImgList:" + sb.toString());
+		// SQL文実行
+			resultSet = statement.executeQuery(sb.toString());
 
-				String color;
-				String colorcode = null;
-			// 実行結果の取得
+		// 実行結果の取得
 			while(resultSet.next()) {
-				//Idはpost_idを獲得
-				HashMap<String, BufferedImage> ImgInfo = new HashMap<String, BufferedImage>();
-
 				//画像の取得とImgInfoへのput
-		        byte[] Imgbyte = resultSet.getBytes("img_bin");
-		        BufferedImage bimg = ImageIO.read(new ByteArrayInputStream(Imgbyte));
-		        ImgInfo.put("Imgbyte", bimg);
-				System.out.println("W0040M getImgSize:" + Imgbyte.length);
+				byte[] Imgbyte = resultSet.getBytes("img_bin");
 
-		        //イメージリストにイメージインフォを送る
-				ImgList.add(ImgInfo);
+				//Base64エンコード
+		        String img = Base64.encode(Imgbyte);
+		        String commentId = resultSet.getString("post_id");
+		        imgInfo.put(commentId, img);
+		        System.out.println("W0040M getImgSize:" + Imgbyte.length);
 			}
 		} catch (SQLException e) {
 			System.out.println("リスト取得SQL実行処理失敗!!");
-			e.printStackTrace();
-		} catch (IOException e){
-			System.out.println("ImageIOエラー発生");
 			e.printStackTrace();
 		} finally {
 			try {
@@ -199,7 +187,7 @@ public class W0040Model {
 			}
 		}
 		//作ったコメントリストを返す
-		return ImgList;
+		return imgInfo;
 	}
 
 	//いいね

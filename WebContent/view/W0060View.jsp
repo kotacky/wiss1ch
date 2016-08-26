@@ -20,15 +20,15 @@
          }
 
 		function Registration(Update){
-				alert(Update);
+				//alert(Update);
      			if(Update == "1"){
         			//flagが1の場合更新
-	        		alert("update:");
+	        		//alert("update:");
 	        		document.MyForm.actionId.value = 'update';
 	        		document.MyForm.hiddenUserid.value = document.MyForm.userId.value;
         		}else{
         			//flagが0の場合新規登録
-	        		alert("insert:");
+	        		//alert("insert:");
 	        		document.MyForm.actionId.value = 'Registration';
         		}
         		//alert("actionID : " + document.MyForm.actionId.value);
@@ -38,9 +38,9 @@
 
 		function changepuldown(){
 			var select = document.MyForm.fontColor.selectedIndex;
-			alert("index:"+select);
+			//alert("index:"+select);
 			var selectValue = document.MyForm.fontColor.options[select].value;
-			alert("value:"+selectValue);
+			//alert("value:"+selectValue);
 		}
 
 
@@ -51,16 +51,19 @@
  	<fieldset>
  	 		<div align="right">
 			<% out.print(session.getAttribute("userName")); %>
-			<% String updateFlg = request.getAttribute("updateFlg").toString(); %>
-			<% String userId = request.getAttribute("userId").toString(); %>
-			<% String userName = request.getAttribute("userName").toString(); %>
-			<% String userAddress = request.getAttribute("userAddress").toString(); %>
+			<% String updateFlg = (String)request.getAttribute("updateFlg"); %>
+			<% String userId = (String)request.getAttribute("userId"); %>
+			<% String userName = (String)request.getAttribute("userName"); %>
+			<% String userAddress = (String)request.getAttribute("userAddress"); %>
     		<a style="margin-left:20px"class="button" name="logout" onClick="logOut();"><img src="<%= request.getContextPath() %>/view/img/153.142.124.217 (2).gif"></a>
     	    </div>
 
     		<h1>
    		    <img src="<%= request.getContextPath() %>/view/img/wiss1ch.png">
     		</h1>
+
+    		<% String registar = request.getAttribute("registar").toString();%>
+    		<% if(registar.equals("0")){out.print("<CENTER><font size='6'>ユーザIDが重複しています。</font></CENTER>");}%>
 			<CENTER><font size=6>ユーザー<% if(updateFlg.equals("1")){ out.print("変更"); }else{ out.print("登録");}  %>入力画面</font></CENTER><br></br>
 			<CENTER>
 				<table border="1">

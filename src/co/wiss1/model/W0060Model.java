@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import org.postgresql.util.PSQLException;
+
 import co.wiss1.common.DBAccessUtils;
 
 public class W0060Model {
@@ -51,7 +53,7 @@ public class W0060Model {
 				System.out.println(userInfo.get("passWord"));
 			}
 		} catch (SQLException e) {
-			System.out.println("カテゴリ一覧SQL実行処理失敗!!");
+			System.out.println("ユーザ一覧SQL実行処理失敗!!");
 			e.printStackTrace();//どういうバグがあって落ちたのかログを保存する
 		} finally {
 			try {
@@ -86,7 +88,9 @@ public class W0060Model {
 	        		+ " VALUES ('" + userId + "','"+ userName +"','"+ userAddress +"','"+ passWord +"', FALSE, FALSE, current_timestamp, current_timestamp, '" + loginUser + "', '" + loginUser +"', '" + fontColor +"')";
 	        System.out.println("W0060M :" + insertSql);
 	        insertCount = statement.executeUpdate (insertSql);
-
+		}catch(PSQLException pe){
+			System.err.println("ユーザ重複SQL failed.");
+			pe.printStackTrace ();
 		}catch (SQLException e){
 			System.err.println("ユーザ登録SQL failed.");
 			e.printStackTrace ();

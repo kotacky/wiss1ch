@@ -45,9 +45,7 @@ public class W0060Control extends HttpServlet{
 				request.setAttribute("userId", userId);
 				request.setAttribute("userName", userName);
 				request.setAttribute("userAddress", userAddress);
-
-				// パスワードをハッシュ化
-				//	  String hashedpassword = RealmBase.Digest(passWord, "SHA-1", "Windows-31J");
+				request.setAttribute("registar", "1");
 			}
 
 			//ユーザ情報更新画面で更新ボタンを押したとき

@@ -107,20 +107,13 @@
 
 						%>
 						<% String sessionflag = session.getAttribute("adminFlg").toString();
+						   String sessionuser = session.getAttribute("userId").toString();
 
-						System.out.println("★権限は" + sessionflag + "です！！！★");
-
-						   String chk1 = null;
-						   String chk2 = null;
-			  			  String str1 = "t";
-			    		  if(sessionflag.equals(str1) ){
-			    		      String str2 = "true";
-			    		      chk1 = str2;
-			    		  }else{
-			    			  String str2 = "disabled";
-			    			  chk1 = str2;
-
-			    		     }	%>
+						System.out.println("★権限は" + sessionflag + "です！！！★"); %>
+						<%
+							String chk1 = null;
+							String str1 = "t";
+						%>
 
 						<% if (userList != null) { %>
 
@@ -130,6 +123,7 @@
 							<%String admin = userInfo.get("userAdmin");  %>
 							<%String userAddress = userInfo.get("userAddress");  %>
 							<%String encorded_addr = URLEncoder.encode(userAddress, "UTF-8"); %>
+							<%if(sessionflag.equals(str1) && !(sessionuser.equals(userId))){chk1 = "";}else{chk1 = "disabled";} %>
 
 							<tr>
 								<td><input type="checkbox" <%= chk1  %> name="chkbox" style="width:17px;height:17px;"value="<%= userInfo.get("userId") %>" onClick="chk();"></td>
@@ -148,6 +142,7 @@
 <% } %>
 				</tbody>
 			</table>
+			<%if(sessionflag.equals(str1)){chk1 = "";}else{chk1 = "disabled";} %>
 			<input type="hidden" name="process">
 			<input type="hidden" name="employeeAuthority" value="<%= session.getAttribute("employeeAuthority") %>">
 

@@ -50,11 +50,15 @@
 		}
 
 
+		function go_portal(){
+			document.MyForm.action = "<%= request.getContextPath() %>/W0011Control"
+			document.MyForm.submit();
+		}
+
        </script>
  	 </head>
 	 <body>
  	<form name="MyForm" method="POST" action="#">
- 	<fieldset>
  	 		<div align="right">
 			<% out.print(session.getAttribute("userName")); %>
 			<% String updateFlg = (String)request.getAttribute("updateFlg"); %>
@@ -65,8 +69,9 @@
     	    </div>
 
     		<h1>
-   		    <img src="<%= request.getContextPath() %>/view/img/wiss1ch.png">
+   		    <a href="#"  onclick=go_portal();><img src="<%= request.getContextPath() %>/view/img/wiss1ch.png"></a>
     		</h1>
+			<input type="button"  value="戻る"  style="position: absolute; left: 20px; top: 0px;" onClick="javascript:history.back();">
 
     		<% String registar = request.getAttribute("registar").toString();%>
     		<CENTER><font size=6>ユーザー<% if(updateFlg.equals("1")){ out.print("変更"); }else{ out.print("登録");}  %>画面</font></CENTER><br></br>
@@ -121,7 +126,6 @@
 						<input type ="hidden" name ="hiddenUserid" value ="">
 
 			</CENTER>
-	</fieldset>
 	</form>
 	</body>
 </html>

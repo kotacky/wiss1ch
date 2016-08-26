@@ -70,7 +70,7 @@
 
     		<% String registar = request.getAttribute("registar").toString();%>
     		<CENTER><font size=6>ユーザー<% if(updateFlg.equals("1")){ out.print("変更"); }else{ out.print("登録");}  %>画面</font></CENTER><br></br>
-			<% if(registar.equals("0")){out.print("<CENTER><font size='2' >ユーザIDが重複しています。</font></CENTER><br></br>");}%>
+			<% if(registar.equals("0")){out.print("<CENTER><font size='2' color = 'red'>ユーザIDが重複しています。</font></CENTER><br></br>");}%>
 
 			<CENTER>
 				<table border="1">

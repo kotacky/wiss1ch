@@ -80,11 +80,11 @@
 		<% } %>
 
  	 	<div align="right">
-			<% out.print(session.getAttribute("userName")); %>
 			<% String insertFlag = (String) request.getAttribute("insertFlag"); %>
 			<% System.out.println("W0030V insertFLAG=" + insertFlag); %>
 			<% String upflag = (String) request.getAttribute("update_flag"); %>
 			<% String cid = (String) request.getAttribute("categoryId"); %>
+			<% out.print(session.getAttribute("userName")); %>
     		<a style="margin-left:20px"class="button" name="logout"onClick="logOut();"><img src="<%= request.getContextPath() %>/view/img/153.142.124.217 (2).gif"></a>
     	</div>
 
@@ -94,11 +94,11 @@
    			<a href="#"  onclick=go_portal();><img src="<%= request.getContextPath() %>/view/img/wiss1ch.png"></a>
     	</h1>
 
-		<% if("0".equals(insertFlag)){ %>
-			<H2><% out.print("<CENTER>カテゴリ名が重複しているか、大カテゴリが選択されていません。</CENTER>"); %></H2>
-		<% } %>
-		<p><center><B><span style="font-size:22px">カテゴリの<% if(upflag.equals("1")){ out.print("変更"); }else{ out.print("追加");}  %></span></B>
+		<p><center><B><span style="font-size:32px">カテゴリ<% if(upflag.equals("1")){ out.print("変更"); }else{ out.print("登録");}%>画面</span></B>
 		<br><br>
+		<% if("0".equals(insertFlag)){ %>
+			<H2><% out.print("<CENTER><font size=2 color=red>カテゴリ名が重複しているか、大カテゴリが選択されていません。</font></CENTER>"); %></H2>
+		<% } %>
 				<SELECT <% if(upflag.equals("1")){ out.print("disabled");} %> onchange= "changepulldown()"  name="pldw">
 					<OPTION value="0" selected disabled>大カテゴリを選択</OPTION>
 					<OPTION value="1">16'新人</OPTION>

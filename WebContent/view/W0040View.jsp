@@ -37,7 +37,7 @@
 	    		var k = document.MyForm.text.value.trim();
 				var l = document.MyForm.text.value.length;
 				//alert("|" + k + "|" + k.length );
-				if(k <= 3){
+				if(k.length <= 3){
 					alert("文字数が不足しています");
 				}else if(l <= 3){
 					alert("文字数が不足しています");

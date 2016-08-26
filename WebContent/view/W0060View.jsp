@@ -21,7 +21,13 @@
 
 		function Registration(Update){
 				//alert(Update);
-     			if(Update == "1"){
+
+				//パスワードが一致していなかった場合
+				if(document.MyForm.passWord.value != document.MyForm.conPassword.value){
+					alert("パスワードが一致していません。");
+					return;
+				}else if(Update == "1"){
+					//パスワードが一致していた時
         			//flagが1の場合更新
 	        		//alert("update:");
 	        		document.MyForm.actionId.value = 'update';
@@ -63,18 +69,19 @@
     		</h1>
 
     		<% String registar = request.getAttribute("registar").toString();%>
-    		<% if(registar.equals("0")){out.print("<CENTER><font size='6'>ユーザIDが重複しています。</font></CENTER>");}%>
-			<CENTER><font size=6>ユーザー<% if(updateFlg.equals("1")){ out.print("変更"); }else{ out.print("登録");}  %>入力画面</font></CENTER><br></br>
+    		<CENTER><font size=6>ユーザー<% if(updateFlg.equals("1")){ out.print("変更"); }else{ out.print("登録");}  %>画面</font></CENTER><br></br>
+			<% if(registar.equals("0")){out.print("<CENTER><font size='2' >ユーザIDが重複しています。</font></CENTER><br></br>");}%>
+
 			<CENTER>
 				<table border="1">
 
 					<tr>
 						<td>ユーザーID(半角英数字)：</td>
-						<td><input <% if (updateFlg.equals("1")) { out.print("disabled");}%> value="<% if (updateFlg.equals("1")) { out.print(userId);}%>"  type="text" name="userId" size="20" maxlength="10" required></td>
+						<td><input pattern=^[0-9A-Za-z]+$ <% if (updateFlg.equals("1")) { out.print("disabled");}%> value="<% if (updateFlg.equals("1")) { out.print(userId);}%>"  type="text" name="userId" size="20" maxlength="10" required></td>
 					</tr>
 					<tr>
 						<td>ユーザー名(全角文字)：</td>
-						<td><input  type="text" name="userName" value="<% if (updateFlg.equals("1")) { out.print(userName);}%>" size="20" maxlength="10"required></td>
+						<td><input pattern=[^\x20-\x7E]* type="text" name="userName" value="<% if (updateFlg.equals("1")) { out.print(userName);}%>" size="20" maxlength="10"required></td>
 					</tr>
 					<tr>
 						<td>住所：</td>
@@ -82,11 +89,11 @@
 					</tr>
 					<tr>
 						<td>パスワード(半角文字　8字以上)：</td>
-						<td><input type="password" name="passWord" size="20" maxlength="40" required></td>
+						<td><input pattern=^([a-zA-Z0-9]{8,})$ type="password" name="passWord" size="20" maxlength="40" required></td>
 					</tr>
 					<tr>
 						<td>確認用パスワード(半角文字　8字以上)：</td>
-						<td><input type="password" name="conPassword" size="20" maxlength="40" required></td>
+						<td><input pattern=^([a-zA-Z0-9]{8,})$ type="password" name="conPassword" size="20" maxlength="40" required></td>
 					</tr>
 					<tr>
 						<td>文字色：</td>

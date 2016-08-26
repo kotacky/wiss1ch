@@ -75,7 +75,7 @@
 			    	dispatch.forward(request, response);
 		    	}
 		    %>
-			<% String insertFlag = request.getAttribute("insertFlag").toString(); %>
+			<% String insertFlag = (String) request.getAttribute("insertFlag"); %>
 			<% System.out.println("W0030V insertFLAG=" + insertFlag); %>
 			<% if("0".equals(insertFlag)){ %>
 				<H2><% out.print("カテゴリ名が重複しているか、大カテゴリが選択されていません。"); %></H2>
@@ -86,8 +86,8 @@
 
  	 	<div align="right">
 			<% out.print(session.getAttribute("userName")); %>
-			<% String upflag = request.getAttribute("update_flag").toString(); %>
-			<% String cid = request.getAttribute("categoryId").toString(); %>
+			<% String upflag = (String) request.getAttribute("update_flag"); %>
+			<% String cid = (String) request.getAttribute("categoryId"); %>
     		<a style="margin-left:20px"class="button" name="logout"onClick="logOut();"><img src="<%= request.getContextPath() %>/view/img/153.142.124.217 (2).gif"></a>
     	</div>
 

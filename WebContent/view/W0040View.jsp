@@ -143,7 +143,7 @@
             <% String chk2 = "t";%>
             <% String Id; %>
             <% Id = request.getAttribute("Id").toString(); %>
-    		<% //out.print(user_font_color); %>
+    		<% out.print(user_font_color); %>
 
 
             <%  List<HashMap<String,String>> commentList = (List<HashMap<String,String>>)request.getAttribute("commentList"); %>

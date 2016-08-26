@@ -61,43 +61,43 @@ public class W0040Model {
 
 				//文字色の実装
 				color = resultSet.getString("font_color");
-				System.out.println(color);
+				System.out.println("W0040M colorVal:" + color);
 
 				switch(color){
-					case "1 ":
+					case "1":
 						colorcode = "#000000";
 						break;
-					case "2 ":
+					case "2":
 						colorcode = "#ff0000";
 						break;
-					case "3 ":
+					case "3":
 						colorcode = "#0000ff";
 						break;
-					case "4 ":
+					case "4":
 						colorcode = "#008000";
 						break;
-					case "5 ":
+					case "5":
 						colorcode = "#ffcc00";
 						break;
-					case "6 ":
+					case "6":
 						colorcode = "#ffa500";
 						break;
-					case "7 ":
+					case "7":
 						colorcode = "#800080";
 						break;
-					case "8 ":
+					case "8":
 						colorcode = "#adff2f";
 						break;
-					case "9 ":
+					case "9":
 						colorcode = "#87ceeb";
 						break;
-					case "10 ":
+					case "10":
 						colorcode = "#000080";
 						break;
-					case "11 ":
+					case "11":
 						colorcode = "#a52a2a";
 						break;
-					case "12 ":
+					case "12":
 						colorcode = "#d2691e";
 						break;
 				}

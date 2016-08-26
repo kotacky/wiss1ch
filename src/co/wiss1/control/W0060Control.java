@@ -70,14 +70,14 @@ public class W0060Control extends HttpServlet{
 				// パスワードをハッシュ化
 				String hashedpassword = RealmBase.Digest(passWord, "SHA-1", "Windows-31J");
 				int registar = W0060Model.updateUser(loginUser,userId,userName,userAddress,hashedpassword,conPassword, fontColor);
-				request.setAttribute("registar",registar);
-				RequestDispatcher dispatch = getServletContext().getRequestDispatcher("/W0050Control");
-				dispatch.forward(request, response);
-
 				//自分の情報を更新していた場合
 				if(loginUser.equals(userId)){
 					session.setAttribute("font_color", fontColor);
 				}
+				request.setAttribute("registar",registar);
+				RequestDispatcher dispatch = getServletContext().getRequestDispatcher("/W0050Control");
+				dispatch.forward(request, response);
+				return;
 			}
 
 			//ユーザ一覧からユーザ登録ボタンを押したとき
@@ -85,19 +85,14 @@ public class W0060Control extends HttpServlet{
 			if ("userRegist".equals(actionId)){
 				System.out.println("W0060C 新規登録画面にいきます。");
 
-
 				request.setAttribute("userId", "");
 				request.setAttribute("userName", "");
 				request.setAttribute("userAddress", "");
-
-
-
 			}
 
 			//ユーザ新規登録画面で登録ボタンを押したとき
 			if ("Registration".equals(actionId)) {
-
-				System.out.println("W0060CS insertします。");
+				System.out.println("W0060C insertします。");
 
 				String userId = request.getParameter("userId");
 				String userName = request.getParameter("userName");
@@ -118,7 +113,7 @@ public class W0060Control extends HttpServlet{
 				request.setAttribute("registar",registar);
 				RequestDispatcher dispatch = getServletContext().getRequestDispatcher("/W0050Control");
 				dispatch.forward(request, response);
-
+				return;
 			}
 
 

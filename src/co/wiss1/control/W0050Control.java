@@ -26,13 +26,12 @@ public class W0050Control extends HttpServlet {
 		try {
 			String user = session.getAttribute("userName").toString();
 			String admin = session.getAttribute("adminFlg").toString();
-			System.out.print("W0050C" );
 
 			// アクションIDの取得
 			String actionId = request.getParameter("actionId");
 			String checkBox[] = request.getParameterValues("chkbox"); //Viewのchkboxの値を取得
 			String Id = session.getAttribute("userId").toString();
-			System.out.print("引数は"+Id );
+			System.out.println("W0050C 引数は"+Id );
 
 			// 削除
 			if ("Update".equals(actionId)) {
@@ -62,6 +61,7 @@ public class W0050Control extends HttpServlet {
 			RequestDispatcher dispatch =getServletContext().getRequestDispatcher("/view/W0050View.jsp");
 			dispatch.forward(request, response);
 			System.out.println("doPost end");
+			return;
 		}catch(NullPointerException W0030nullException){
 			RequestDispatcher dispatch =getServletContext().getRequestDispatcher("/view/W0010View.jsp");
 			dispatch.forward(request, response);

@@ -79,7 +79,7 @@
 			function good(cid){
 				document.MyForm.actionId.value = 'good';
 				document.MyForm.commentId.value = cid;
-	    		alert("いいねします ID:" + cid);
+	    		//alert("いいねします ID:" + cid);
 				document.MyForm.action = "<%= request.getContextPath() %>/W0040Control"
 				document.MyForm.submit();
 			}

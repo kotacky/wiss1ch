@@ -154,8 +154,7 @@
 						<% for (HashMap<String,String> categoryInfo : categoryList) { %>
 								<%String Id = categoryInfo.get("categoryId"); %>
 								<%String Name = categoryInfo.get("categoryName");
-								  String OutputName = Name.replaceAll("\n","<br>")
-																.replaceAll("&","&amp;")
+								  String OutputName = Name.replaceAll("&","&amp;")
 																.replaceAll("<","&lt;")
 																.replaceAll(">","&gt;")
 																.replaceAll("\"","&quot;")

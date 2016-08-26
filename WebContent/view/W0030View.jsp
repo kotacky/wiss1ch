@@ -75,17 +75,14 @@
 			    	dispatch.forward(request, response);
 		    	}
 		    %>
-			<% String insertFlag = (String) request.getAttribute("insertFlag"); %>
-			<% System.out.println("W0030V insertFLAG=" + insertFlag); %>
-			<% if("0".equals(insertFlag)){ %>
-				<H2><% out.print("カテゴリ名が重複しているか、大カテゴリが選択されていません。"); %></H2>
-			<% } %>
 
 		<% }catch(NullPointerException insertException){ %>
 		<% } %>
 
  	 	<div align="right">
 			<% out.print(session.getAttribute("userName")); %>
+			<% String insertFlag = (String) request.getAttribute("insertFlag"); %>
+			<% System.out.println("W0030V insertFLAG=" + insertFlag); %>
 			<% String upflag = (String) request.getAttribute("update_flag"); %>
 			<% String cid = (String) request.getAttribute("categoryId"); %>
     		<a style="margin-left:20px"class="button" name="logout"onClick="logOut();"><img src="<%= request.getContextPath() %>/view/img/153.142.124.217 (2).gif"></a>
@@ -97,6 +94,9 @@
    			<a href="#"  onclick=go_portal();><img src="<%= request.getContextPath() %>/view/img/wiss1ch.png"></a>
     	</h1>
 
+		<% if("0".equals(insertFlag)){ %>
+			<H2><% out.print("<CENTER>カテゴリ名が重複しているか、大カテゴリが選択されていません。</CENTER>"); %></H2>
+		<% } %>
 		<p><center><B><span style="font-size:22px">カテゴリの<% if(upflag.equals("1")){ out.print("変更"); }else{ out.print("追加");}  %></span></B>
 		<br><br>
 				<SELECT <% if(upflag.equals("1")){ out.print("disabled");} %> onchange= "changepulldown()"  name="pldw">

@@ -59,6 +59,7 @@ import co.wiss1.model.W0040Model;
 				System.out.println("*W40C いいねするコメントIDは" + CommentID + "です。");
 				System.out.println("*W40C いいねするユーザIDは" + userID + "です。");
 
+				//いいね関数
 				int goodCount = W0040Model.goodComment(CommentID, userID);
 				System.out.println("*W40C goodに" + goodCount + "が入力されました。");
 				request.setAttribute("goodCount",goodCount);
@@ -93,7 +94,7 @@ import co.wiss1.model.W0040Model;
 				System.out.println("W40C 投稿者名は"+ postName +"です" );
 
 				//文字色指定(sessionから取得)
-				String ColorStr = session.getAttribute("font_color").toString();
+				String ColorStr = (String) session.getAttribute("font_color");
 				System.out.println("W40C 色番号は"+ ColorStr +"です" );
 				//投稿者名変更
 				//Name:投稿される名前

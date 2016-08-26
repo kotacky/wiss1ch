@@ -54,9 +54,16 @@
 	<% try{ %>
 
 		<% String EMSG  = request.getAttribute("EMSG0001").toString(); %>
-
 			<H3 style="margin-left:80px;color:red"><% out.print(EMSG); %></H3>
+
 	<% }catch(NullPointerException deleteException){ %>
+		<%try{ %>
+
+		<% String EMSG4  = request.getAttribute("EMSG0004").toString(); %>
+			<H3 style="margin-left:80px;color:red"><% out.print(EMSG4); %></H3>
+
+		<%}catch(NullPointerException Exc){ %>
+		<%} %>
 	<% } %>
   <h1>Login</h1>
   <form name="myForm" method="POST" action="#">

@@ -153,10 +153,17 @@
 
 						<% for (HashMap<String,String> categoryInfo : categoryList) { %>
 								<%String Id = categoryInfo.get("categoryId"); %>
-								<%String Name = categoryInfo.get("categoryName"); %>
+								<%String Name = categoryInfo.get("categoryName");
+								  String OutputName = Name.replaceAll("\n","<br>")
+																.replaceAll("&","&amp;")
+																.replaceAll("<","&lt;")
+																.replaceAll(">","&gt;")
+																.replaceAll("\"","&quot;")
+																.replaceAll("\'","&#39;");
+						%>
 								<tr>
 									<td><input type="checkbox" <%= chk1  %> name="chkbox" style="width:17px;height:17px;"value="<%= categoryInfo.get("categoryId") %>" onClick="chk();"></td>
-									<td><a onClick="move('<%=Id %>,<%=Name %>');"   href="#"  value=""  ><% out.print(categoryInfo.get("categoryName")); %></a></td>
+									<td><a onClick="move('<%=Id %>,<%=OutputName %>');"   href="#"  value=""  ><% out.print(categoryInfo.get("categoryName")); %></a></td>
 						<% } %>
 					<% } %>
 					</tr>

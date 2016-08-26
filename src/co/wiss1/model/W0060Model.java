@@ -68,7 +68,7 @@ public class W0060Model {
 	}
 
 
-	public static int registarUser(String loginUser, String userId, String userName, String userAddress, String passWord, String conPassword) {
+	public static int registarUser(String loginUser, String userId, String userName, String userAddress, String passWord, String conPassword, String fontColor) {
 		Connection connection = null;
 		Statement statement = null;
 		int insertCount = 0;
@@ -82,8 +82,8 @@ public class W0060Model {
 	        //自動コミットを有効にする
 	        connection.setAutoCommit(true);
 	        //コメントの追加
-	        String insertSql = "INSERT INTO t_user_info (user_id, user_name, user_address, password, delete_flg, admin_flg, create_date, update_date, create_user, update_user)"
-	        		+ " VALUES ('" + userId + "','"+ userName +"','"+ userAddress +"','"+ passWord +"', FALSE, FALSE, current_timestamp, current_timestamp, '" + loginUser + "', '" + loginUser +"')";
+	        String insertSql = "INSERT INTO t_user_info (user_id, user_name, user_address, password, delete_flg, admin_flg, create_date, update_date, create_user, update_user, font_color)"
+	        		+ " VALUES ('" + userId + "','"+ userName +"','"+ userAddress +"','"+ passWord +"', FALSE, FALSE, current_timestamp, current_timestamp, '" + loginUser + "', '" + loginUser +"', '" + fontColor +"')";
 	        System.out.println("W0060M :" + insertSql);
 	        insertCount = statement.executeUpdate (insertSql);
 
@@ -103,7 +103,7 @@ public class W0060Model {
 		}
 		return insertCount;
 	}
-	public static int updateUser(String loginUser ,String userId,String userName, String userAddress, String passWord, String conPassword) {
+	public static int updateUser(String loginUser ,String userId,String userName, String userAddress, String passWord, String conPassword, String fontColor) {
 		Connection connection = null;
 		Statement statement = null;
 		int updateCount = 0;
@@ -117,7 +117,7 @@ public class W0060Model {
 	        connection.setAutoCommit(true);
 
 	        //コメントの追加
-	        String updateSql = "UPDATE t_user_info SET user_name ='" + userName + "' , user_address ='" + userAddress +"', password ='" + passWord + "', update_date = current_timestamp , update_user ='" + loginUser +"'  WHERE  user_id = '"+ userId +"';";
+	        String updateSql = "UPDATE t_user_info SET user_name ='" + userName + "' , user_address ='" + userAddress +"', password ='" + passWord + "', update_date = current_timestamp , update_user ='" + loginUser +"', font_color = '" + fontColor +"'  WHERE  user_id = '"+ userId +"';";
 
 	        System.out.println("W0060M : " + updateSql );
 	        updateCount = statement.executeUpdate( updateSql );

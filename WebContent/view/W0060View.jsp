@@ -36,6 +36,13 @@
         	   // document.MyForm.submit();
   		}
 
+		function changepuldown(){
+			var select = document.MyForm.fontColor.selectedIndex;
+			alert("index:"+select);
+			var selectValue = document.MyForm.fontColor.options[select].value;
+			alert("value:"+selectValue);
+		}
+
 
        </script>
  	 </head>
@@ -68,7 +75,7 @@
 					</tr>
 					<tr>
 						<td>住所：</td>
-						<td><textarea name=userAddress value="<% if (updateFlg.equals("1")) { out.print(userAddress);}%>" cols="30" rows="3" required><% if (updateFlg.equals("1")) { out.print(userAddress);}%></textarea></td>
+						<td><textarea name="userAddress" cols="30" rows="3" required><% if (updateFlg.equals("1")) { out.print(userAddress);}%></textarea></td>
 					</tr>
 					<tr>
 						<td>パスワード(半角文字　8字以上)：</td>
@@ -81,7 +88,7 @@
 					<tr>
 						<td>文字色：</td>
 						<td>
-						<select name=Font_color>
+						<select name="fontColor" onchange = "changepuldown()" >
 						<option style = "color : #000000 ;" value ="1">黒</option>
 						<option style = "color : #ff0000 ;" value ="2">赤</option>
 						<option style = "color : #0000ff ;" value ="3">青</option>

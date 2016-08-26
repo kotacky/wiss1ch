@@ -59,19 +59,25 @@ public class W0060Control extends HttpServlet{
 				String userAddress = request.getParameter("userAddress");
 				String passWord = request.getParameter("passWord");
 				String conPassword = request.getParameter("conPassword");
+				String fontColor = request.getParameter("fontColor");
 				System.out.println("W0060C ユーザーIDは"+userId +"です" );
 				System.out.println("W0060C ユーザー名は"+ userName +"です" );
 				System.out.println("W0060C 住所は"+ userAddress +"です" );
 				System.out.println("W0060C パスワードは"+ passWord +"です" );
-				System.out.println("W0060C パスワードは"+ conPassword +"です" );
+				System.out.println("W0060C 再確認パスワードは"+ conPassword +"です" );
+
 
 				// パスワードをハッシュ化
 				String hashedpassword = RealmBase.Digest(passWord, "SHA-1", "Windows-31J");
-				int registar = W0060Model.updateUser(loginUser,userId,userName,userAddress,hashedpassword,conPassword);
+				int registar = W0060Model.updateUser(loginUser,userId,userName,userAddress,hashedpassword,conPassword, fontColor);
 				request.setAttribute("registar",registar);
 				RequestDispatcher dispatch = getServletContext().getRequestDispatcher("/W0050Control");
 				dispatch.forward(request, response);
 
+				//自分の情報を更新していた場合
+				if(loginUser.equals(userId)){
+					session.setAttribute("font_color", fontColor);
+				}
 			}
 
 			//ユーザ一覧からユーザ登録ボタンを押したとき
@@ -98,15 +104,17 @@ public class W0060Control extends HttpServlet{
 				String userAddress = request.getParameter("userAddress");
 				String passWord = request.getParameter("passWord");
 				String conPassword = request.getParameter("conPassword");
+				String fontColor = request.getParameter("fontColor");
 				System.out.println("W0060C ユーザーIDは"+userId +"です" );
 				System.out.println("W0060C ユーザー名は"+ userName +"です" );
 				System.out.println("W0060C 住所は"+ userAddress +"です" );
 				System.out.println("W0060C パスワードは"+ passWord +"です" );
-				System.out.println("W0060C パスワードは"+ conPassword +"です" );
+				System.out.println("W0060C 再確認パスワードは"+ conPassword +"です" );
+				System.out.println("W0060C 文字色は"+ fontColor +"です" );
 
 				// パスワードをハッシュ化
 				String hashedpassword = RealmBase.Digest(passWord, "SHA-1", "Windows-31J");
-				int registar = W0060Model.registarUser(loginUser,userId,userName,userAddress,hashedpassword,conPassword);
+				int registar = W0060Model.registarUser(loginUser,userId,userName,userAddress,hashedpassword,conPassword,fontColor);
 				request.setAttribute("registar",registar);
 				RequestDispatcher dispatch = getServletContext().getRequestDispatcher("/W0050Control");
 				dispatch.forward(request, response);

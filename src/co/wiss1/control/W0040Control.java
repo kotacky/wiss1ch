@@ -65,7 +65,6 @@ import co.wiss1.model.W0040Model;
 				request.setAttribute("goodCount",goodCount);
 			}
 
-
 			// コメント登録(旧版)
 			if ("insert".equals(actionId)) {
 				System.out.println("W40C insertします。");

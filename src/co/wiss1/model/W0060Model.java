@@ -36,7 +36,7 @@ public class W0060Model {
 			//sb.append("SELECT user_id);
 			// SQL文実行
 			System.out.println("W0060M ," + sb.toString());
-			sb.append("SELECT user_id, user_name, user_address, password FROM t_user_info WHERE delete_flg = FALSE");
+			sb.append("SELECT user_id, user_name, user_address, user_mail, password FROM t_user_info WHERE delete_flg = FALSE");
 			System.out.println("W0060M getUsertList:" + sb.toString());
 			resultSet = statement.executeQuery(sb.toString());//resultSet実行した結executeQuery＝要求をＳＱＬとしてＤＢに投げる
 			// 実行結果の取得・次の行を呼ぶ
@@ -45,11 +45,13 @@ public class W0060Model {
 				userInfo.put("userId", resultSet.getString("user_id"));
 				userInfo.put("userName", resultSet.getString("user_name"));
 				userInfo.put("userAddress", resultSet.getString("user_address"));
+				userInfo.put("userMail", resultSet.getString("user_mail"));
 				userInfo.put("passWord", resultSet.getString("password"));
 				userList.add(userInfo);
 				System.out.println(userInfo.get("userId"));
 				System.out.println(userInfo.get("userName"));
 				System.out.println(userInfo.get("userAddress"));
+				System.out.println(userInfo.get("userMail"));
 				System.out.println(userInfo.get("passWord"));
 			}
 		} catch (SQLException e) {
@@ -70,7 +72,7 @@ public class W0060Model {
 	}
 
 
-	public static int registarUser(String loginUser, String userId, String userName, String userAddress, String passWord, String conPassword, String fontColor) {
+	public static int registarUser(String loginUser, String userId, String userName, String userAddress, String userMail, String passWord, String conPassword, String fontColor) {
 		Connection connection = null;
 		Statement statement = null;
 		int insertCount = 0;
@@ -84,8 +86,8 @@ public class W0060Model {
 	        //自動コミットを有効にする
 	        connection.setAutoCommit(true);
 	        //コメントの追加
-	        String insertSql = "INSERT INTO t_user_info (user_id, user_name, user_address, password, delete_flg, admin_flg, create_date, update_date, create_user, update_user, font_color)"
-	        		+ " VALUES ('" + userId + "','"+ userName +"','"+ userAddress +"','"+ passWord +"', FALSE, FALSE, current_timestamp, current_timestamp, '" + loginUser + "', '" + loginUser +"', '" + fontColor +"')";
+	        String insertSql = "INSERT INTO t_user_info (user_id, user_name, user_address, user_mail, password, delete_flg, admin_flg, create_date, update_date, create_user, update_user, font_color)"
+	        		+ " VALUES ('" + userId + "','"+ userName +"','"+ userAddress +"', '"+ userMail +"','"+ passWord +"', FALSE, FALSE, current_timestamp, current_timestamp, '" + loginUser + "', '" + loginUser +"', '" + fontColor +"')";
 	        System.out.println("W0060M :" + insertSql);
 	        insertCount = statement.executeUpdate (insertSql);
 		}catch(PSQLException pe){
@@ -107,7 +109,7 @@ public class W0060Model {
 		}
 		return insertCount;
 	}
-	public static int updateUser(String loginUser ,String userId,String userName, String userAddress, String passWord, String conPassword, String fontColor) {
+	public static int updateUser(String loginUser ,String userId,String userName, String userAddress, String userMail, String passWord, String conPassword, String fontColor) {
 		Connection connection = null;
 		Statement statement = null;
 		int updateCount = 0;
@@ -121,7 +123,7 @@ public class W0060Model {
 	        connection.setAutoCommit(true);
 
 	        //コメントの追加
-	        String updateSql = "UPDATE t_user_info SET user_name ='" + userName + "' , user_address ='" + userAddress +"', password ='" + passWord + "', update_date = current_timestamp , update_user ='" + loginUser +"', font_color = '" + fontColor +"'  WHERE  user_id = '"+ userId +"';";
+	        String updateSql = "UPDATE t_user_info SET user_name ='" + userName + "' , user_address ='" + userAddress +"', user_mail ='" + userMail +"', password ='" + passWord + "', update_date = current_timestamp , update_user ='" + loginUser +"', font_color = '" + fontColor +"'  WHERE  user_id = '"+ userId +"';";
 
 	        System.out.println("W0060M : " + updateSql );
 	        updateCount = statement.executeUpdate( updateSql );

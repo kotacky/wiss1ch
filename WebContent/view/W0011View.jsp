@@ -30,6 +30,11 @@
 			document.MyForm.submit();
 		}
 
+		function go_inquiry(){
+			document.MyForm.action = "<%= request.getContextPath() %>/W0070Control"
+				document.MyForm.submit();
+		}
+
 		</script>
 	</head>
 
@@ -61,6 +66,7 @@
 						<td class="category"><input type="button" name=ct_btn value="カテゴリ一覧" onClick=go_category();></td>
 					</tr>
 				</table>
+				<input type="button" name=inq_btn value="問い合わせ一覧" onClick=go_inquiry();>
 			</CENTER>
 		</form>
 	</body>

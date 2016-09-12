@@ -25,6 +25,12 @@
 				document.MyForm.submit();
 	    	}
 
+			//カテゴリ一覧へ遷移
+	    	function go_categorylist(){
+				document.MyForm.action = "<%= request.getContextPath() %>/W0020Control"
+				document.MyForm.submit();
+			}
+
 	    	//カテゴリ登録・更新
 			function Registration(updateflag){
         		//alert(updateflag);
@@ -88,7 +94,7 @@
     		<a style="margin-left:20px"class="button" name="logout"onClick="logOut();"><img src="<%= request.getContextPath() %>/view/img/153.142.124.217 (2).gif"></a>
     	</div>
 
-		<input type="button" value="戻る" style="position: absolute; left: 20px; top: 0px;" onClick="javascript:history.back();">
+		<input type="button" value="戻る" style="position: absolute; left: 20px; top: 0px;" onClick=go_categorylist();>
 
     	<h1>
    			<a href="#"  onclick=go_portal();><img src="<%= request.getContextPath() %>/view/img/wiss1ch.png"></a>

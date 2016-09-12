@@ -55,6 +55,11 @@
 			document.MyForm.submit();
 		}
 
+		function go_userlist(){
+			document.MyForm.action = "<%= request.getContextPath() %>/W0050Control"
+			document.MyForm.submit();
+		}
+
        </script>
  	 </head>
 	 <body>
@@ -65,13 +70,14 @@
 			<% String userId = (String)request.getAttribute("userId"); %>
 			<% String userName = (String)request.getAttribute("userName"); %>
 			<% String userAddress = (String)request.getAttribute("userAddress"); %>
+			<% String userMail = (String)request.getAttribute("userMail"); %>
     		<a style="margin-left:20px"class="button" name="logout" onClick="logOut();"><img src="<%= request.getContextPath() %>/view/img/153.142.124.217 (2).gif"></a>
     	    </div>
 
     		<h1>
    		    <a href="#"  onclick=go_portal();><img src="<%= request.getContextPath() %>/view/img/wiss1ch.png"></a>
     		</h1>
-			<input type="button"  value="戻る"  style="position: absolute; left: 20px; top: 0px;" onClick="javascript:history.back();">
+			<input type="button"  value="戻る"  style="position: absolute; left: 20px; top: 0px;" onClick=go_userlist();>
 
     		<% String registar = request.getAttribute("registar").toString();%>
     		<CENTER><font size=6>ユーザー<% if(updateFlg.equals("1")){ out.print("変更"); }else{ out.print("登録");}  %>画面</font></CENTER><br></br>
@@ -91,6 +97,10 @@
 					<tr>
 						<td>住所：</td>
 						<td><textarea name="userAddress" cols="30" rows="3" required><% if (updateFlg.equals("1")) { out.print(userAddress);}%></textarea></td>
+					</tr>
+					<tr>
+						<td>メールアドレス：</td>
+						<td><input pattern=[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$ type="text" name="userMail" value="<% if (updateFlg.equals("1")) { out.print(userMail);}%>" size="30" maxlength="50"required></td>
 					</tr>
 					<tr>
 						<td>パスワード(半角文字　8字以上)：</td>

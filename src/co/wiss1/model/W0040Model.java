@@ -400,4 +400,4 @@ public class W0040Model {
 		}
 		return insertCount;
 	}
-}
+}//コミットプッシュ用

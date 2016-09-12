@@ -141,4 +141,4 @@ public class W0060Control extends HttpServlet{
 			dispatch.forward(request, response);
 		}
 	}
-}
+}//コミットプッシュ用

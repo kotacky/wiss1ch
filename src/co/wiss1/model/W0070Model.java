@@ -152,4 +152,4 @@ public class W0070Model {
 		}
 
 
-}
+}//コミットプッシュ用

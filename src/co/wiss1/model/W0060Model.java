@@ -146,5 +146,5 @@ public class W0060Model {
 	}
 
 
-}
+}//コミットプッシュ用
 

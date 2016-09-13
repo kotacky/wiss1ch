@@ -32,6 +32,7 @@ public class W0050Control extends HttpServlet {
 			String checkBox[] = request.getParameterValues("chkbox"); //Viewのchkboxの値を取得
 			String Id = session.getAttribute("userId").toString();
 			System.out.println("W0050C 引数は"+Id );
+			System.out.println("actionId は "+actionId);
 
 			// 削除
 			if ("Update".equals(actionId)) {

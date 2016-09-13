@@ -87,6 +87,11 @@
 			document.MyForm.submit();
 		}
 
+		function go_inqform(){
+			document.MyForm.action = "<%= request.getContextPath() %>/W0080Control"
+				document.MyForm.submit();
+		}
+
 		//追加した関数
 		function changepulldown(){
 			var pullop = document.MyForm.pldw.selectedIndex;//selectedIndexは「今」選択されているoptionを指す。返り値は数字。
@@ -169,7 +174,8 @@
 				</table>
 			<P>
 				<input type="button"  <%=chk1 %> value="カテゴリ登録" onClick="Regist();" >
-				<input type="button"  <%=chk1 %> value="カテゴリ削除" onClick="deletes('Update');">
+				<input type="button"  <%=chk1 %> value="カテゴリ削除" onClick="deletes('Update');"><br>
+				<input type="button" name=inq_btn value="問い合わせフォーム" onClick=go_inqform();>
 				<input type="hidden" name="actionId" value="">
 				<input type="hidden" name="Id" value="">
 				<input type="hidden" name="Name" value="">

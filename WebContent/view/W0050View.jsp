@@ -69,6 +69,11 @@
 			document.MyForm.submit();
 		}
 
+			function go_inqform(){
+				document.MyForm.action = "<%= request.getContextPath() %>/W0080Control"
+					document.MyForm.submit();
+			}
+
 		</script>
 	</head>
 
@@ -160,7 +165,8 @@
 				</table>
 				<P>
 				<input type="button"  value="ユーザ登録" onClick=user_Regist();></td>
-				<input type="button"  <%=chk1 %> value="ユーザ削除" onClick="deletes('Update');">
+				<input type="button"  <%=chk1 %> value="ユーザ削除" onClick="deletes('Update');"><br>
+				<input type="button" name=inq_btn value="問い合わせフォーム" onClick=go_inqform();>
 				<input type="hidden" name="actionId" value="">
 				<input type="hidden" name="userId" value="">
 				<input type="hidden" name="userName" value="">

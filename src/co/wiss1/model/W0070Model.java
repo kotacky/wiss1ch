@@ -72,8 +72,43 @@ public class W0070Model {
 	}
 
 
+	//コメント削除(単独)
+	public static int updateSoloInq(String inquiryId, String userId) {
 
-	public static int updateInq(String checkBox[]) {	 										//カテゴリ削除
+		Connection connection = null;
+		Statement statement = null;
+		int updateCount = 0;
+
+		try{
+			//DB接続
+			connection = DBAccessUtils.getConnection();
+			statement = connection.createStatement();
+			connection.setAutoCommit(true);
+
+			//単独削除
+			String sql = "UPDATE t_inquiry SET delete_flg = TRUE, update_date = current_timestamp, update_user = '"+ userId +"' WHERE inquiry_id = '"+ inquiryId + "'";
+			System.out.println("");
+			System.out.println(sql);
+			//SQL実行
+			updateCount = statement.executeUpdate (sql);
+		}catch (SQLException e){
+			System.err.println("単独削除SQL failed.");
+			e.printStackTrace ();
+		}finally{
+			try {
+				//クローズ処理
+				statement.close();
+				connection.close();
+			} catch (Exception e) {
+				System.err.println("クローズ処理失敗!!");
+				e.printStackTrace ();
+			}
+		}
+		return updateCount;
+	}
+
+	//一括削除
+	public static int updateInq(String checkBox[]) {
 
 		Connection connection = null;
 		Statement statement = null;
@@ -82,7 +117,7 @@ public class W0070Model {
 		try
 
         {
-            // ユーザ一覧照会実行
+            // 問い合わせ一覧照会実行
         	connection = DBAccessUtils.getConnection();												//DBへ接続
         	statement = connection.createStatement();												//Statementを取得するためのコード
 
@@ -110,4 +145,4 @@ public class W0070Model {
 	return UpdateCount;
 	}
 
-}//コミットプッシュ用
+}

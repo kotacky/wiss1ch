@@ -32,7 +32,12 @@
 
 		function go_inquiry(){
 			document.MyForm.action = "<%= request.getContextPath() %>/W0070Control"
-				document.MyForm.submit();
+			document.MyForm.submit();
+		}
+
+		function go_messagelist(){
+			document.MyForm.action = "<%= request.getContextPath() %>/W0090Control"
+			document.MyForm.submit();
 		}
 
 
@@ -44,6 +49,7 @@
 		<form name="MyForm" method="POST" action="<%= request.getContextPath() %>/W0000Control">
 
 			<div align="right">
+				<a class="button" onClick="go_messagelist()">メッセージがあります。</a>
 				<% out.print(session.getAttribute("userName")); %>
     			<a style="margin-left:20px"class="button" name="logout" onClick="logOut();">
     			<img src="<%= request.getContextPath() %>/view/img/153.142.124.217 (2).gif"></a>
@@ -73,4 +79,3 @@
 		</form>
 	</body>
 </html>
-<%-- コミットプッシュ用 --%>

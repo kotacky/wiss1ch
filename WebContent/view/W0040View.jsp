@@ -149,7 +149,6 @@
             <% String chk2 = "t";%>
             <% String Id; %>
             <% Id = request.getAttribute("Id").toString(); %>
-    		<% out.print(user_font_color); %>
 
 
             <%  List<HashMap<String,String>> commentList = (List<HashMap<String,String>>)request.getAttribute("commentList"); %>
@@ -170,10 +169,10 @@
 							for (j=0; j<k; j++) {
 								HashMap<String,String> commentInfo = commentList.get(j);
 								String comment = commentInfo.get("comment");
-								String OutputComment = comment.replaceAll("\n","<br>")
-																.replaceAll("&","&amp;")
+								String OutputComment = comment.replaceAll("&","&amp;")
 																.replaceAll("<","&lt;")
 																.replaceAll(">","&gt;")
+																.replaceAll("\n","<br>")
 																.replaceAll("\"","&quot;")
 																.replaceAll("\'","&#39;");
 

@@ -31,7 +31,7 @@ public class W0080Control extends HttpServlet{
 			request.setAttribute("updateFlg", "0");
 
 			//送信ボタンを押したときの処理
-			if ("Registration".equals(actionId)) {
+			if ("insert_inq".equals(actionId)) {
 				System.out.println("W0080C registarします。");
 
 				String inquiry = request.getParameter("inquiry");
@@ -40,16 +40,7 @@ public class W0080Control extends HttpServlet{
 				System.out.println("W0080C registar 終了" + registar);
 				request.setAttribute("registar",registar);
 
-				if(registar == 0){
-					System.out.println("W0080C registar0に入りました" + registar);
-					RequestDispatcher dispatch = getServletContext().getRequestDispatcher("/view/W0080View.jsp");
-					dispatch.forward(request, response);
-					return;
-				}else{
-					RequestDispatcher dispatch = getServletContext().getRequestDispatcher("/W0050Control");
-					dispatch.forward(request, response);
-					return;
-				}
+
 			}
 
 

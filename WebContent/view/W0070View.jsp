@@ -27,8 +27,19 @@
 			document.MyForm.submit();
 		}
 
+    	//単独論理削除
+		function soloupdate(cid){
+			document.MyForm.inquiryId.value = cid;
+			if(confirm("単独削除しますか？")){
+				document.MyForm.actionId.value = 'soloupdate';
+				document.MyForm.action = "<%= request.getContextPath() %>/W0070Control"
+//				document.MyForm.submit();
+			}else {
+				alert("キャンセル");
+			}
+		}
 
-
+		//一括論理削除
 		function deletes(Command){
 			// チェックボックス要素をすべて取得する
 			var boxes = document.getElementsByName("chkbox");
@@ -42,7 +53,7 @@
 			       }
 			    }
 				if(flg > 0){
-				  MyMessage = confirm("削除しますか");
+				  MyMessage = confirm("削除しますか？");
 			  		if ( MyMessage == true ){
 			  			document.MyForm.actionId.value = Command;
 						document.MyForm.action = "<%= request.getContextPath() %>/W0070Control"
@@ -53,16 +64,6 @@
 					 alert("チェックボックスが未入力です。");
 				  }
 			    }
-		 function move(Command){
-			var values = Command.split(','); // , 区切;
-			document.MyForm.inquiryId.value = values[0];
-			document.MyForm.userName.value = values[1];
-			document.MyForm.userAddress.value = values[2];
-			document.MyForm.userMail.value = values[3];
-			document.MyForm.actionId.value = 'move';
-			document.MyForm.action = "<%= request.getContextPath() %>/W0060Control"
-			document.MyForm.submit();
-		}
 
 
 
@@ -82,12 +83,13 @@
 				<h1>
 	   		    <a href="#"  onclick=go_portal();><img src="<%= request.getContextPath() %>/view/img/wiss1ch.png"></a>
 	   		    </h1>
-	    		<font size="8">問い合わせ一覧</font><br><br>
+	    		<font size="6">問い合わせ一覧</font><br><br>
+	    		</CENTER>
 
 				<%-- 問い合わせの表示--%>
 
 
-				</CENTER>
+
 
 					    <%
 
@@ -98,44 +100,75 @@
 						<%
 							String chk1 = null;
 							String str1 = "t";
+							String chk2 = "t";
 						%>
 
 						<% if (inqList != null) { %>
+						<%
+							 for (HashMap<String,String> inqInfo : inqList) {
+							String inquiryId = inqInfo.get("inquiryId");
+							String PostTime = inqInfo.get("PostTime");
+							String userName = inqInfo.get("userName");
+							String inquiry = inqInfo.get("inquiry");
+							String OutputInquiry = inquiry.replaceAll("&","&amp;")
+															.replaceAll("<","&lt;")
+															.replaceAll(">","&gt;")
+															.replaceAll("\"","&quot;")
+															.replaceAll("\'","&#39;")
+															.replaceAll("\n","<br>");
+							String userId = inqInfo.get("userId");
+							String userMail = inqInfo.get("userMail");
+							//PostDateはミリ秒まで表示しているのでトリミング、ハイフンをスラッシュへ
+							String OutputPostTime = PostTime.substring(0,16);
+							OutputPostTime = OutputPostTime.replaceAll("-","/");
+							if(userId.equals(userId)) {
+								chk1 ="true";
+							} else {
+								chk1 ="disabled";
+							}
 
-							<% for (HashMap<String,String> inqInfo : inqList) { %>
-							<%String inquiryId = inqInfo.get("inquiryId"); %>
-							<%String PostTime = inqInfo.get("PostTime"); %>
-							<%String userName = inqInfo.get("userName");  %>
-							<%String inquiry = inqInfo.get("inquiry");  %>
-							<%String userId = inqInfo.get("userId"); %>
-							<%String userMail = inqInfo.get("userMail"); %>
+							%>
 
-							<tr>
-								<td><input type="checkbox" <%= chk1  %> name="chkbox" style="width:17px;height:17px;"value="<%= inqInfo.get("inquiryId") %>" onClick="chk();"></td>
-								<td><a onClick="move('<%=inquiryId %>,<%=PostTime %>,<%= %>,<%=userName %>');"   href="#"  value=""  ><% out.print(inqInfo.get("inquiryId")); %></a></td>
-								<td><% out.print(inqInfo.get("userName")); %></td>
-								<td><% out.print(inqInfo.get("userMail")); %></td>
+								<div class="margin" align="center">
+								<table>
+									<tr bgcolor="#ffffff">
+										<%-- 投稿時間を表示するように修正 --%>
+										<th colspan=3>
+											<div style="text-align : left">
+												<input type="checkbox"  <%=chk1 %> name="chkbox" style="width:17px;height:17px;" value="<%= inquiryId %>"onClick="chk();">
+												<span style="margin-right: 1em;"></span>
+												問い合わせ時間: <% out.print(OutputPostTime); %>
+												<span style="margin-right: 3em;"></span>
+												ユーザ名 <a href="mailto:<% out.print(userMail); %>"><% out.print(userName); %></a> (<% out.print(userId); %>)
+											</div>
+											<div style = "text-align : left">
+												<FONT size="4"><% out.print(OutputInquiry);%></FONT>
+											</div>
+											<div style = "text-align : right">　
+												<input type="submit" <%=chk1 %> name="deleteBtn" value="削除" onClick="soloupdate(<%=inquiryId%>);">
+											</div>
+										</th>
+										<br>
+									</tr>
+								</table>
+             					</div>
 
-					</Tr>
+
+
+
 	<% } %>
 <% } %>
-				</tbody>
-			</table>
-			<%if(sessionflag.equals(str1)){chk1 = "";}else{chk1 = "disabled";} %>
-			<input type="hidden" name="process">
-			<input type="hidden" name="employeeAuthority" value="<%= session.getAttribute("employeeAuthority") %>">
 
-	</form>
+
 			<div id="footer">
-			<p id="copyright">Copyright (c) WISS1 Inc. All Rights Reserved.</p>
+<%-- 			<p id="copyright">Copyright (c) WISS1 Inc. All Rights Reserved.</p> --%>
 	</div>
-</body>
-</html>
+
 							</tr>
 				</table>
-				<P>
+				<P align="center">
 
-				<input type="button"  <%=chk1 %> value="ユーザ削除" onClick="deletes('Update');"><br>
+				<input type="button"  <%=chk1 %> value="問い合わせ削除" onClick="deletes('Update');"><br>
 				<input type="hidden" name="actionId" value="">
 				<input type="hidden" name="inquiryId" value="">
 				<input type="hidden" name="userName" value="">

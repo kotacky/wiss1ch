@@ -48,5 +48,5 @@ public class W0080Model {
 		}
 		return insertCount;
 	}
-}//コミットプッシュ用
+}
 

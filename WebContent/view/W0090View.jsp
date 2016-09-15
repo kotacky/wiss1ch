@@ -26,33 +26,40 @@
 			}
          }
 
+	//メッセージ送信
 		function send_message(command){
-			alert("send_message");
-			var k = document.MyForm.title.value.length;
+			var k = document.MyForm.messageTitle.value.length;
 			var l = document.MyForm.message.value.length;
-			//alert(l)
-			if (l > 200) {
-				alert("本文は200文字以内で入力してください。");
+			var id = document.MyForm.rUserId.value;
+			if (id == "-") {
+				alert("送信先を選択してください。");
 			} else {
-				if (k > 30) {
-					alert("件名は30文字以内で入力してください。")
+				if (l > 200) {
+					alert("本文は200文字以内で入力してください。");
+				} if (document.MyForm.message.value == '') {
+					alert("本文を入力してください。")
 				} else {
-					myRet = confirm("この内容で送信しますか？");
-					if (myRet == true) {
-						document.MyForm.actionId.value = command;
-
-			        	//alert("actionID : " + document.MyForm.actionId.value);
-			       		document.MyForm.action = "<%= request.getContextPath() %>/W0090Control"
-		    	   	    //document.MyForm.submit();
-
+					if (k > 30) {
+						alert("件名は30文字以内で入力してください。")
 					} else {
-						alert("キャンセルしました。");
+						if (document.MyForm.messageTitle.value == '') {
+							document.MyForm.messageTitle.value = '(無題)';
+						}
+
+						if (confirm("この内容で送信しますか？")) {
+							document.MyForm.actionId.value = command;
+
+				        	//alert("actionID : " + document.MyForm.actionId.value);
+				       		document.MyForm.action = "<%= request.getContextPath() %>/W0090Control"
+		    		   	    //document.MyForm.submit();
+
+						} else {
+							alert("キャンセルしました。");
+						}
 					}
 				}
-
-			}
-
-        }
+        	}
+		}
 
 		function go_portal(){
 			document.MyForm.action = "<%= request.getContextPath() %>/W0011Control"
@@ -96,29 +103,31 @@
 
 
 
-			<div style="text-align : left" class="form">
+			<div class="form">
+				<div class="txt">
 			送信先<br>
-					<select id="r_user_name" name="r_user_name">
-						<option value="---">送信先を選んでください。</option>
+					<select id="rUserId" name="rUserId" onchange="changepulldown()">
+						<option value="-">送信先を選んでください。</option>
 						<%	if (userList != null) { %>
 						<% 	for (HashMap<String,String> userInfo : userList) { %>
-						<% 	String UserId = userInfo.get("userId"); %>
+						<% 	String rUserId = userInfo.get("userId"); %>
 						<%	String UserName = userInfo.get("userName"); %>
-						<option value="<%= UserId %>"><% out.print(UserName); %></option>
+						<option value="<%= rUserId %>"><% out.print(UserName); %></option>
 							<% } %>
 						<% } %>
 					</select><br>
 			件名<br>
-					<input type="text" id="title" name="title" size="40"><br>
+					<input type="text" id="messageTitle" name="messageTitle" size="40"><br>
 			本文<br>
 					<textarea class="margin"  onkeyup="ShowLength( 'nummoji' , value );"  id="message" name="message"  rows="20" cols="60" ></textarea>
-						<span id="nummoji">0</span>
-				<br>
-				 <font size=2>件名は30文字以内、本文は200文字以内でご入力ください。</font><br>
+					<span id="nummoji">0</span><br>
+			<font size=2>件名は30文字以内、本文は200文字以内でご入力ください。</font>
+			<br>
 						<input type="submit" value="送信" onClick="send_message('send_message')">
 
 						<input type ="hidden" name ="actionId" value ="">
 						<input type ="hidden" name ="hiddenUserid" value ="">
+				</div>
 			</div>
 
 	</form>

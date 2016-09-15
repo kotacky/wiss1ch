@@ -36,7 +36,7 @@
 		}
 
 		function go_messagelist(){
-			document.MyForm.action = "<%= request.getContextPath() %>/W0090Control"
+			document.MyForm.action = "<%= request.getContextPath() %>/W0100Control"
 			document.MyForm.submit();
 		}
 

@@ -231,7 +231,7 @@
 				投稿者名<input type="text" id="postName" name="postName" size="20"></input>
 			</div>
 			<div>
-	            コメント入力欄<textarea class="margin" input type="text" onkeyup="ShowLength( 'nummoji' , value );"  id="text" name="text"  rows="4" cols="40"  placeholder="コメント記入欄"></textarea>
+	            コメント入力欄<textarea class="margin" onkeyup="ShowLength( 'nummoji' , value );"  id="text" name="text"  rows="4" cols="40"  placeholder="コメント記入欄"></textarea>
 				<span id="nummoji">0文字</span>
 			</div>
 			<input class="margin" type="file" name="imgfile" accept='image/*' size="50" id=imgfile" value="画像選択">　　　　　　

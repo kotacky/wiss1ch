@@ -10,8 +10,25 @@ body {
  	color: #5e5e5e;
  	font: 400 87.5%/1.5em 'Open Sans', sans-serif;
  	background: #fdf8d9;
+ 	text-align:center;
 }
 
 div.form {
-	position: center;
+	text-align: center;
+}
+
+div.txt {
+	display: inline-block;
+	margin-left: auto;
+	margin-right:auto;
+	text-align: left;
+	width: 500px;
+}
+
+p.txt {
+	display: inline-block;
+	margin-left: auto;
+	margin-right:auto;
+	text-align: left;
+	width: 500px;
 }

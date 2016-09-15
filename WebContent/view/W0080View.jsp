@@ -72,7 +72,7 @@
 			<CENTER>
 
 					お問い合わせ内容<br>
-						<textarea class="margin"  input type="text" onkeyup="ShowLength( 'nummoji' , value );"  id="inquiry" name="inquiry"  rows="20" cols="60" ></textarea>
+						<textarea class="margin"  onkeyup="ShowLength( 'nummoji' , value );"  id="inquiry" name="inquiry"  rows="20" cols="60" ></textarea>
 						<span id="nummoji">0</span>
 				 <br>
 				 <font size=2>1000文字以内でご入力ください。</font><br>

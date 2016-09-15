@@ -27,9 +27,8 @@
 			document.MyForm.submit();
 		}
 
-		function user_Regist(){
-			document.MyForm.actionId.value = 'userRegist';
-			document.MyForm.action = "<%= request.getContextPath() %>/W0060Control"
+		function go_messageform(){
+			document.MyForm.action = "<%= request.getContextPath() %>/W0090Control"
 			document.MyForm.submit();
 		}
 
@@ -50,7 +49,7 @@
 				  MyMessage = confirm("削除しますか");
 			  		if ( MyMessage == true ){
 			  			document.MyForm.actionId.value = Command;
-						document.MyForm.action = "<%= request.getContextPath() %>/W0050Control"
+						document.MyForm.action = "<%= request.getContextPath() %>/W0100Control"
 						document.MyForm.submit();
 					  }
 				}
@@ -65,14 +64,11 @@
 			document.MyForm.userAddress.value = values[2];
 			document.MyForm.userMail.value = values[3];
 			document.MyForm.actionId.value = 'move';
-			document.MyForm.action = "<%= request.getContextPath() %>/W0060Control"
+			document.MyForm.action = "<%= request.getContextPath() %>/W0100Control"
 			document.MyForm.submit();
 		}
 
-			function go_inqform(){
-				document.MyForm.action = "<%= request.getContextPath() %>/W0080Control"
-					document.MyForm.submit();
-			}
+
 
 		</script>
 	</head>
@@ -90,70 +86,61 @@
 				<h1>
 	   		    <a href="#"  onclick=go_portal();><img src="<%= request.getContextPath() %>/view/img/wiss1ch.png"></a>
 	   		    </h1>
-	    		<font size="8">ユーザリスト</font><br><br>
+	    		<font size="5">メッセージ一覧</font><br><br>
 
 				<%-- テーブルの表示--%>
 				<table border = "1">
-
-						<tr>
-							<th></th>
-							<th>ユーザID</th>
-							<th>ユーザ名</th>
-							<th>住所</th>
-							<th>メールアドレス</th>
-							<th>権限</th>
-						</tr>
-
 
 				</CENTER>
 
 					    <%
 
 							//ユーザ情報取得
-							List<HashMap<String,String>> userList = (List<HashMap<String,String>>)request.getAttribute("userList");
+							List<HashMap<String,String>> messageList = (List<HashMap<String,String>>)request.getAttribute("messageList");
 
 						%>
 						<% String sessionflag = session.getAttribute("adminFlg").toString();
 						   String sessionuser = session.getAttribute("userId").toString();
 
-						System.out.println("★権限は" + sessionflag + "です！！！★"); %>
+						System.out.println("userIdは" + sessionuser + "です！！！★"); %>
 						<%
 							String chk1 = null;
 							String str1 = "t";
 						%>
 
-						<% if (userList != null) { %>
+						<% if (messageList != null) { %>
 
-							<% for (HashMap<String,String> userInfo : userList) { %>
-							<%String userId = userInfo.get("userId"); %>
-							<%String userName = userInfo.get("userName"); %>
-							<%String admin = userInfo.get("userAdmin");  %>
-							<%String userAddress = userInfo.get("userAddress");  %>
-							<%String userMail = userInfo.get("userMail"); %>
-							<%String encorded_addr = URLEncoder.encode(userAddress, "UTF-8"); %>
-							<%if(sessionflag.equals(str1) && !(sessionuser.equals(userId))){chk1 = "";}else{chk1 = "disabled";} %>
-
+							<% for (HashMap<String,String> messageInfo : messageList) { %>
+							<%String messageTitle = messageInfo.get("messageTitle"); %>
+							<%String message = messageInfo.get("message"); %>
+							<%String sendUserName = messageInfo.get("sendUserName");  %>
+							<%String recUserName = messageInfo.get("recUserName"); %>
+							<%String postTime = messageInfo.get("postTime");  %>
+							<%
+							String OutputMessage = message.replaceAll("&","&amp;")
+															.replaceAll("<","&lt;")
+															.replaceAll(">","&gt;")
+															.replaceAll("\"","&quot;")
+															.replaceAll("\'","&#39;")
+															.replaceAll("\n","<br>");
+							//PostDateはミリ秒まで表示しているのでトリミング、ハイフンをスラッシュへ
+							String OutputPostTime = postTime.substring(0,16);
+							OutputPostTime = OutputPostTime.replaceAll("-","/");
+							%>
 							<tr>
-								<td><input type="checkbox" <%= chk1  %> name="chkbox" style="width:17px;height:17px;"value="<%= userInfo.get("userId") %>" onClick="chk();"></td>
-								<td><a onClick="move('<%=userId %>,<%=userName %>,<%=userAddress %>,<%=userMail %>');"   href="#"  value=""  ><% out.print(userInfo.get("userId")); %></a></td>
-								<td><% out.print(userInfo.get("userName")); %></td>
-								<td><a href="javascript:void(0);"	onclick=window.open("http://maps.google.co.jp/maps?q=<% out.print(encorded_addr);%>",'GoogleMap','width=700,height=400')> <% out.print(userAddress); %> </a></td>
-								<td><%= userMail %></td>
-								<td>
-								<% if(admin.equals(str1)){
-									out.print("管理者");
-								}else{
-									out.print("一般");
-								}
-								%></td>
+								<td><input type="checkbox" <%= chk1  %> name="chkbox" style="width:17px;height:17px;"value="<%= messageInfo.get("userId") %>" onClick="chk();"></td>
+		<!--  						<td><a onClick="move('<%=messageTitle %>,<%=message %>,<%=postTime %>,<%=sendUserName %><%=recUserName %>');"   href="#"  value=""  ><% out.print(messageInfo.get("userId")); %></a></td>
+								<td><% out.print(messageInfo.get("userName")); %></td>
+		-->						<td><%=messageTitle %></td>
+								<td><%=OutputPostTime %></td>
+								<td><%=sendUserName %></td>
+								<td><%=recUserName %></td>
+
 					</Tr>
 	<% } %>
 <% } %>
 				</tbody>
 			</table>
-			<%if(sessionflag.equals(str1)){chk1 = "";}else{chk1 = "disabled";} %>
-			<input type="hidden" name="process">
-			<input type="hidden" name="employeeAuthority" value="<%= session.getAttribute("employeeAuthority") %>">
 
 
 			<div id="footer">
@@ -163,9 +150,8 @@
 							</tr>
 				</table>
 				<P>
-				<input type="button"  value="ユーザ登録" onClick=user_Regist();></td>
-				<input type="button"  <%=chk1 %> value="ユーザ削除" onClick="deletes('Update');"><br>
-				<input type="button" name=inq_btn value="問い合わせフォーム" onClick="go_inqform();">
+				<input type="button"  <%=chk1 %> value="削除" onClick="deletes('Update');"><br>
+				<input type="button" value="メッセージ送信フォーム" onClick="go_messageform();">
 				<input type="hidden" name="actionId" value="">
 				<input type="hidden" name="userId" value="">
 				<input type="hidden" name="userName" value="">

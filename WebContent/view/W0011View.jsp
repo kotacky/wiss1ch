@@ -46,10 +46,34 @@
 	</head>
 
 	<body>
+			    <%
+					//ユーザ情報取得
+					List<HashMap<String,String>> messageList = (List<HashMap<String,String>>)request.getAttribute("userList");
+
+				%>
+				<% 	String sessionflag = session.getAttribute("adminFlg").toString();
+				   	String sessionuser = session.getAttribute("userId").toString();
+
+					System.out.println("★権限は" + sessionflag + "です！！！★"); %>
+				<%
+					String str1 = "t";
+				%>
+					<% if (messageList != null) { %>
+
+					<% for (HashMap<String,String> messageInfo : messageList) { %>
+					<%String messageId = messageInfo.get("messageId"); %>
+					<%String sendUserId = messageInfo.get("sendUserId");  %>
+					<%String recUserId = messageInfo.get("recUserId"); %>
+					<%String postTime = messageInfo.get("postTime");  %>
+					<% } %>
+				<% } %>
+
+
 		<form name="MyForm" method="POST" action="<%= request.getContextPath() %>/W0000Control">
 
 			<div align="right">
-				<a class="button" onClick="go_messagelist()">メッセージがあります。</a>
+				<b><font color="#ff0000">NEW !</font>
+				<a class="button" onClick="go_messagelist()">メッセージ</a></b>
 				<% out.print(session.getAttribute("userName")); %>
     			<a style="margin-left:20px"class="button" name="logout" onClick="logOut();">
     			<img src="<%= request.getContextPath() %>/view/img/153.142.124.217 (2).gif"></a>
@@ -74,7 +98,9 @@
 						<td class="category"><input type="button" name=ct_btn value="カテゴリ一覧" onClick=go_category();></td>
 					</tr>
 				</table>
+				<%if(sessionflag.equals(str1)) { %>
 				<input type="button" name=inq_btn value="問い合わせ一覧" onClick=go_inquiry();>
+				<% } %>
 			</CENTER>
 		</form>
 	</body>

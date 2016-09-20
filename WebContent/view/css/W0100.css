@@ -11,3 +11,23 @@ body {
  	font: 400 87.5%/1.5em 'Open Sans', sans-serif;
  	background: #fdf8d9;
 }
+
+table.messagelist {
+	border-collapse: separate;
+	background-color: #eef;
+	width: 500px;
+}
+
+td.messageTitle{
+	width: 30%;
+}
+
+td.userName {
+	text-align: center;
+}
+/*
+.dialog {
+display: none;
+}
+*/
+/* «‰^“] */

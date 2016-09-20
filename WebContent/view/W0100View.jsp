@@ -8,10 +8,14 @@
 <html lang="ja">
 	<head>
 		<meta charset="UTF-8" />
-		<link href="<%= request.getContextPath() %>/view/css/W0050.css" rel="stylesheet" type="text/css" />
-		<title>WISS1ch</title>
+		<link href="<%= request.getContextPath() %>/view/css/W0100.css" rel="stylesheet" type="text/css" />
+		<link type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1/themes/redmond/jquery-ui.css" rel="stylesheet" />
+ 		<title>WISS1ch</title>
 
-		<script type="text/javascript" >
+		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1/jquery-ui.min.js"></script>
+		<script type="text/javascript">
+
 		function logOut(){
 			MyMessage = confirm("ログアウトします。よろしいですか？");
 			if ( MyMessage == true ){
@@ -46,31 +50,44 @@
 			       }
 			    }
 				if(flg > 0){
-				  MyMessage = confirm("削除しますか");
-			  		if ( MyMessage == true ){
+			  		if (confirm("削除しますか")){
 			  			document.MyForm.actionId.value = Command;
 						document.MyForm.action = "<%= request.getContextPath() %>/W0100Control"
 						document.MyForm.submit();
 					  }
 				}
-				if(flg ==0){
+				if(flg == 0){
 					 alert("チェックボックスが未入力です。");
 				  }
 			    }
-		 function move(Command){
-			var values = Command.split(','); // , 区切;
-			document.MyForm.userId.value = values[0];
-			document.MyForm.userName.value = values[1];
-			document.MyForm.userAddress.value = values[2];
-			document.MyForm.userMail.value = values[3];
-			document.MyForm.actionId.value = 'move';
-			document.MyForm.action = "<%= request.getContextPath() %>/W0100Control"
-			document.MyForm.submit();
-		}
+
 
 
 
 		</script>
+<script type="text/javascript">
+//function open_message(id){
+	$(function() {
+//		var openID = "#openDialog" + id;
+		System.out.println("messageIdは" + id + "です！！！★");
+		$('#openDialog').click(function(){
+			$('.content').html($('#openDialog').html());
+			$('.dialog').dialog('open');
+		});
+
+		$('.dialog').dialog({
+			width: 500,
+			autoOpen: false,
+			buttons: {
+				"OK": function() {
+					$(this).dialog("close");
+				}
+			}
+		});
+	});
+//}
+	</script>
+
 	</head>
 
 
@@ -89,7 +106,7 @@
 	    		<font size="5">メッセージ一覧</font><br><br>
 
 				<%-- テーブルの表示--%>
-				<table border = "1">
+				<table class="messagelist">
 
 				</CENTER>
 
@@ -111,10 +128,13 @@
 						<% if (messageList != null) { %>
 
 							<% for (HashMap<String,String> messageInfo : messageList) { %>
+							<%String messageId = messageInfo.get("messageId"); %>
 							<%String messageTitle = messageInfo.get("messageTitle"); %>
 							<%String message = messageInfo.get("message"); %>
 							<%String sendUserName = messageInfo.get("sendUserName");  %>
 							<%String recUserName = messageInfo.get("recUserName"); %>
+							<%String sendUserId = messageInfo.get("sendUserId");  %>
+							<%String recUserId = messageInfo.get("recUserId"); %>
 							<%String postTime = messageInfo.get("postTime");  %>
 							<%
 							String OutputMessage = message.replaceAll("&","&amp;")
@@ -126,29 +146,34 @@
 							//PostDateはミリ秒まで表示しているのでトリミング、ハイフンをスラッシュへ
 							String OutputPostTime = postTime.substring(0,16);
 							OutputPostTime = OutputPostTime.replaceAll("-","/");
-							%>
-							<tr>
-								<td><input type="checkbox" <%= chk1  %> name="chkbox" style="width:17px;height:17px;"value="<%= messageInfo.get("userId") %>" onClick="chk();"></td>
-		<!--  						<td><a onClick="move('<%=messageTitle %>,<%=message %>,<%=postTime %>,<%=sendUserName %><%=recUserName %>');"   href="#"  value=""  ><% out.print(messageInfo.get("userId")); %></a></td>
-								<td><% out.print(messageInfo.get("userName")); %></td>
-		-->						<td><%=messageTitle %></td>
-								<td><%=OutputPostTime %></td>
-								<td><%=sendUserName %></td>
-								<td><%=recUserName %></td>
 
-					</Tr>
+
+							%>
+
+							<tr>
+								<td><input type="checkbox" <%= chk1  %> name="chkbox" style="width:17px;height:17px;"value="<%= messageInfo.get("messageId") %>" onClick="chk();"></td>
+								<td class="messageTitle"><a href="#" id="openDialog<%=messageId %>" class="openDialog" ><b><%=messageTitle %></b></a></td>
+								<td><%=OutputPostTime %></td>
+								<td class="userName"><%=sendUserName %></td>
+								<td>⇒</td>
+								<td class="userName"><%=recUserName %></td>
+								<td><div id="dialog<%=messageId %>" class="dialog" title=<%=messageTitle %>><p class="content"><%=OutputMessage %></p></div></td>
+
+					</tr>
 	<% } %>
 <% } %>
-				</tbody>
+
 			</table>
+
+
+
 
 
 			<div id="footer">
 			<p id="copyright">Copyright (c) WISS1 Inc. All Rights Reserved.</p>
 	</div>
 
-							</tr>
-				</table>
+
 				<P>
 				<input type="button"  <%=chk1 %> value="削除" onClick="deletes('Update');"><br>
 				<input type="button" value="メッセージ送信フォーム" onClick="go_messageform();">

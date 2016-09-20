@@ -31,14 +31,14 @@ public class W0100Model {
 			statement = connection.createStatement();//SQLを
 			// SQL文作成
 			StringBuffer sb = new StringBuffer();//一時的に文字を保管する
-				sb.append("SELECT DISTINCT m.message_id, m.message_title, m.message, m.create_date, "
+				sb.append("SELECT DISTINCT m.message_id, m.message_title, m.message, m.create_date, m.send_user_id, m.receive_user_id, "
 							+ "u.user_name AS receive_user_name, s.send_user_name "
 							+ "FROM t_message m "
 							+ "INNER JOIN (SELECT m.send_user_id, u.user_name AS send_user_name FROM t_message m INNER JOIN t_user_info u ON m.send_user_id = u.user_id ) s "
 							+ "ON m.send_user_id = s.send_user_id "
 							+ "INNER JOIN t_user_info u "
 							+ "ON m.receive_user_id = u.user_id "
-							+ "WHERE m.delete_flg = FALSE AND (m.send_user_id = '" + Id + "' m.receive_user_id = '" + Id + "')"
+							+ "WHERE m.delete_flg = FALSE AND (m.send_user_id = '" + Id + "' OR m.receive_user_id = '" + Id + "')"
 							+ "ORDER BY m.message_id ");
 			//sbの箱SELECT * FROM t_message のうち送受信者のいずれかが自分で WHERE m.delete_flg = 'FALSE' message_id昇順にいれる
 			// SQL文実行
@@ -48,15 +48,18 @@ public class W0100Model {
 			// 実行結果の取得・次の行を呼ぶ
 			while(resultSet.next()) {
 				HashMap<String, String> messageInfo = new HashMap<String, String>();
+				messageInfo.put("messageId", resultSet.getString("message_id"));
 				messageInfo.put("messageTitle", resultSet.getString("message_title"));
 				messageInfo.put("message", resultSet.getString("message"));
 				messageInfo.put("sendUserName", resultSet.getString("send_user_name"));
 				messageInfo.put("recUserName", resultSet.getString("receive_user_name"));
+				messageInfo.put("sendUserId", resultSet.getString("send_user_id"));
+				messageInfo.put("recUserId", resultSet.getString("receive_user_id"));
 				messageInfo.put("postTime", resultSet.getString("create_date"));
 				messageList.add(messageInfo);
 				System.out.println(messageInfo.get("sendUserName"));
 				System.out.println(messageInfo.get("messageTitle"));
-				System.out.println(messageInfo.get("recUserName"));;
+				System.out.println(messageInfo.get("recUserName"));
 			}
 		} catch (SQLException e) {
 			System.out.println("メッセージ一覧SQL実行処理失敗!!");
@@ -92,7 +95,7 @@ public class W0100Model {
 
             connection.setAutoCommit(true);							 								//自動コミットを有効にする
             for (int i = 0; i < checkBox.length; i++ ) {
-            String sql = "UPDATE t_message SET delete_flg = 'TRUE' WHERE user_id =  '"+ checkBox[i] +"'";
+            String sql = "UPDATE t_message SET delete_flg = 'TRUE' WHERE message_id =  '"+ checkBox[i] +"'";
 
             	System.out.println("checkBoxに" + checkBox[i] + "が入力されました。");
             	UpdateCount = statement.executeUpdate (sql);

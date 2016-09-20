@@ -66,6 +66,11 @@
 			document.MyForm.submit();
 		}
 
+		function go_message(){
+			document.MyForm.action = "<%= request.getContextPath() %>/W0100Control"
+			document.MyForm.submit();
+		}
+
 		//プルダウンの変更を確認
 		function changepulldown(){
 			//selectedIndexは「今」選択されているoptionを指す。返り値は数字。
@@ -90,7 +95,7 @@
      		<h1>
    		    <a href="#"  onclick=go_portal();><img src="<%= request.getContextPath() %>/view/img/wiss1ch.png"></a>
     		</h1>
-			<input type="button"  value="戻る"  style="position: absolute; left: 20px; top: 0px;" onClick="javascript:history.back();">
+			<input type="button"  value="戻る"  style="position: absolute; left: 20px; top: 0px;" onClick="go_message();">
 
     		<CENTER><font size=5>メッセージ送信フォーム<br><br></font></CENTER>
 

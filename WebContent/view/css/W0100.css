@@ -15,19 +15,19 @@ body {
 table.messagelist {
 	border-collapse: separate;
 	background-color: #eef;
-	width: 500px;
+	width: 600px;
 }
 
 td.messageTitle{
-	width: 30%;
+	width: 25%;
 }
 
 td.userName {
 	text-align: center;
 }
-/*
-.dialog {
-display: none;
+
+/*div.dialog {
+	display: none;
 }
-*/
+
 /* «‰^“] */

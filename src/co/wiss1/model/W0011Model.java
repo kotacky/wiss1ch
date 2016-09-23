@@ -34,16 +34,16 @@ public class W0011Model {
 			StringBuffer sb = new StringBuffer();//一時的に文字を保管する
 				sb.append("SELECT message_id, create_date, send_user_id, receive_user_id "
 							+ "FROM t_message "
-							+ "WHERE ((send_user_id,receive_user_id,message_id) IN ("
+							+ "WHERE ((send_user_id, receive_user_id, message_id) IN ("
 							+ "SELECT send_user_id, receive_user_id, MAX(message_id)"
 							+ "FROM t_message"
 							+ "GROUP BY send_user_id, receive_user_id))"
-							+ "AND (send_user_id = '" + Id + "' OR receive_user_id = '" + Id + "')"
-							+ "AND delete_flg = FALSE");
+							+ "AND ((send_user_id = ' + Id + ' OR receive_user_id = ' + Id + ')"
+							+ "AND delete_flg = FALSE )");
 			//sbの箱SELECT * FROM t_message のうち送受信者のいずれかが自分で WHERE m.delete_flg = 'FALSE'
 			//その中で最新のものをSELECT
 			// SQL文実行
-			System.out.println("W0100M ," + sb.toString());
+			System.out.println("W0011M ," + sb.toString());
 			resultSet = statement.executeQuery(sb.toString());
 			//resultSet実行した結executeQuery＝要求をＳＱＬとしてＤＢに投げる
 			// 実行結果の取得・次の行を呼ぶ

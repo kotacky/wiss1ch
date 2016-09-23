@@ -73,7 +73,7 @@
 
 			<div align="right">
 				<b><font color="#ff0000">NEW !</font>
-				<a class="button" onClick="go_messagelist()">メッセージ</a></b>
+				<a href="javascript:go_messagelist()">メッセージ</a></b>
 				<% out.print(session.getAttribute("userName")); %>
     			<a style="margin-left:20px"class="button" name="logout" onClick="logOut();">
     			<img src="<%= request.getContextPath() %>/view/img/153.142.124.217 (2).gif"></a>

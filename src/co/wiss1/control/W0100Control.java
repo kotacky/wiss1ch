@@ -78,7 +78,7 @@ public class W0100Control extends HttpServlet {
 			// 初期表示 と削除後の再検索したメッセージ一覧を取得
 			List<HashMap<String, String>> messageList = W0100Model.getMessageList(Id);
 			//System.out.println(messageList());
-			// ユーザ一覧が空ではなく1件以上存在する場合、メッセージ一覧をセット
+			// メッセージ一覧が空ではなく1件以上存在する場合、メッセージ一覧をセット
 			if (messageList != null && 0 < messageList.size()) {
 				request.setAttribute("messageList", messageList);
 			}

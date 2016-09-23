@@ -80,7 +80,34 @@
 			//alert(pullval)//オンチェンジ動作確認用、値拾う
 		}
 
-       </script>
+		//タイトル未入力の場合(無題)と表示し、未入力のままであるときに(無題)のまま送信するための処理
+/*		var defaultvalue["messageTitle"] = "(無題)" ;
+
+		$("#messageTitle").focus(function() { // フォーカスを得たとき
+			if($(this).val() == defaultvalue[messageTitle]) { // 中身が初期値の場合
+			$(this).val(""); // 中身を空にする
+			$(this).css("color","#000000") // 色をブラックにする
+			}
+			})
+
+			$("#messageTitle").blur(function() {  // フォーカスを失ったとき
+			setdefault($(this)) ;
+			})
+
+			$("#messageTitle").show(function() { // 初期表示
+			setdefault($(this)) ;
+			})
+
+			//色をグレーにして、中身を初期値にする関数
+		function setdefault(obj){
+		if(obj.val() == defaultvalue["messageTitle"] || obj.val() == "") { // 中身が初期値、もしくは空の場合
+		obj.val(defaultvalue["messageTitle"]); // 中身を初期値にする
+		obj.css("color","#AAAAAA") // 色をグレーにする
+		}
+		}
+		//現在、この部分は文字数カウントと同時に進行できない不具合があり、htmlタグの方でグレーの初期表示のみ対応しています。
+*/
+		</script>
  	 </head>
 	 <body>
  	<form name="MyForm" method="POST" action="#">
@@ -122,7 +149,7 @@
 						<% } %>
 					</select><br>
 			件名<br>
-					<input type="text" id="messageTitle" name="messageTitle" size="40"><br>
+					<input type="text" id="messageTitle" name="messageTitle" size="40" placeholder="(無題)"><br>
 			本文<br>
 					<textarea class="margin"  onkeyup="ShowLength( 'nummoji' , value );"  id="message" name="message"  rows="20" cols="60" ></textarea>
 					<span id="nummoji">0</span><br>

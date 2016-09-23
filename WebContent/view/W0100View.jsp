@@ -61,20 +61,16 @@
 				  }
 			    }
 
+//		function open_message(id) {
+	//		document.MyForm.messageId.value = id;
+	//		System.out.println("messageIdは" + id + "です！！！★");
+		//}
 
-
-
-		</script>
-<script type="text/javascript">
-//function open_message(id){
-	$(function() {
-//		var openID = "#openDialog" + id;
-		System.out.println("messageIdは" + id + "です！！！★");
-		$('#openDialog').click(function(){
-			$('.content').html($('#openDialog').html());
+/*	$(function() {
+		$("#" + messageId).click(function(){
+			$('.content').html($('#' + messageId).html());
 			$('.dialog').dialog('open');
 		});
-
 		$('.dialog').dialog({
 			width: 500,
 			autoOpen: false,
@@ -85,7 +81,22 @@
 			}
 		});
 	});
-//}
+*/
+
+
+//		function open_message(id) {
+//			var openID = "#openDialog" + id;
+//			System.out.println("messageIdは" + id + "です！！！★");
+
+//		}
+
+
+		function open_message(mid){
+			alert("#mes" + mid);
+			var mesId = "message" + mid;
+			var hd = document.MyForm.mesId.value;
+			alert(hd);
+		}
 	</script>
 
 	</head>
@@ -152,12 +163,19 @@
 
 							<tr>
 								<td><input type="checkbox" <%= chk1  %> name="chkbox" style="width:17px;height:17px;"value="<%= messageInfo.get("messageId") %>" onClick="chk();"></td>
-								<td class="messageTitle"><a href="#" id="openDialog<%=messageId %>" class="openDialog" ><b><%=messageTitle %></b></a></td>
+								<td class="messageTitle"><a href="#" id="open<%=messageId %>" class="openDialog" onClick="open_message(<%=messageId %>);" ><b><%=messageTitle %></b></a></td>
 								<td><%=OutputPostTime %></td>
 								<td class="userName"><%=sendUserName %></td>
 								<td>⇒</td>
 								<td class="userName"><%=recUserName %></td>
-								<td><div id="dialog<%=messageId %>" class="dialog" title=<%=messageTitle %>><p class="content"><%=OutputMessage %></p></div></td>
+				<!-- 				<td><div id="dialog<%=messageId %>" class="dialog" title=<%=messageTitle %>> <p class="content"> <%=OutputMessage %></div></td>  -->
+								<td>
+									<input type="hidden" name="messageTitle<%=messageId %>" value="<%=messageTitle%>">
+									<input type="hidden" name="message<%=messageId %>" value="<%=OutputMessage %>">
+									<input type="hidden" name="sendUserName<%=messageId %>" value="<%=sendUserName %>">
+									<input type="hidden" name="recUserName<%=messageId %>" value="<%=recUserName %>">
+									<input type="hidden" name="time<%=messageId %>" value="<%=OutputPostTime %>">
+								</td>
 
 					</tr>
 	<% } %>
@@ -169,19 +187,13 @@
 
 
 
-			<div id="footer">
-			<p id="copyright">Copyright (c) WISS1 Inc. All Rights Reserved.</p>
-	</div>
-
 
 				<P>
-				<input type="button"  <%=chk1 %> value="削除" onClick="deletes('Update');"><br>
-				<input type="button" value="メッセージ送信フォーム" onClick="go_messageform();">
+				<input type="button" value="メッセージ送信フォーム" onClick="go_messageform();"><br>
+				<input type="button"  <%=chk1 %> value="削除" onClick="deletes('Update');">
 				<input type="hidden" name="actionId" value="">
 				<input type="hidden" name="userId" value="">
 				<input type="hidden" name="userName" value="">
-				<input type="hidden" name="userAddress" value="">
-				<input type="hidden" name="userMail" value="">
 
 				</P>
 

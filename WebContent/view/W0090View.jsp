@@ -56,7 +56,7 @@
                     }
                 }
             }
-           }
+        }
     }
 
     function go_portal(){

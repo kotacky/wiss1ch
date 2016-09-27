@@ -17,8 +17,7 @@
 
             //ログアウト
             function logOut(){
-                MyMessage = confirm("ログアウトします。よろしいですか？");
-                if ( MyMessage == true ){
+                if ( confirm("ログアウトします。よろしいですか？") ){
                     document.MyForm.action = "<%= request.getContextPath() %>/W0000Control"
                     document.MyForm.submit();
                 }else{
@@ -42,18 +41,17 @@
             function newinsert(command){
                 var k = document.MyForm.text.value.trim();
                 var l = document.MyForm.text.value.length;
-                //alert("|" + k + "|" + k.length );
+
                 if(k.length <= 3){
                     alert("文字数が不足しています");
                 }else if(l <= 3){
                     alert("文字数が不足しています");
                 }else if (l<=200){
-                    myRet = confirm("投稿しますか？");
-                    if(myRet == true ){
+                    if(confirm("投稿しますか？")){
                         document.MyForm.actionId.value = command;
                         document.MyForm.action = "<%= request.getContextPath() %>/W0040Control"
                         document.MyForm.submit();
-                    }else if(myRet == false){
+                    }else {
                         alert("キャンセルされました");
                     }
                 }else if (l > 200){
@@ -64,19 +62,18 @@
             //投稿(挿入) 旧版
             function insert(command){
                 var l = document.MyForm.text.value.length;
-                //alert(l);
+
                 if(l <= 3){
                     alert("文字数が不足しています");
                 }else if (l<=200){
-                    myRet = confirm("投稿しますか？");
-                    if(myRet == true ){
+                    if(confirm("投稿しますか？")){
                         document.MyForm.actionId.value = command;
                         document.MyForm.action = "<%= request.getContextPath() %>/W0040Control"
                         document.MyForm.submit();
-                    }else if(myRet == false){
+                    }else {
                         alert("キャンセルされました");
                     }
-                }else if (l > 200){
+                }else {
                     alert("200文字以内で入力してください");
                 }
             }
@@ -93,12 +90,12 @@
             //単独論理削除
             function soloupdate(cid){
                 document.MyForm.commentId.value = cid;
-                var myRet = confirm("単独削除しますか？");
-                if(myRet == true){
+
+                if(confirm("単独削除しますか？")){
                     document.MyForm.actionId.value = 'soloupdate';
                     document.MyForm.action = "<%= request.getContextPath() %>/W0040Control"
                     document.MyForm.submit();
-                }else if(myRet == false){
+                }else {
                     alert("キャンセル");
                 }
             }
@@ -109,16 +106,15 @@
                 var boxes = document.getElementsByName("chkbox");
                 // チェックボックスの個数を取得する
                 var cnt = boxes.length;
-
                 var flg = 0;  //flg:チェックの判定用
+
                 for(var i=0; i < cnt; i++) {
                     if(boxes.item(i).checked) {
                         flg = 1;
                     }
                 }
                 if(flg > 0){
-                    MyMessage = confirm("削除しますか");
-                    if ( MyMessage == true ){
+                    if ( confirm("削除しますか") ){
                         document.MyForm.actionId.value = Command;
                         document.MyForm.action = "<%= request.getContextPath() %>/W0040Control"
                         document.MyForm.submit();
@@ -129,7 +125,6 @@
                 }
             }
         </script>
-
     </head>
     <body>
         <form name="MyForm" enctype="multipart/form-data" method="POST" action="#">
@@ -140,18 +135,18 @@
             <img src="<%= request.getContextPath() %>/view/img/153.142.124.217 (2).gif"></a>
             </div>
             <input type="button"  value="戻る"  style="position: absolute; left: 20px; top: 0px;" onClick=go_categorylist();>
-            <% String categoryName = request.getAttribute("Name").toString();%>
+            <% String categoryName = request.getAttribute("categoryName").toString();%>
             <% String sessionflag = session.getAttribute("adminFlg").toString();%>
             <% String userId = session.getAttribute("userId").toString();%>
             <% String userName = session.getAttribute("userName").toString();%>
-            <% String user_font_color = session.getAttribute("font_color").toString();%>
+            <% String userFontColor = session.getAttribute("font_color").toString();%>
             <% String chk1 = null ;%>
             <% String chk2 = "t";%>
-            <% String Id; %>
-            <% Id = request.getAttribute("Id").toString(); %>
+            <% String categoryId; %>
+            <% categoryId = request.getAttribute("categoryId").toString(); %>
 
 
-            <%  List<HashMap<String,String>> commentList = (List<HashMap<String,String>>)request.getAttribute("commentList"); %>
+            <% List<HashMap<String,String>> commentList = (List<HashMap<String,String>>)request.getAttribute("commentList"); %>
             <% HashMap<String,String> imgInfo = (HashMap<String,String>)request.getAttribute("imgInfo"); %>
 
                 <% try { %>
@@ -161,7 +156,7 @@
                     </h1>
                     <%-- コメントの表示--%>
                     <table style="">
-                    <h2><%out.print(request.getAttribute("Name"));%>スレッド</h2>
+                    <h2><%out.print(request.getAttribute("categoryName"));%>スレッド</h2>
                 </CENTER>
                     <%	if (commentList != null) { %>
                     <%
@@ -170,21 +165,21 @@
                                 HashMap<String,String> commentInfo = commentList.get(j);
                                 String comment = commentInfo.get("comment");
                                 String OutputComment = comment.replaceAll("&","&amp;")
-                                                                .replaceAll("<","&lt;")
-                                                                .replaceAll(">","&gt;")
-                                                                .replaceAll("\n","<br>")
-                                                                .replaceAll("\"","&quot;")
-                                                                .replaceAll("\'","&#39;");
+                                                              .replaceAll("<","&lt;")
+                                                              .replaceAll(">","&gt;")
+                                                              .replaceAll("\n","<br>")
+                                                              .replaceAll("\"","&quot;")
+                                                              .replaceAll("\'","&#39;");
 
                                 String commentId = commentInfo.get("commentId");
                                 String commentUserId = commentInfo.get("userId");
-                                String UserName = commentInfo.get("userName");
-                                String good_count = commentInfo.get("good_count");
-                                String post_font_color = commentInfo.get("font_color");
-                            //Create_Dateを取得してPostDateへ
-                                String PostTime = commentInfo.get("PostTime");
-                            //PostDateはミリ秒まで表示しているのでトリミング、ハイフンをスラッシュへ
-                                String OutputPostTime = PostTime.substring(0,16);
+                                String postUserName = commentInfo.get("userName");
+                                String goodCount = commentInfo.get("good_count");
+                                String postFontColor = commentInfo.get("font_color");
+                                //Create_Dateを取得してPostDateへ
+                                String postTime = commentInfo.get("PostTime");
+                                //PostDateはミリ秒まで表示しているのでトリミング、ハイフンをスラッシュへ
+                                String OutputPostTime = postTime.substring(0,16);
                                 OutputPostTime = OutputPostTime.replaceAll("-","/");
                                 if(chk2.equals(sessionflag)){
                                     chk1 = "true";
@@ -205,10 +200,10 @@
                                                 <span style="margin-right: 1em;"></span>
                                                 投稿時間: <% out.print(OutputPostTime); %>
                                                 <span style="margin-right: 3em;"></span>
-                                                ユーザ名  <% out.print(UserName); %>
+                                                ユーザ名  <% out.print(postUserName); %>
                                             </div>
                                             <div style = "text-align : left">
-                                                <FONT size="4" color="<%out.print(post_font_color);%>"><% out.print(OutputComment);%></FONT>
+                                                <FONT size="4" color="<%out.print(postFontColor);%>"><% out.print(OutputComment);%></FONT>
                                             </div>
                                             <div style = "text-align : left">
                                                 <% String imgtext = imgInfo.get(commentId);%>
@@ -216,7 +211,7 @@
                                             </div>
                                             <div style = "text-align : right">
                                                 <input type="submit" name="commentBtn" value="ｲｲﾈ!" onClick="good(<%=commentId%>);">
-                                                <% out.print(good_count); %>　　
+                                                <% out.print(goodCount); %>　　
                                                 <input type="submit" <%=chk1 %> name="deleteBtn" value="削除" onClick="soloupdate(<%=commentId%>);">
                                             </div>
                                         </th>
@@ -227,35 +222,35 @@
                             <% } %>
                         <% } %>
             <P class="margin">投稿可能文字数は 4文字以上、200文字までです。
-            <div>
-                投稿者名<input type="text" id="postName" name="postName" size="20"></input>
-            </div>
-            <div>
-                コメント入力欄<textarea class="margin" onkeyup="ShowLength( 'nummoji' , value );"  id="text" name="text"  rows="4" cols="40"  placeholder="コメント記入欄"></textarea>
-                <span id="nummoji">0文字</span>
-            </div>
-            <input class="margin" type="file" name="imgfile" accept='image/*' size="50" id=imgfile" value="画像選択">　　　　　　
-            <input class="margin" type="submit" name="btn1" id="toukou" value ="投稿する" onClick="newinsert('newinsert');">
-            <input class="margin" type="button" name="btn1" value ="削除する" <% if (commentList == null) { out.print("disabled"); }%> onClick="update('update');">
-            <input class="margin" type="hidden" name="actionId" value="">
-            <input class="margin" type="hidden" name="Id" value="<%= Id %>">
-            <input class="margin" type="hidden" name="userId" value="<%= userId %>">
-            <input class="margin" type="hidden" name="userName" value="<%= userName %>">
-            <input class="margin" type="hidden" name="Name" value="<%= categoryName %>">
+                <div>
+                    投稿者名<input type="text" id="postName" name="postName" size="20"></input>
+                </div>
+                <div>
+                    コメント入力欄<textarea class="margin" onkeyup="ShowLength( 'numOfLetter' , value );"  id="text" name="text"  rows="4" cols="40"  placeholder="コメント記入欄"></textarea>
+                    <span id="numOfLetter">0文字</span>
+                </div>
+                <input class="margin" type="file" name="imgfile" accept='image/*' size="50" id=imgfile" value="画像選択">　　　　　　
+                <input class="margin" type="submit" name="btn1" id="toukou" value ="投稿する" onClick="newinsert('newinsert');">
+                <input class="margin" type="button" name="btn1" value ="削除する" <% if (commentList == null) { out.print("disabled"); }%> onClick="update('update');">
+                <input class="margin" type="hidden" name="actionId" value="">
+                <input class="margin" type="hidden" name="categoryId" value="<%= categoryId %>">
+                <input class="margin" type="hidden" name="userId" value="<%= userId %>">
+                <input class="margin" type="hidden" name="userName" value="<%= userName %>">
+                <input class="margin" type="hidden" name="categoryName" value="<%= categoryName %>">
             </P>
             <%} catch(NullPointerException deleteException){ %>>
             <div>
-                コメント入力欄<textarea class="margin" input type="text" onkeyup="ShowLength( 'nummoji' , value );"  id="text" name="text"  rows="4" cols="40"  placeholder="コメント記入欄"></textarea>
-                <span id="nummoji">0文字</span>
+                コメント入力欄<textarea class="margin" input type="text" onkeyup="ShowLength( 'numOfLetter' , value );"  id="text" name="text"  rows="4" cols="40"  placeholder="コメント記入欄"></textarea>
+                <span id="numOfLetter">0文字</span>
             </div>
             <input class="margin" type="file" name="imgfile" accept='image/*' size="50" id=imgfile" value="画像選択">
             <input class="margin" type="submit" name="btn1" value ="投稿する" onClick="newinsert('newinsert');">
             <input class="margin" type="button" name="btn1" value ="削除する" <% if (commentList == null) { out.print("disabled"); }%> onClick="update('update');">
             <input class="margin" type="hidden" name="actionId" value="">
-            <input class="margin" type="hidden" name="Id" value="<%= Id %>">
+            <input class="margin" type="hidden" name="categoryId" value="<%= categoryId %>">
             <input class="margin" type="hidden" name="userId" value="<%= userId %>">
             <input class="margin" type="hidden" name="userName" value="<%= userName %>">
-            <input class="margin" type="hidden" name="Name" value="<%= categoryName %>">
+            <input class="margin" type="hidden" name="categoryName" value="<%= categoryName %>">
             <% } %>
 
         </form>

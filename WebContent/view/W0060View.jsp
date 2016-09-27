@@ -10,8 +10,7 @@
 
     //リクエストパラメータの文字コードを指定
         function logOut(){
-            MyMessage = confirm("ログアウトします。よろしいですか？");
-            if ( MyMessage == true ){
+            if ( confirm("ログアウトします。よろしいですか？") ){
                 document.MyForm.action = "<%= request.getContextPath() %>/W0000Control"
                 document.MyForm.submit();
             }else{
@@ -109,18 +108,18 @@
                         <td>文字色：</td>
                         <td>
                             <select name="fontColor" onchange = "changepuldown()" >
-                            <option style = "color : #000000 ;" value ="1">黒</option>
-                            <option style = "color : #ff0000 ;" value ="2">赤</option>
-                            <option style = "color : #0000ff ;" value ="3">青</option>
-                            <option style = "color : #008000 ;" value ="4">緑</option>
-                            <option style = "color : #ffcc00 ;" value ="5">黄</option>
-                            <option style = "color : #ffa500 ;" value ="6">橙</option>
-                            <option style = "color : #800080 ;" value ="7">紫</option>
-                            <option style = "color : #adff2f ;" value ="8">黄緑</option>
-                            <option style = "color : #87ceeb ;" value ="9">空色</option>
-                            <option style = "color : #000080 ;" value ="10">紺</option>
-                            <option style = "color : #a52a2a ;" value ="11">茶</option>
-                            <option style = "color : #d2691e ;" value ="12">チョコ</option>
+                                <option style = "color : #000000 ;" value ="1">黒</option>
+                                <option style = "color : #ff0000 ;" value ="2">赤</option>
+                                <option style = "color : #0000ff ;" value ="3">青</option>
+                                <option style = "color : #008000 ;" value ="4">緑</option>
+                                <option style = "color : #ffcc00 ;" value ="5">黄</option>
+                                <option style = "color : #ffa500 ;" value ="6">橙</option>
+                                <option style = "color : #800080 ;" value ="7">紫</option>
+                                <option style = "color : #adff2f ;" value ="8">黄緑</option>
+                                <option style = "color : #87ceeb ;" value ="9">空色</option>
+                                <option style = "color : #000080 ;" value ="10">紺</option>
+                                <option style = "color : #a52a2a ;" value ="11">茶</option>
+                                <option style = "color : #d2691e ;" value ="12">チョコ</option>
                             </select>
                         </td>
                     </tr>

@@ -28,8 +28,8 @@ public class W0020Control extends HttpServlet {
             // アクションIDの取得
             String actionId = request.getParameter("actionId");
             String checkBox[] = request.getParameterValues("chkbox"); //Viewのchkboxの値を取得
-            String Id = request.getParameter("categoryId");
-            System.out.println("W0020C categoryId:"+Id );
+            String categoryId = request.getParameter("categoryId");
+            System.out.println("W0020C categoryId:"+categoryId );
 
             // 削除
             if ("Update".equals(actionId)){

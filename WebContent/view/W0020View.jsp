@@ -11,8 +11,7 @@
 
         <script type="text/javascript">
         function logOut(){
-            MyMessage = confirm("ログアウトします。よろしいですか？");
-              if ( MyMessage == true ){
+              if ( confirm("ログアウトします。よろしいですか？") ){
                 document.MyForm.action = "<%= request.getContextPath() %>/W0000Control"
                 document.MyForm.submit();
             }else{
@@ -34,8 +33,7 @@
                 }
             }
             if(flg > 0){
-                MyMessage = confirm("削除しますか");
-                if ( MyMessage == true ){
+                if ( confirm("削除しますか") ){
                     document.MyForm.actionId.value = Command;
                     document.MyForm.action = "<%= request.getContextPath() %>/W0020Control"
                     document.MyForm.submit();
@@ -75,8 +73,8 @@
 
         function move(Command){
             var values = Command.split(','); // , 区切;
-            document.MyForm.Id.value = values[0];
-            document.MyForm.Name.value = values[1];
+            document.MyForm.categoryId.value = values[0];
+            document.MyForm.categoryName.value = values[1];
             document.MyForm.action = "<%= request.getContextPath() %>/W0040Control"
             document.MyForm.submit();
         }
@@ -89,7 +87,7 @@
 
         function go_inqform(){
             document.MyForm.action = "<%= request.getContextPath() %>/W0080Control"
-                document.MyForm.submit();
+            document.MyForm.submit();
         }
 
         //追加した関数
@@ -105,7 +103,7 @@
 
     <body>
     <form name="MyForm" method="POST" action="<%= request.getContextPath() %>/W0000Control">
-        <input type="hidden" name="categoryId">
+
         <div align="right">
             <% out.print(session.getAttribute("userName")); %>
             <a style="margin-left:20px"class="button" name="logout"onClick="logOut();"><img src="<%= request.getContextPath() %>/view/img/153.142.124.217 (2).gif"></a>
@@ -157,9 +155,9 @@
                     <% if (categoryList != null) { %>
 
                         <% for (HashMap<String,String> categoryInfo : categoryList) { %>
-                                <%String Id = categoryInfo.get("categoryId"); %>
-                                <%String Name = categoryInfo.get("categoryName");
-                                  String OutputName = Name.replaceAll("&","&amp;")
+                                <%String categoryId = categoryInfo.get("categoryId"); %>
+                                <%String categoryName = categoryInfo.get("categoryName");
+                                  String outputName = categoryName.replaceAll("&","&amp;")
                                                                 .replaceAll("<","&lt;")
                                                                 .replaceAll(">","&gt;")
                                                                 .replaceAll("\"","&quot;")
@@ -167,7 +165,7 @@
                         %>
                                 <tr>
                                     <td><input type="checkbox" <%= chk1  %> name="chkbox" style="width:17px;height:17px;"value="<%= categoryInfo.get("categoryId") %>" onClick="chk();"></td>
-                                    <td><a onClick="move('<%=Id %>,<%=OutputName %>');"   href="#"  value=""  ><% out.print(categoryInfo.get("categoryName")); %></a></td>
+                                    <td><a onClick="move('<%=categoryId %>,<%=outputName %>');"   href="#"  value=""  ><% out.print(categoryInfo.get("categoryName")); %></a></td>
                         <% } %>
                     <% } %>
                     </tr>
@@ -175,10 +173,10 @@
             <P>
                 <input type="button"  <%=chk1 %> value="カテゴリ登録" onClick="Regist();" >
                 <input type="button"  <%=chk1 %> value="カテゴリ削除" onClick="deletes('Update');"><br>
-                <input type="button" name=inq_btn value="問い合わせフォーム" onClick=go_inqform();>
+                <input type="button" name="inq_btn" value="問い合わせフォーム" onClick="go_inqform();">
                 <input type="hidden" name="actionId" value="">
-                <input type="hidden" name="Id" value="">
-                <input type="hidden" name="Name" value="">
+                <input type="hidden" name="categoryId" value="">
+                <input type="hidden" name="categoryName" value="">
             </div>
             </P>
         </form>

@@ -15,8 +15,7 @@ import co.wiss1.common.DBAccessUtils;
 public class W0040Model {
 
     //コメント一覧の取得
-    public static List<HashMap<String, String>> getCommentList(String Id) {
-        System.out.println("カテゴリIDは" + Id + "になります!!");
+    public static List<HashMap<String, String>> getCommentList(String categoryId) {
         // コメント一覧を格納する二次元文字列配列
             List<HashMap<String, String>> commentList = new ArrayList<HashMap<String, String>>();
         // SQL実行結果格納用Set
@@ -37,7 +36,7 @@ public class W0040Model {
                 sb.append("SELECT p.post, p.user_name, p.post_id, p.user_id, p.create_date, c.category_name, p.good_count, p.font_color "
                         + "FROM t_post p LEFT OUTER JOIN t_category c "
                         + "ON c.category_id = p.category_id "
-                        + "WHERE p.category_id = '"+ Id +"' AND p.delete_flg = 'f' "
+                        + "WHERE p.category_id = '"+ categoryId +"' AND p.delete_flg = 'f' "
                         + "ORDER BY p.post_id	");
                 System.out.println("W0040M getCommentList:" + sb.toString());
             // SQL文実行
@@ -49,13 +48,12 @@ public class W0040Model {
             while(resultSet.next()) {
                 //Idはpost_idを獲得
                 HashMap<String, String> commentInfo = new HashMap<String, String>();
-                commentInfo.put("CategoryName", resultSet.getString("category_name"));
+                commentInfo.put("categoryName", resultSet.getString("category_name"));
                 commentInfo.put("commentId", resultSet.getString("post_id"));
                 //v1.1 CreateDateを取得
                 commentInfo.put("PostTime", resultSet.getString("create_date"));
                 commentInfo.put("userName", resultSet.getString("user_name"));
                 commentInfo.put("comment", resultSet.getString("post"));
-                commentInfo.put("Id", resultSet.getString("post_id"));
                 commentInfo.put("userId", resultSet.getString("user_id"));
                 commentInfo.put("good_count", resultSet.getString("good_count"));
 
@@ -106,10 +104,6 @@ public class W0040Model {
                 //コメントリストへコメントインフォを送る
                 commentList.add(commentInfo);
                 System.out.println("コメントIdは" + commentInfo.get("commentId") + "です" );
-                //System.out.println("ユーザ名は" + commentInfo.get("userName") + "です" );
-                //System.out.println("コメントは" + commentInfo.get("comment") + "です" );
-                //System.out.println("ユーザIdは" + commentInfo.get("userId") + "です" );
-                //System.out.println("いいね数は" + commentInfo.get("good_count") + "です" );
                 System.out.println("カラーコードは" + commentInfo.get("font_color") + "です" );
 
             }
@@ -133,7 +127,7 @@ public class W0040Model {
     }
 
     //画像データ一覧の取得
-    public static HashMap<String, String> getImgList(String Id) {
+    public static HashMap<String, String> getImgList(String categoryId) {
     // 画像一覧を格納する二次元文字列配列
         HashMap<String, String> imgInfo = new HashMap<String, String>();
     // SQL実行結果格納用Set
@@ -154,7 +148,7 @@ public class W0040Model {
             sb.append("SELECT p.post_id, p.img_bin "
                     + "FROM t_post p LEFT OUTER JOIN t_category c "
                     + "ON c.category_id = p.category_id "
-                    + "WHERE p.category_id = '"+ Id +"' AND p.delete_flg = 'f' "
+                    + "WHERE p.category_id = '"+ categoryId +"' AND p.delete_flg = 'f' "
                     + "ORDER BY p.post_id	");
             System.out.println("W0040M getImgList:" + sb.toString());
         // SQL文実行
@@ -322,7 +316,7 @@ public class W0040Model {
             connection.setAutoCommit(true);
             //コメントの追加
             String insertSql = "INSERT INTO t_post(post,category_id,user_name,delete_flg,user_id,create_date,create_user,update_date,update_user,font_color)"
-                    + " VALUES ('" + comment + "','"+ categoryId +"','"+ userName +"',FALSE,'"+ userId +"',current_timestamp,'"+ userId +"',current_timestamp,'"+ userId +"','"+ color + "')";
+                             + " VALUES ('" + comment + "','"+ categoryId +"','"+ userName +"',FALSE,'"+ userId +"',current_timestamp,'"+ userId +"',current_timestamp,'"+ userId +"','"+ color + "')";
             System.out.println("W0040M : INSERT");
             insertCount = statement.executeUpdate(insertSql);
 
@@ -359,8 +353,8 @@ public class W0040Model {
 
         try{
             // コメント一覧照会実行
-            connection = DBAccessUtils.getConnection();													//DBへ接続
-            statement = connection.createStatement();													//Statementを取得するためのコード
+            connection = DBAccessUtils.getConnection();						//DBへ接続
+            statement = connection.createStatement();						//Statementを取得するためのコード
 
             //自動コミットを有効にする
             connection.setAutoCommit(true);

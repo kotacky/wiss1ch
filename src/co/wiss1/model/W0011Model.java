@@ -39,9 +39,9 @@ public class W0011Model {
                             + "FROM t_message "
                             + "GROUP BY send_user_id, receive_user_id)) "
                             + "AND (delete_flg = FALSE "
-                            + "AND (send_user_id = '" + Id + "' OR receive_user_id = '" + Id + "')) "
+                            + "AND receive_user_id = '" + Id + "') "
                             + "AND create_date BETWEEN current_timestamp - interval '1 days' AND current_timestamp");
-            //sbの箱SELECT * FROM t_message のうち送受信者のいずれかが自分で WHERE m.delete_flg = 'FALSE'
+            //sbの箱SELECT * FROM t_message のうち受信者が自分で WHERE m.delete_flg = 'FALSE'
             //その中で24時間以内に登録されたものをSELECT
             // SQL文実行
             System.out.println("W0011M " + sb.toString());

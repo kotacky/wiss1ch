@@ -12,8 +12,7 @@
 
         <script type="text/javascript">
         function logOut(){
-            MyMessage = confirm("ログアウトします。よろしいですか？");
-            if ( MyMessage == true ){
+            if ( confirm("ログアウトします。よろしいですか？") ){
                 document.MyForm.action = "<%= request.getContextPath() %>/W0000Control"
                 document.MyForm.submit();
             }else{

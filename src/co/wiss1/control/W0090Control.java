@@ -38,12 +38,12 @@ public class W0090Control extends HttpServlet{
 
                 String messageTitle = request.getParameter("messageTitle");
                 String message = request.getParameter("message");
-                String rUserId = request.getParameter("rUserId");
+                String recUserId = request.getParameter("recUserId");
                 System.out.println("W0090C 件名は" + messageTitle + "です");
                 System.out.println("W0090C 本文は" + message + "です");
-                System.out.println("W0090C 送信先は" + rUserId + "です");
+                System.out.println("W0090C 送信先は" + recUserId + "です");
 
-                int registar = W0090Model.sendMessage(loginUser,messageTitle,message,rUserId);
+                int registar = W0090Model.sendMessage(loginUser,messageTitle,message,recUserId);
                 System.out.println("W0090C registar 終了" + registar);
                 request.setAttribute("registar",registar);
 

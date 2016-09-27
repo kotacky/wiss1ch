@@ -37,13 +37,13 @@ public class W0100Control extends HttpServlet {
             if("soloupdate".equals(actionId)) {
                 System.out.println("*W0100C 単独論理削除します。");
                 //削除対象のコメントID。Viewから受け取る
-                String inqID = request.getParameter("messageId");
+                String messageID = request.getParameter("messageId");
                 String userID = session.getAttribute("userId").toString();
-                System.out.println("*W0100C 削除を行うコメントIDは" + inqID + "です。");
+                System.out.println("*W0100C 削除を行うコメントIDは" + messageID + "です。");
                 System.out.println("*W0100C 削除を行うユーザIDは" + userID + "です。");
 
                 //削除の項目を送る
-                int delete = W0100Model.updateSoloMessage(inqID,userID);
+                int delete = W0100Model.updateSoloMessage(messageID,userID);
                 if (delete >= 1) {
                     System.out.println("削除成功");
                     request.setAttribute("delete",delete);

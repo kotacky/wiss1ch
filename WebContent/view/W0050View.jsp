@@ -13,8 +13,7 @@
 
         <script type="text/javascript" >
         function logOut(){
-            MyMessage = confirm("ログアウトします。よろしいですか？");
-            if ( MyMessage == true ){
+            if ( confirm("ログアウトします。よろしいですか？") ){
                 document.MyForm.action = "<%= request.getContextPath() %>/W0000Control"
                 document.MyForm.submit();
             }else{
@@ -48,12 +47,11 @@
                 }
             }
             if(flg > 0){
-                MyMessage = confirm("削除しますか");
-                if ( MyMessage == true ){
+                if ( confirm("削除しますか") ){
                     document.MyForm.actionId.value = Command;
                     document.MyForm.action = "<%= request.getContextPath() %>/W0050Control"
                     document.MyForm.submit();
-                  }
+                }
             }
             if(flg ==0){
                  alert("チェックボックスが未入力です。");
@@ -132,14 +130,14 @@
                     <%String admin = userInfo.get("userAdmin");  %>
                     <%String userAddress = userInfo.get("userAddress");  %>
                     <%String userMail = userInfo.get("userMail"); %>
-                    <%String encorded_addr = URLEncoder.encode(userAddress, "UTF-8"); %>
+                    <%String encordedAddr = URLEncoder.encode(userAddress, "UTF-8"); %>
                     <%if(sessionflag.equals(str1) && !(sessionuser.equals(userId))){chk1 = "";}else{chk1 = "disabled";} %>
 
                 <tr>
                     <td><input type="checkbox" <%= chk1  %> name="chkbox" style="width:17px;height:17px;"value="<%= userInfo.get("userId") %>" onClick="chk();"></td>
                     <td><a onClick="move('<%=userId %>,<%=userName %>,<%=userAddress %>,<%=userMail %>');"   href="#"  value=""  ><% out.print(userInfo.get("userId")); %></a></td>
                     <td><% out.print(userInfo.get("userName")); %></td>
-                    <td><a href="javascript:void(0);" onclick=window.open("http://maps.google.co.jp/maps?q=<% out.print(encorded_addr);%>",'GoogleMap','width=700,height=400')> <% out.print(userAddress); %> </a></td>
+                    <td><a href="javascript:void(0);" onclick=window.open("http://maps.google.co.jp/maps?q=<% out.print(encordedAddr);%>",'GoogleMap','width=700,height=400')> <% out.print(userAddress); %> </a></td>
                     <td><%= userMail %></td>
                     <td>
                         <% if(admin.equals(str1)){
@@ -164,13 +162,12 @@
             <P>
             <input type="button"  value="ユーザ登録" onClick=user_Regist();></td>
             <input type="button"  <%=chk1 %> value="ユーザ削除" onClick="deletes('Update');"><br>
-            <input type="button" name=inq_btn value="問い合わせフォーム" onClick="go_inqform();">
+            <input type="button" name="inq_btn" value="問い合わせフォーム" onClick="go_inqform();">
             <input type="hidden" name="actionId" value="">
             <input type="hidden" name="userId" value="">
             <input type="hidden" name="userName" value="">
             <input type="hidden" name="userAddress" value="">
             <input type="hidden" name="userMail" value="">
-
             </P>
 
         </form>

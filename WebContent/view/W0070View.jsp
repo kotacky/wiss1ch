@@ -13,8 +13,7 @@
 
         <script type="text/javascript" >
         function logOut(){
-            MyMessage = confirm("ログアウトします。よろしいですか？");
-            if ( MyMessage == true ){
+            if ( confirm("ログアウトします。よろしいですか？") ){
                 document.MyForm.action = "<%= request.getContextPath() %>/W0000Control"
                 document.MyForm.submit();
             }else{
@@ -52,9 +51,9 @@
                     flg = 1;
                 }
             }
+
             if(flg > 0){
-                MyMessage = confirm("削除しますか？");
-                if ( MyMessage == true ){
+                if ( confirm("削除しますか？") ){
                     document.MyForm.actionId.value = Command;
                     document.MyForm.action = "<%= request.getContextPath() %>/W0070Control"
                     document.MyForm.submit();
@@ -65,11 +64,8 @@
             }
         }
 
-
         </script>
     </head>
-
-
     <body>
         <form name="MyForm" method="POST" action="<%= request.getContextPath() %>/W0000Control">
 
@@ -102,10 +98,10 @@
             <%
                    for (HashMap<String,String> inqInfo : inqList) {
                        String inquiryId = inqInfo.get("inquiryId");
-                       String PostTime = inqInfo.get("PostTime");
+                       String postTime = inqInfo.get("PostTime");
                        String userName = inqInfo.get("userName");
                        String inquiry = inqInfo.get("inquiry");
-                       String OutputInquiry = inquiry.replaceAll("&","&amp;")
+                       String outputInquiry = inquiry.replaceAll("&","&amp;")
                                                      .replaceAll("<","&lt;")
                                                      .replaceAll(">","&gt;")
                                                      .replaceAll("\"","&quot;")
@@ -114,8 +110,8 @@
                        String userId = inqInfo.get("userId");
                        String userMail = inqInfo.get("userMail");
                        //PostDateはミリ秒まで表示しているのでトリミング、ハイフンをスラッシュへ
-                       String OutputPostTime = PostTime.substring(0,16);
-                       OutputPostTime = OutputPostTime.replaceAll("-","/");
+                       String outputPostTime = postTime.substring(0,16);
+                       outputPostTime = outputPostTime.replaceAll("-","/");
                        if(userId.equals(userId)) {
                            chk1 ="true";
                        } else {
@@ -132,12 +128,12 @@
                             <div style="text-align : left">
                                 <input type="checkbox"  <%=chk1 %> name="chkbox" style="width:17px;height:17px;" value="<%= inquiryId %>"onClick="chk();">
                                 <span style="margin-right: 1em;"></span>
-                                問い合わせ時間: <% out.print(OutputPostTime); %>
+                                問い合わせ時間: <% out.print(outputPostTime); %>
                                 <span style="margin-right: 3em;"></span>
                                 ユーザ名 <a href="mailto:<% out.print(userMail); %>"><% out.print(userName); %></a> (<% out.print(userId); %>)
                             </div>
                             <div style = "text-align : left">
-                                <FONT size="4"><% out.print(OutputInquiry);%></FONT>
+                                <FONT size="4"><% out.print(outputInquiry);%></FONT>
                             </div>
                             <div style = "text-align : right">　
                                 <input type="submit" <%=chk1 %> name="deleteBtn" value="削除" onClick="soloupdate(<%=inquiryId%>);">

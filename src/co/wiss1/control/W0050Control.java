@@ -13,9 +13,10 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import co.wiss1.model.W0050Model;
+import co.wiss1.common.Constants;
 
 // WebServlet
-@WebServlet("/W0050Control")
+@WebServlet(Constants.W0050_CONTROL)
 public class W0050Control extends HttpServlet {
     public void doPost(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {
@@ -55,12 +56,12 @@ public class W0050Control extends HttpServlet {
             if (userList != null && 0 < userList.size()) {
                 request.setAttribute("userList", userList);
             }
-            RequestDispatcher dispatch =getServletContext().getRequestDispatcher("/view/W0050View.jsp");
+            RequestDispatcher dispatch =getServletContext().getRequestDispatcher(Constants.W0050_VIEW);
             dispatch.forward(request, response);
             System.out.println("doPost end");
             return;
         } catch (NullPointerException W0030nullException) {
-            RequestDispatcher dispatch =getServletContext().getRequestDispatcher("/view/W0010View.jsp");
+            RequestDispatcher dispatch =getServletContext().getRequestDispatcher(Constants.W0010_VIEW);
             dispatch.forward(request, response);
         }
     }

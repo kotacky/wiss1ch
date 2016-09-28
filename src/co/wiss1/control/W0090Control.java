@@ -12,17 +12,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.catalina.realm.RealmBase;
-
-import co.wiss1.model.W0050Model;
 import co.wiss1.model.W0090Model;
+import co.wiss1.common.Constants;
 
-@WebServlet("/W0090Control")
+@WebServlet(Constants.W0090_CONTROL)
 public class W0090Control extends HttpServlet{
 
     public void doPost(HttpServletRequest request, HttpServletResponse response)
         throws IOException, ServletException{
-        request.setCharacterEncoding("UTF-8");
+        request.setCharacterEncoding(Constants.CHARACTER_ENCODING);
         //sessionから取得したuserNameをNull対応
         HttpSession session = request.getSession(true);
         try{
@@ -53,12 +51,12 @@ public class W0090Control extends HttpServlet{
                 request.setAttribute("userList", userList);
             }
 
-            RequestDispatcher dispatch = getServletContext().getRequestDispatcher("/view/W0090View.jsp");
+            RequestDispatcher dispatch = getServletContext().getRequestDispatcher(Constants.W0090_VIEW);
             dispatch.forward(request, response);
 
 
         } catch (NullPointerException W0030nullException) {
-            RequestDispatcher dispatch = getServletContext().getRequestDispatcher("/view/W0010View.jsp");
+            RequestDispatcher dispatch = getServletContext().getRequestDispatcher(Constants.W0010_VIEW);
             dispatch.forward(request, response);
         }
     }

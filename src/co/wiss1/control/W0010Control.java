@@ -14,9 +14,10 @@ import javax.servlet.http.HttpSession;
 import org.apache.catalina.realm.RealmBase;
 
 import co.wiss1.model.W0010Model;
+import co.wiss1.common.Constants;
 
 // WebServlet
-@WebServlet("/W0010Control")
+@WebServlet(Constants.W0010_CONTROL)
 public class W0010Control extends HttpServlet {
     public void doPost(HttpServletRequest request, HttpServletResponse response)
         throws IOException, ServletException {
@@ -26,7 +27,7 @@ public class W0010Control extends HttpServlet {
           String inputpassword = request.getParameter("password");
 
           // パスワードをハッシュ化
-          String hashedpassword = RealmBase.Digest(inputpassword, "SHA-1", "Windows-31J");
+          String hashedpassword = RealmBase.Digest(inputpassword, "SHA-1", Constants.CHARACTER_ENCODING);
 
 
           // ユーザー情報を受け取る
@@ -40,9 +41,13 @@ public class W0010Control extends HttpServlet {
           String deleteFlg = UserInfo.get("deleteFlg");
           String chk = UserInfo.get("残念");
 
-          if(deleteFlg.equals("t")){ //削除されたユーザーは存在しないものとして弾く
+          if(deleteFlg == null){
               request.setAttribute("EMSG0001", "ユーザーが存在しません。");
-              RequestDispatcher dispatch = request.getRequestDispatcher("/view/W0010View.jsp");
+              RequestDispatcher dispatch = request.getRequestDispatcher(Constants.W0010_VIEW);
+              dispatch.forward(request, response);
+          } else if(deleteFlg.equals("t")){ //削除されたユーザーは存在しないものとして弾く
+              request.setAttribute("EMSG0001", "ユーザーが存在しません。");
+              RequestDispatcher dispatch = request.getRequestDispatcher(Constants.W0010_VIEW);
               dispatch.forward(request, response);
 
           }else if (hashedpassword.equals(password)){
@@ -50,19 +55,18 @@ public class W0010Control extends HttpServlet {
               session.setAttribute("userName",userName);
               session.setAttribute("adminFlg",adminFlg);
               session.setAttribute("fontColor", fontColor);
-              RequestDispatcher dispatch = request.getRequestDispatcher("/W0011Control");
+              RequestDispatcher dispatch = request.getRequestDispatcher(Constants.W0011_CONTROL);
               dispatch.forward(request, response);
 
           }else if(chk == null){
               request.setAttribute("EMSG0004", "パスワードが間違っています。");
-              RequestDispatcher dispatch = request.getRequestDispatcher("/view/W0010View.jsp");
+              RequestDispatcher dispatch = request.getRequestDispatcher(Constants.W0010_VIEW);
               dispatch.forward(request, response);
           }else if(chk.equals("残念")){
               request.setAttribute("EMSG0001", "ユーザーが存在しません。");
-              RequestDispatcher dispatch = request.getRequestDispatcher("/view/W0010View.jsp");
+              RequestDispatcher dispatch = request.getRequestDispatcher(Constants.W0010_VIEW);
               dispatch.forward(request, response);
           }
-
 
     }
 

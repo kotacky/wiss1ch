@@ -5,7 +5,7 @@
 
 
     <link href="<%= request.getContextPath() %>/view/css/W0010.css" rel="stylesheet" type="text/css" />
-    <meta charset="Windows-31J">
+    <meta charset="UTF-8">
     <title>WISS1ch</title>
     <div style="bottom:40;">
     <script type="text/javascript">

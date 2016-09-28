@@ -32,22 +32,17 @@
 
             //カテゴリ登録・更新
             function Registration(updateflag){
-                //alert(updateflag);
                 //空白のみと無記入をはじく
                 if(!((document.MyForm.categoryName.value.trim()=="")||(document.MyForm.categoryName.value==null))){
-                    //alert(document.MyForm.categoryName.value);
                     //空白を除去
                     document.MyForm.categoryName.value = document.MyForm.categoryName.value.trim()
                     if(updateflag == "1"){
                         //flagが1の場合更新
-                        //alert("update:" + document.MyForm.categoryName.value);
                         document.MyForm.actionId.value = 'update';
                     }else{
                         //flagが0の場合新規登録
-                        //alert("insert:" + document.MyForm.categoryName.value);
                         document.MyForm.actionId.value = 'insert';
                     }
-                    //alert("actionID : " + document.MyForm.actionId.value);
                     document.MyForm.action = "<%= request.getContextPath() %>/W0030Control"
                     document.MyForm.submit();
                 }else{

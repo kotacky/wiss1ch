@@ -17,9 +17,10 @@ import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
 import co.wiss1.model.W0040Model;
+import co.wiss1.common.Constants;
 
 // WebServlet
-@WebServlet("/W0040Control")
+@WebServlet(Constants.W0040_CONTROL)
 @MultipartConfig(location="")
     public class W0040Control extends HttpServlet {
     public void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -29,7 +30,7 @@ import co.wiss1.model.W0040Model;
         try{
             System.out.println("W40C doPost start");
             // setCharacterEncodingはリクエスト本体にのみ摘要される(POST)
-            request.setCharacterEncoding("UTF-8");
+            request.setCharacterEncoding(Constants.CHARACTER_ENCODING);
 
             // 処理に必要となる情報を受け取る
             // カテゴリIDの取得
@@ -151,10 +152,10 @@ import co.wiss1.model.W0040Model;
                 request.setAttribute("commentList", commentList);
                 request.setAttribute("imgInfo", imgInfo);
             }
-            RequestDispatcher dispatch =getServletContext().getRequestDispatcher("/view/W0040View.jsp");
+            RequestDispatcher dispatch =getServletContext().getRequestDispatcher(Constants.W0040_VIEW);
             dispatch.forward(request, response);
         } catch(NullPointerException W0030nullException) {
-             RequestDispatcher dispatch =getServletContext().getRequestDispatcher("/view/W0010View.jsp");
+             RequestDispatcher dispatch =getServletContext().getRequestDispatcher(Constants.W0010_VIEW);
              dispatch.forward(request, response);
         }
     }

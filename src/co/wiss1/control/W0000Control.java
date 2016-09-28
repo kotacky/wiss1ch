@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import co.wiss1.common.Constants;
+
 @WebServlet("/W0000Control")
 public class W0000Control extends HttpServlet{
 
@@ -26,15 +28,13 @@ public class W0000Control extends HttpServlet{
 
         session.invalidate();
         session = request.getSession(false);
-        RequestDispatcher dispatch =getServletContext().getRequestDispatcher("/view/W0010View.jsp");
+        RequestDispatcher dispatch =getServletContext().getRequestDispatcher(Constants.W0010_VIEW);
 
         if (session == null) {
             System.out.println("セッションは破棄されました");
             dispatch.forward(request, response); // 画面遷移 セッション不具合の原因
         } else {
             System.out.println("セッションが残っています");
-        /*	RequestDispatcher dispatc =getServletContext().getRequestDispatcher("/view/W0030View.jsp");
-            dispatc.forward(request, response); // 検証用 セッションが残っていると0030へ遷移 */
         }
 
         session = request.getSession(false);

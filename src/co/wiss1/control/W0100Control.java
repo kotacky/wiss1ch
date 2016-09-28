@@ -12,12 +12,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import co.wiss1.model.W0040Model;
 import co.wiss1.model.W0100Model;
-import co.wiss1.model.W0100Model;
+import co.wiss1.common.Constants;
 
 // WebServlet
-@WebServlet("/W0100Control")
+@WebServlet(Constants.W0100_CONTROL)
 public class W0100Control extends HttpServlet {
     public void doPost(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {
@@ -77,12 +76,12 @@ public class W0100Control extends HttpServlet {
             if (messageList != null && 0 < messageList.size()) {
                 request.setAttribute("messageList", messageList);
             }
-            RequestDispatcher dispatch =getServletContext().getRequestDispatcher("/view/W0100View.jsp");
+            RequestDispatcher dispatch =getServletContext().getRequestDispatcher(Constants.W0100_VIEW);
             dispatch.forward(request, response);
             System.out.println("doPost end");
             return;
         } catch (NullPointerException W0030nullException) {
-            RequestDispatcher dispatch =getServletContext().getRequestDispatcher("/view/W0010View.jsp");
+            RequestDispatcher dispatch =getServletContext().getRequestDispatcher(Constants.W0010_VIEW);
             dispatch.forward(request, response);
         }
     }

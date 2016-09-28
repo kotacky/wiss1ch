@@ -13,9 +13,10 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import co.wiss1.model.W0020Model;
+import co.wiss1.common.Constants;
 
 // WebServlet
-@WebServlet("/W0020Control")
+@WebServlet(Constants.W0020_CONTROL)
 public class W0020Control extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
@@ -58,11 +59,11 @@ public class W0020Control extends HttpServlet {
             if (categoryList != null && 0 < categoryList.size()) {
                 request.setAttribute("categoryList", categoryList);
             }
-            RequestDispatcher dispatch =getServletContext().getRequestDispatcher("/view/W0020View.jsp");
+            RequestDispatcher dispatch =getServletContext().getRequestDispatcher(Constants.W0020_VIEW);
             dispatch.forward(request, response);
             System.out.println("doPost end");
         } catch (NullPointerException W0030nullException) {
-            RequestDispatcher dispatch =getServletContext().getRequestDispatcher("/view/W0010View.jsp");
+            RequestDispatcher dispatch =getServletContext().getRequestDispatcher(Constants.W0010_VIEW);
             dispatch.forward(request, response);
         }
     }

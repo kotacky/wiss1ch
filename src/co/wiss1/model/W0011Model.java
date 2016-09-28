@@ -44,7 +44,6 @@ public class W0011Model {
             //sbの箱SELECT * FROM t_message のうち受信者が自分で WHERE m.delete_flg = 'FALSE'
             //その中で24時間以内に登録されたものをSELECT
             // SQL文実行
-            System.out.println("W0011M " + sb.toString());
             resultSet = statement.executeQuery(sb.toString());
             //resultSet実行した結果executeQuery＝要求をＳＱＬとしてＤＢに投げる
             // 実行結果の取得・次の行を呼ぶ

@@ -14,13 +14,14 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.catalina.realm.RealmBase;
 import co.wiss1.model.W0060Model;
+import co.wiss1.common.Constants;
 
-@WebServlet("/W0060Control")
+@WebServlet(Constants.W0060_CONTROL)
 public class W0060Control extends HttpServlet{
 
     public void doPost(HttpServletRequest request, HttpServletResponse response)
         throws IOException, ServletException{
-        request.setCharacterEncoding("UTF-8");
+        request.setCharacterEncoding(Constants.CHARACTER_ENCODING);
         //sessionから取得したuserNameをNull対応
         HttpSession session = request.getSession(true);
         try{
@@ -66,7 +67,7 @@ public class W0060Control extends HttpServlet{
                     session.setAttribute("font_color", fontColor);
                 }
                 request.setAttribute("registar",registar);
-                RequestDispatcher dispatch = getServletContext().getRequestDispatcher("/W0050Control");
+                RequestDispatcher dispatch = getServletContext().getRequestDispatcher(Constants.W0050_CONTROL);
                 dispatch.forward(request, response);
                 return;
             }
@@ -102,23 +103,23 @@ public class W0060Control extends HttpServlet{
 
                 if(registar == 0){
                     System.out.println("W0060C registar0に入りました" + registar);
-                    RequestDispatcher dispatch = getServletContext().getRequestDispatcher("/view/W0060View.jsp");
+                    RequestDispatcher dispatch = getServletContext().getRequestDispatcher(Constants.W0060_VIEW);
                     dispatch.forward(request, response);
                     return;
                 }else{
-                    RequestDispatcher dispatch = getServletContext().getRequestDispatcher("/W0050Control");
+                    RequestDispatcher dispatch = getServletContext().getRequestDispatcher(Constants.W0050_CONTROL);
                     dispatch.forward(request, response);
                     return;
                 }
             }
 
 
-            RequestDispatcher dispatch = getServletContext().getRequestDispatcher("/view/W0060View.jsp");
+            RequestDispatcher dispatch = getServletContext().getRequestDispatcher(Constants.W0060_VIEW);
             dispatch.forward(request, response);
 
 
         } catch (NullPointerException W0030nullException) {
-            RequestDispatcher dispatch = getServletContext().getRequestDispatcher("/view/W0010View.jsp");
+            RequestDispatcher dispatch = getServletContext().getRequestDispatcher(Constants.W0010_VIEW);
             dispatch.forward(request, response);
         }
     }

@@ -10,9 +10,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import co.wiss1.model.W0030Model;
-import co.wiss1.model.W0040Model;
+import co.wiss1.common.Constants;
 
-@WebServlet("/W0030Control")
+@WebServlet(Constants.W0030_CONTROL)
 public class W0030Control extends HttpServlet{
 
     public void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -30,7 +30,7 @@ public class W0030Control extends HttpServlet{
 
             //Viewからフォーム入力の値を受け取る
             //UTF-8にエンコード
-            request.setCharacterEncoding("UTF-8");
+            request.setCharacterEncoding(Constants.CHARACTER_ENCODING);
 
             // アクションIDの取得
             String actionId = request.getParameter("actionId");
@@ -85,22 +85,22 @@ public class W0030Control extends HttpServlet{
             if(ret == -1){
                 //SQL操作なし(初回表示)
                 request.setAttribute("insertFlag","1");
-                RequestDispatcher dispatch =getServletContext().getRequestDispatcher("/view/W0030View.jsp");
+                RequestDispatcher dispatch =getServletContext().getRequestDispatcher(Constants.W0030_VIEW);
                 dispatch.forward(request, response);
             }else if(ret == 1){
                 //登録成功
                 request.setAttribute("insertFlag","1");
-                RequestDispatcher dispatch =getServletContext().getRequestDispatcher("/W0020Control");
+                RequestDispatcher dispatch =getServletContext().getRequestDispatcher(Constants.W0020_CONTROL);
                 dispatch.forward(request, response);
             }else{
                 //登録失敗
                 request.setAttribute("insertFlag","0");
-                RequestDispatcher dispatch =getServletContext().getRequestDispatcher("/view/W0030View.jsp");
+                RequestDispatcher dispatch =getServletContext().getRequestDispatcher(Constants.W0030_VIEW);
                 dispatch.forward(request, response);
             }
         } catch (NullPointerException W0030nullException) {
             //Null落ちしたら0010に戻る
-            RequestDispatcher dispatch =getServletContext().getRequestDispatcher("/view/W0010View.jsp");
+            RequestDispatcher dispatch =getServletContext().getRequestDispatcher(Constants.W0010_VIEW);
             dispatch.forward(request, response);
         }
     }

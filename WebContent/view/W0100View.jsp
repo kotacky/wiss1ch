@@ -128,8 +128,7 @@
                 %>
                 <% String sessionflag = session.getAttribute("adminFlg").toString();
                    String sessionuser = session.getAttribute("userId").toString();
-
-                   System.out.println("userIdは" + sessionuser + "です！！！★"); %>
+                %>
                 <%
                    String chk1 = null;
                    String str1 = "t";

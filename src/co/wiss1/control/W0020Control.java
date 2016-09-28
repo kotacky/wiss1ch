@@ -29,13 +29,11 @@ public class W0020Control extends HttpServlet {
             String actionId = request.getParameter("actionId");
             String checkBox[] = request.getParameterValues("chkbox"); //Viewのchkboxの値を取得
             String categoryId = request.getParameter("categoryId");
-            System.out.println("W0020C categoryId:"+categoryId );
 
             // 削除
             if ("Update".equals(actionId)){
                 //ViewからchkBoxの値を受け取る
                 for (int i = 0; i < checkBox.length; i++ ) {
-                    System.out.println(checkBox[i] + "<br>");
                 }
 
                 //削除の項目を送る
@@ -51,7 +49,6 @@ public class W0020Control extends HttpServlet {
 
             // 初期表示 と削除後の再検索したカテゴリ一覧を取得
             String parent = request.getParameter("pldw");
-            System.out.println("W0020M pldw:" + parent);
 
             List<HashMap<String, String>> categoryList = null;
             if(parent != null){

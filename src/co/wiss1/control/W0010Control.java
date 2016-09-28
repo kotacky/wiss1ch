@@ -36,14 +36,15 @@ public class W0010Control extends HttpServlet {
           String userName = UserInfo.get("userName");
           String password = UserInfo.get("password");
           String adminFlg = UserInfo.get("adminFlg");
-          String font_color = UserInfo.get("font_color");
+          String fontColor = UserInfo.get("fontColor");
+          String deleteFlg = UserInfo.get("deleteFlg");
+          System.out.println("deleteflg=" + deleteFlg);
           String chk = UserInfo.get("残念");
           if (hashedpassword.equals(password)){
               session.setAttribute("userId",userId);
               session.setAttribute("userName",userName);
               session.setAttribute("adminFlg",adminFlg);
-              session.setAttribute("font_color", font_color);
-              System.out.println("W0010C font_color=" + font_color + ";");
+              session.setAttribute("fontColor", fontColor);
               RequestDispatcher dispatch = request.getRequestDispatcher("/W0011Control");
               dispatch.forward(request, response);
 
@@ -55,7 +56,10 @@ public class W0010Control extends HttpServlet {
                 request.setAttribute("EMSG0001", "ユーザーが存在しません。");
                 RequestDispatcher dispatch = request.getRequestDispatcher("/view/W0010View.jsp");
                 dispatch.forward(request, response);
-          }else{
+          }else if(deleteFlg != "f"){
+              request.setAttribute("EMSG0001", "ユーザーが存在しません。");
+              RequestDispatcher dispatch = request.getRequestDispatcher("/view/W0010View.jsp");
+              dispatch.forward(request, response);
           }
 
 

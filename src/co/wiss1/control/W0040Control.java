@@ -27,8 +27,6 @@ import co.wiss1.model.W0040Model;
             //sessionから取得したUserNameをNull対応
             HttpSession session = request.getSession(true);
         try{
-            String user = session.getAttribute("userName").toString();
-
             System.out.println("W40C doPost start");
             // setCharacterEncodingはリクエスト本体にのみ摘要される(POST)
             request.setCharacterEncoding("UTF-8");
@@ -37,14 +35,11 @@ import co.wiss1.model.W0040Model;
             // カテゴリIDの取得
             String categoryId = request.getParameter("categoryId");
             request.setAttribute("categoryId",categoryId);
-            System.out.println("W40C カテゴリIDは"+ categoryId +"です" );
 
             String categoryName = request.getParameter("categoryName");
             request.setAttribute("categoryName",categoryName);
-            System.out.println("W40C カテゴリ名は"+ categoryName +"です" );
 
             String comment = request.getParameter("text");
-            System.out.println("W40C コメントは"+ comment +"です");
 
             // アクションIDの取得
             String actionId = request.getParameter("actionId");
@@ -56,12 +51,9 @@ import co.wiss1.model.W0040Model;
                 //いいね対象のコメントID。Viewから受け取る
                 String commentId = request.getParameter("commentId");
                 String userId = session.getAttribute("userId").toString();
-                System.out.println("*W40C いいねするコメントIDは" + commentId + "です。");
-                System.out.println("*W40C いいねするユーザIDは" + userId + "です。");
 
                 //いいね関数
                 int goodCount = W0040Model.goodComment(commentId, userId);
-                System.out.println("*W40C goodに" + goodCount + "が入力されました。");
                 request.setAttribute("goodCount",goodCount);
             }
 
@@ -72,10 +64,7 @@ import co.wiss1.model.W0040Model;
                 String userId = request.getParameter("userId");
                 String userName = request.getParameter("userName");
                 //文字色指定(sessionから取得)
-                String colorStr = session.getAttribute("font_color").toString();
-                System.out.println("W40C ユーザーIDは"+ userId +"です" );
-                System.out.println("W40C ユーザー名は"+ userName +"です" );
-                System.out.println("W40C 色番号は"+ colorStr +"です" );
+                String colorStr = session.getAttribute("fontColor").toString();
 
                 int insertCount = W0040Model.insertComment(comment,categoryId,userId,userName,colorStr);
                 request.setAttribute("insertCount",insertCount);
@@ -88,13 +77,10 @@ import co.wiss1.model.W0040Model;
                 String userId = request.getParameter("userId");
                 String userName = request.getParameter("userName");
                 String postName = request.getParameter("postName");
-                System.out.println("W40C ユーザーIDは"+ userId +"です" );
-                System.out.println("W40C ユーザー名は"+ userName +"です" );
-                System.out.println("W40C 投稿者名は"+ postName +"です" );
 
                 //文字色指定(sessionから取得)
-                String colorStr = (String) session.getAttribute("font_color");
-                System.out.println("W40C 色番号は"+ colorStr +"です" );
+                String colorStr = (String) session.getAttribute("fontColor");
+
                 //投稿者名変更
                 //writtenName:投稿される名前
                 //blank:比較用空文字列
@@ -106,8 +92,6 @@ import co.wiss1.model.W0040Model;
                 }else{
                     writtenName = postName;
                 }
-                System.out.println("W40C 表示される投稿名は"+ writtenName +"です" );
-
 
                 // <INPUT type="file" name="imgfile"> で指定したものを取得
                 final String files = "imgfile";
@@ -143,11 +127,8 @@ import co.wiss1.model.W0040Model;
                 //削除対象のコメントID。Viewから受け取る
                 String commentId = request.getParameter("commentId");
                 String userId = session.getAttribute("userId").toString();
-                System.out.println("*W40C 削除を行うコメントIDは" + commentId + "です。");
-                System.out.println("*W40C 削除を行うユーザIDは" + userId + "です。");
 
                 int goodCount = W0040Model.updateSoloComment(commentId, userId);
-                System.out.println("*W40C goodに" + goodCount + "が入力されました。");
                 request.setAttribute("goodCount",goodCount);
             }
 
@@ -155,14 +136,11 @@ import co.wiss1.model.W0040Model;
             // コメントの削除
             if("update".equals(actionId)) {
                 String checkBox[ ] = request.getParameterValues("chkbox");
-                System.out.println("W40C checkBox[ ]に" + checkBox + "が入力されました。");
                 //ViewからchkBoxの値を受け取る
                 for (int i = 0; i < checkBox.length; i++ ) {
-                    System.out.println(checkBox[i] + "<br>");
                 }
 
                 int updateCount = W0040Model.updateComment(checkBox);
-                System.out.println("W40C updateに" + updateCount + "が入力されました。");
                 request.setAttribute("updateCount",updateCount);
             }
 

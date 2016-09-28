@@ -36,7 +36,6 @@ public class W0070Model {
                     + "WHERE i.delete_flg = FALSE "
                     + "ORDER BY i.inquiry_id DESC "); //問い合わせを降順で保管する
             // SQL文実行
-            System.out.println("W0070M ," + sb.toString());
             resultSet = statement.executeQuery(sb.toString());//resultSet実行した結executeQuery＝要求をＳＱＬとしてＤＢに投げる
             // 実行結果の取得・次の行を呼ぶ
             while(resultSet.next()) {
@@ -48,7 +47,6 @@ public class W0070Model {
                 inquiryInfo.put("userId", resultSet.getString("user_id"));
                 inquiryInfo.put("userMail", resultSet.getString("user_mail"));
                 inquiryList.add(inquiryInfo);
-                System.out.println("問い合わせIDは" + inquiryInfo.get("inquiryId") + "です");
 
             }
         } catch (SQLException e) {
@@ -122,7 +120,6 @@ public class W0070Model {
             for (int i = 0; i < checkBox.length; i++ ) {
             String sql = "UPDATE t_inquiry SET delete_flg = 'TRUE' WHERE inquiry_id =  '"+ checkBox[i] +"'";
 
-                System.out.println("checkBoxに" + checkBox[i] + "が入力されました。");
                 UpdateCount = statement.executeUpdate (sql);
                 System.out.println(sql);
                 if(UpdateCount >= 1){																	//削除が成功しているかどうかの確認

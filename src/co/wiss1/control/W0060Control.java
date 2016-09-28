@@ -25,7 +25,6 @@ public class W0060Control extends HttpServlet{
         HttpSession session = request.getSession(true);
         try{
             String loginUser = session.getAttribute("userId").toString();
-            System.out.println("W0060C SessionのuserIdが"+ loginUser +"に入力されました");
             String actionId = request.getParameter("actionId");
 
             request.setAttribute("updateFlg", "0");
@@ -39,10 +38,6 @@ public class W0060Control extends HttpServlet{
                 String userAddress = request.getParameter("userAddress");
                 String userMail = request.getParameter("userMail");
                 System.out.println("moveからやってきた！！");
-                System.out.println("W0060C ユーザーIDは"+userId +"です" );
-                System.out.println("W0060C ユーザー名は"+ userName +"です" );
-                System.out.println("W0060C 住所は"+ userAddress +"です" );
-                System.out.println("W0060C メールアドレスは"+ userMail +"です" );
 
                 request.setAttribute("userId", userId);
                 request.setAttribute("userName", userName);
@@ -62,13 +57,6 @@ public class W0060Control extends HttpServlet{
                 String passWord = request.getParameter("passWord");
                 String conPassword = request.getParameter("conPassword");
                 String fontColor = request.getParameter("fontColor");
-                System.out.println("W0060C ユーザーIDは"+userId +"です" );
-                System.out.println("W0060C ユーザー名は"+ userName +"です" );
-                System.out.println("W0060C 住所は"+ userAddress +"です" );
-                System.out.println("W0060C メールアドレスは"+ userMail +"です" );
-                System.out.println("W0060C パスワードは"+ passWord +"です" );
-                System.out.println("W0060C 再確認パスワードは"+ conPassword +"です" );
-
 
                 // パスワードをハッシュ化
                 String hashedpassword = RealmBase.Digest(passWord, "SHA-1", "Windows-31J");
@@ -105,13 +93,6 @@ public class W0060Control extends HttpServlet{
                 String passWord = request.getParameter("passWord");
                 String conPassword = request.getParameter("conPassword");
                 String fontColor = request.getParameter("fontColor");
-                System.out.println("W0060C ユーザーIDは"+userId +"です" );
-                System.out.println("W0060C ユーザー名は"+ userName +"です" );
-                System.out.println("W0060C 住所は"+ userAddress +"です" );
-                System.out.println("W0060C メールアドレスは"+ userMail +"です" );
-                System.out.println("W0060C パスワードは"+ passWord +"です" );
-                System.out.println("W0060C 再確認パスワードは"+ conPassword +"です" );
-                System.out.println("W0060C 文字色は"+ fontColor +"です" );
 
                 // パスワードをハッシュ化
                 String hashedpassword = RealmBase.Digest(passWord, "SHA-1", "Windows-31J");

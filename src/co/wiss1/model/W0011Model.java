@@ -14,7 +14,7 @@ public class W0011Model {
     public static void main (String args[]) {
     }
     public static List<HashMap<String, String>> getMessageList(String Id) {
-        System.out.println("W0011 getMessageList (" + Id + ")");
+        System.out.println("W0011M getMessageList (" + Id + ")");
 
         // メッセージ一覧を格納する箱
         List<HashMap<String, String>> messageList = new ArrayList<HashMap<String, String>>();
@@ -55,7 +55,6 @@ public class W0011Model {
                 messageInfo.put("recUserId", resultSet.getString("receive_user_id"));
                 messageInfo.put("postTime", resultSet.getString("create_date"));
                 messageList.add(messageInfo);
-                System.out.println(messageInfo.get("postTime"));
             }
         } catch (SQLException e) {
             System.out.println("メッセージ一覧SQL実行処理失敗!!");

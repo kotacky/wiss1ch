@@ -139,7 +139,6 @@
                     <%List<HashMap<String,String>> categoryList = (List<HashMap<String,String>>)request.getAttribute("categoryList");%>
                     <%
                         String sessionflag = session.getAttribute("adminFlg").toString();
-                        System.out.println("★権限は" + sessionflag + "です！！！★");
 
                         String chk1 = null;
                         String chk2 = null;

@@ -38,7 +38,6 @@ public class W0050Model {
                 sb.append("SELECT user_id, user_name, user_address, user_mail, admin_flg FROM t_user_info WHERE delete_flg = 'FALSE' and user_id = '" + Id + "' ORDER BY user_id ");//sbの箱SELECT * FROM t_category WHERE delete_flg = 'FALSE' ORDER BY category_idにいれる
             }
             // SQL文実行
-            System.out.println("W0050M ," + sb.toString());
             resultSet = statement.executeQuery(sb.toString());//resultSet実行した結executeQuery＝要求をＳＱＬとしてＤＢに投げる
             // 実行結果の取得・次の行を呼ぶ
             while(resultSet.next()) {
@@ -49,11 +48,6 @@ public class W0050Model {
                 userInfo.put("userMail", resultSet.getString("user_mail"));
                 userInfo.put("userAdmin", resultSet.getString("admin_flg"));
                 userList.add(userInfo);
-                System.out.println(userInfo.get("userId"));
-                System.out.println(userInfo.get("userName"));
-                System.out.println(userInfo.get("userAddress"));
-                System.out.println(userInfo.get("userMail"));
-                System.out.println(userInfo.get("userAdmin"));
             }
         } catch (SQLException e) {
             System.out.println("カテゴリ一覧SQL実行処理失敗!!");

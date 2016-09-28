@@ -48,11 +48,6 @@ public class W0060Model {
                 userInfo.put("userMail", resultSet.getString("user_mail"));
                 userInfo.put("passWord", resultSet.getString("password"));
                 userList.add(userInfo);
-                System.out.println(userInfo.get("userId"));
-                System.out.println(userInfo.get("userName"));
-                System.out.println(userInfo.get("userAddress"));
-                System.out.println(userInfo.get("userMail"));
-                System.out.println(userInfo.get("passWord"));
             }
         } catch (SQLException e) {
             System.out.println("ユーザ一覧SQL実行処理失敗!!");
@@ -88,7 +83,6 @@ public class W0060Model {
             //コメントの追加
             String insertSql = "INSERT INTO t_user_info (user_id, user_name, user_address, user_mail, password, delete_flg, admin_flg, create_date, update_date, create_user, update_user, font_color)"
                     + " VALUES ('" + userId + "','"+ userName +"','"+ userAddress +"', '"+ userMail +"','"+ passWord +"', FALSE, FALSE, current_timestamp, current_timestamp, '" + loginUser + "', '" + loginUser +"', '" + fontColor +"')";
-            System.out.println("W0060M :" + insertSql);
             insertCount = statement.executeUpdate (insertSql);
         }catch(PSQLException pe){
             System.err.println("ユーザ重複SQL failed.");
@@ -125,7 +119,6 @@ public class W0060Model {
             //コメントの追加
             String updateSql = "UPDATE t_user_info SET user_name ='" + userName + "' , user_address ='" + userAddress +"', user_mail ='" + userMail +"', password ='" + passWord + "', update_date = current_timestamp , update_user ='" + loginUser +"', font_color = '" + fontColor +"'  WHERE  user_id = '"+ userId +"';";
 
-            System.out.println("W0060M : " + updateSql );
             updateCount = statement.executeUpdate( updateSql );
 
         }catch (SQLException e){
@@ -144,6 +137,5 @@ public class W0060Model {
         }
         return updateCount;
     }
-
 
 }

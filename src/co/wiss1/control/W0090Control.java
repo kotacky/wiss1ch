@@ -27,24 +27,20 @@ public class W0090Control extends HttpServlet{
         HttpSession session = request.getSession(true);
         try{
             String loginUser = session.getAttribute("userId").toString();
-            System.out.println("W0090C SessionのuserIdが"+ loginUser +"に入力されました");
             String actionId = request.getParameter("actionId");
 
             request.setAttribute("updateFlg", "0");
 
             //送信ボタンを押したときの処理
             if ("send_message".equals(actionId)) {
-                System.out.println("W0090C registarします。");
+                System.out.println("W0090C registar start");
 
                 String messageTitle = request.getParameter("messageTitle");
                 String message = request.getParameter("message");
                 String recUserId = request.getParameter("recUserId");
-                System.out.println("W0090C 件名は" + messageTitle + "です");
-                System.out.println("W0090C 本文は" + message + "です");
-                System.out.println("W0090C 送信先は" + recUserId + "です");
 
                 int registar = W0090Model.sendMessage(loginUser,messageTitle,message,recUserId);
-                System.out.println("W0090C registar 終了" + registar);
+                System.out.println("W0090C registar end" + registar);
                 request.setAttribute("registar",registar);
 
             }

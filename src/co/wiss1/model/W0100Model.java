@@ -12,8 +12,8 @@ import co.wiss1.common.DBAccessUtils;
 
 public class W0100Model {
 
-    public static List<HashMap<String, String>> getMessageList(String Id) {
-        System.out.println("W0100 getMessageList (" + Id + ")");
+    public static List<HashMap<String, String>> getMessageList(String userId) {
+        System.out.println("W0100 getMessageList (" + userId + ")");
 
         // メッセージ一覧を格納する箱
         List<HashMap<String, String>> messageList = new ArrayList<HashMap<String, String>>();
@@ -38,11 +38,10 @@ public class W0100Model {
                             + "ON m.send_user_id = s.send_user_id "
                             + "INNER JOIN t_user_info u "
                             + "ON m.receive_user_id = u.user_id "
-                            + "WHERE m.delete_flg = FALSE AND (m.send_user_id = '" + Id + "' OR m.receive_user_id = '" + Id + "')"
+                            + "WHERE m.delete_flg = FALSE AND (m.send_user_id = '" + userId + "' OR m.receive_user_id = '" + userId + "')"
                             + "ORDER BY m.message_id ");
             //sbの箱SELECT * FROM t_message のうち送受信者のいずれかが自分で WHERE m.delete_flg = 'FALSE' message_id昇順にいれる
             // SQL文実行
-            System.out.println("W0100M ," + sb.toString());
             resultSet = statement.executeQuery(sb.toString());
             //resultSet実行した結executeQuery＝要求をＳＱＬとしてＤＢに投げる
             // 実行結果の取得・次の行を呼ぶ
@@ -57,9 +56,6 @@ public class W0100Model {
                 messageInfo.put("recUserId", resultSet.getString("receive_user_id"));
                 messageInfo.put("postTime", resultSet.getString("create_date"));
                 messageList.add(messageInfo);
-                System.out.println(messageInfo.get("sendUserName"));
-                System.out.println(messageInfo.get("messageTitle"));
-                System.out.println(messageInfo.get("recUserName"));
             }
         } catch (SQLException e) {
             System.out.println("メッセージ一覧SQL実行処理失敗!!");
@@ -97,9 +93,7 @@ public class W0100Model {
             for (int i = 0; i < checkBox.length; i++ ) {
             String sql = "UPDATE t_message SET delete_flg = 'TRUE' WHERE message_id =  '"+ checkBox[i] +"'";
 
-                System.out.println("checkBoxに" + checkBox[i] + "が入力されました。");
                 UpdateCount = statement.executeUpdate (sql);
-                System.out.println(sql);
                 if(UpdateCount >= 1){																	//削除が成功しているかどうかの確認
                     System.out.println("削除成功");
                 }
@@ -133,8 +127,6 @@ public class W0100Model {
 
             //単独削除
             String sql = "UPDATE t_message SET delete_flg = TRUE, update_date = current_timestamp, update_user = '"+ userId +"' WHERE post_id = '"+ MessageId + "'";
-            System.out.println("");
-            System.out.println(sql);
             //SQL実行
             updateCount = statement.executeUpdate (sql);
         }catch (SQLException e){

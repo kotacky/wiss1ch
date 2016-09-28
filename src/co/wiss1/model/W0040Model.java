@@ -59,7 +59,6 @@ public class W0040Model {
 
                 //文字色の実装
                 color = resultSet.getString("font_color");
-                System.out.println("W0040M colorVal:" + color);
 
                 switch(color){
                     case "1":
@@ -103,9 +102,6 @@ public class W0040Model {
                 commentInfo.put("font_color", colorcode);
                 //コメントリストへコメントインフォを送る
                 commentList.add(commentInfo);
-                System.out.println("コメントIdは" + commentInfo.get("commentId") + "です" );
-                System.out.println("カラーコードは" + commentInfo.get("font_color") + "です" );
-
             }
         } catch (SQLException e) {
             System.out.println("リスト取得SQL実行処理失敗!!");
@@ -163,8 +159,7 @@ public class W0040Model {
                 String img = Base64.encode(Imgbyte);
                 String commentId = resultSet.getString("post_id");
                 imgInfo.put(commentId, img);
-                System.out.println("W0040M getImgSize:" + Imgbyte.length);
-            }
+                }
         } catch (SQLException e) {
             System.out.println("リスト取得SQL実行処理失敗!!");
             e.printStackTrace();
@@ -202,7 +197,6 @@ public class W0040Model {
             //コメントIDに対応するもののgood_countを増加
             String sql = "UPDATE t_post SET good_count=good_count+1, update_date=current_timestamp, update_user='"+ userId +"' WHERE post_id = " + CommentId;
             System.out.println("goodComment:SQL実行");
-            System.out.println(sql);
 
             //SQL実行
             goodCount = statement.executeUpdate (sql);
@@ -241,10 +235,7 @@ public class W0040Model {
 
             //ループ処理!checkBox[ ]分処理する。
             for( int i = 0; i < checkBox.length; i++) {
-                System.out.println("CheckBoxに" + checkBox[i] + "が入力されました!!");
                 String sql = "UPDATE t_post SET delete_flg = TRUE WHERE post_id = '"+ checkBox[i] + "'";
-                System.out.println("checkBoxに!" + checkBox + "が入力されました!!");
-                System.out.println(sql);
                 updateCount = statement.executeUpdate (sql);
             }
         }catch (SQLException e){
@@ -349,7 +340,6 @@ public class W0040Model {
         Connection connection = null;
         Statement statement = null;
         int insertCount = 0;
-        System.out.println("W40M categoryID引数は"+ categoryId +"です" );
 
         try{
             // コメント一覧照会実行

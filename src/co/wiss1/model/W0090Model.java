@@ -36,7 +36,6 @@ public class W0090Model {
                 sb.append("SELECT user_id, user_name FROM t_user_info WHERE delete_flg = 'FALSE' ORDER BY user_name");//sbの箱SELECT * FROM t_category WHERE delete_flg = 'FALSE' ORDER BY category_idにいれる
 
             // SQL文実行
-            System.out.println("W0090M ," + sb.toString());
             resultSet = statement.executeQuery(sb.toString());//resultSet実行した結executeQuery＝要求をＳＱＬとしてＤＢに投げる
             // 実行結果の取得・次の行を呼ぶ
             while(resultSet.next()) {
@@ -44,8 +43,6 @@ public class W0090Model {
                 userInfo.put("userId", resultSet.getString("user_id"));
                 userInfo.put("userName", resultSet.getString("user_name"));
                 userList.add(userInfo);
-                System.out.println(userInfo.get("userId"));
-                System.out.println(userInfo.get("userName"));
             }
         } catch (SQLException e) {
             System.out.println("カテゴリ一覧SQL実行処理失敗!!");
@@ -69,7 +66,7 @@ public class W0090Model {
         Connection connection = null;
         Statement statement = null;
         int insertCount = 0;
-        System.out.println("W0090M 引数は"+ loginUser +"です" );
+        System.out.println("W0090M sendMessage" );
 
         try{
             // コメント一覧照会実行
@@ -81,7 +78,6 @@ public class W0090Model {
             //コメントの追加
             String insertSql = "INSERT INTO t_message (message_title, message, send_user_id, receive_user_id, create_date, create_user, update_date, update_user)"
                              + " VALUES ('" + messageTitle + "', '" + message + "', '" + loginUser + "', '" + rUserId + "', current_timestamp, '" + loginUser + "', current_timestamp, '" + loginUser + "')";
-            System.out.println("W0090M :" + insertSql);
             insertCount = statement.executeUpdate (insertSql);
         }catch (SQLException e){
             System.err.println("問い合わせ送信SQL failed.");
@@ -100,4 +96,3 @@ public class W0090Model {
         return insertCount;
     }
 }
-

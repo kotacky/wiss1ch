@@ -29,9 +29,7 @@ public class W0100Control extends HttpServlet {
 
             // アクションIDの取得
             String actionId = request.getParameter("actionId");
-            String Id = session.getAttribute("userId").toString();
-            System.out.println("W0100C 引数は"+Id );
-            System.out.println("actionId は "+actionId);
+            String userId = request.getParameter("userId");
 
             // 単独削除
             if("soloupdate".equals(actionId)) {
@@ -39,9 +37,6 @@ public class W0100Control extends HttpServlet {
                 //削除対象のコメントID。Viewから受け取る
                 String messageID = request.getParameter("messageId");
                 String userID = session.getAttribute("userId").toString();
-                System.out.println("*W0100C 削除を行うコメントIDは" + messageID + "です。");
-                System.out.println("*W0100C 削除を行うユーザIDは" + userID + "です。");
-
                 //削除の項目を送る
                 int delete = W0100Model.updateSoloMessage(messageID,userID);
                 if (delete >= 1) {
@@ -76,7 +71,7 @@ public class W0100Control extends HttpServlet {
             }
 
             // 初期表示 と削除後の再検索したメッセージ一覧を取得
-            List<HashMap<String, String>> messageList = W0100Model.getMessageList(Id);
+            List<HashMap<String, String>> messageList = W0100Model.getMessageList(userId);
             //System.out.println(messageList());
             // メッセージ一覧が空ではなく1件以上存在する場合、メッセージ一覧をセット
             if (messageList != null && 0 < messageList.size()) {

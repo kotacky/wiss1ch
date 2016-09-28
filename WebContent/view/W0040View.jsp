@@ -139,7 +139,7 @@
             <% String sessionflag = session.getAttribute("adminFlg").toString();%>
             <% String userId = session.getAttribute("userId").toString();%>
             <% String userName = session.getAttribute("userName").toString();%>
-            <% String userFontColor = session.getAttribute("font_color").toString();%>
+            <% String userFontColor = session.getAttribute("fontColor").toString();%>
             <% String chk1 = null ;%>
             <% String chk2 = "t";%>
             <% String categoryId; %>

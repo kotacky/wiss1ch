@@ -25,7 +25,6 @@ public class W0080Control extends HttpServlet{
         HttpSession session = request.getSession(true);
         try{
             String loginUser = session.getAttribute("userId").toString();
-            System.out.println("W0080C SessionのuserIdが"+ loginUser +"に入力されました");
             String actionId = request.getParameter("actionId");
 
             request.setAttribute("updateFlg", "0");

@@ -73,7 +73,6 @@
 
         <% try{ %>
             <% String sessionflag = session.getAttribute("adminFlg").toString();
-                System.out.println("W0030V 管理者権限は" + sessionflag + "です。");
                 if(sessionflag.equals("f") ){
                     //管理者権限が無い場合、ログイン画面に飛ばす
                     RequestDispatcher dispatch =getServletContext().getRequestDispatcher("/view/W0010View.jsp");
@@ -86,7 +85,6 @@
 
           <div align="right">
             <% String insertFlag = (String) request.getAttribute("insertFlag"); %>
-            <% System.out.println("W0030V insertFLAG=" + insertFlag); %>
             <% String upflag = (String) request.getAttribute("update_flag"); %>
             <% String cid = (String) request.getAttribute("categoryId"); %>
             <% out.print(session.getAttribute("userName")); %>

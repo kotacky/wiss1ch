@@ -21,9 +21,6 @@ public class W0030Control extends HttpServlet{
         //sessionから取得したuserNameをNull対応
         HttpSession session = request.getSession(true);
         try{
-            String user = session.getAttribute("userName").toString();
-            System.out.println("W0030C :SessionからuserName:"+ user +"を受け取りました");
-
             //初期値
             int ret = -1;
             request.setAttribute("update_flag", "0");
@@ -37,27 +34,18 @@ public class W0030Control extends HttpServlet{
 
             // アクションIDの取得
             String actionId = request.getParameter("actionId");
-            System.out.println("W0030C :actionIdは" + actionId + "です");
 
             //新規登録時に通る
             if("insert".equals(actionId)) {
                 System.out.println("W0030C: Welcome INSERT.");
                 //ViewからカテゴリIDを受け取る
                 String categoryName = request.getParameter("categoryName");
-                System.out.println("W0030C cateName:" + categoryName + "が入力されました。");
-
                 //ViewからuserIdを受け取る
                 String userId = request.getParameter("userId");
-                System.out.println("W0030C USERID:" + userId + "が入力されました。");
-
                 //Viewから親カテゴリIDを受け取る
                 String parentId = request.getParameter("pldw");
-                System.out.println("W0030C ParentID:" + parentId + "が入力されました。");
-
                 //Model重複チェックメソッドから重複カウントを受け取る
                 int getOverlapCount = W0030Model.getOverlapCount(categoryName);
-                System.out.println("W0030C :重複カウント" + getOverlapCount + "が入力されました。");
-
                 //重複がなく、かつ親IDがnullってなければ
                 if(getOverlapCount==0 && parentId!=null){
                     //Modelの関数で挿入する
@@ -71,31 +59,24 @@ public class W0030Control extends HttpServlet{
 
             // 更新で20から30に来た場合に通る
             if("update1st".equals(actionId)) {
-                System.out.println("W0030C update1stに来ました");
+                System.out.println("W0030C update1st");
                 request.setAttribute("update_flag", "1");
                 String checkBox[] = request.getParameterValues("chkbox");
-                System.out.println("W40C checkBox[]に" + checkBox + "が入力されました。");
                 //ViewからchkBoxの値をintで受け取る
                 request.setAttribute("categoryId", checkBox[0]);
             }
 
             // カテゴリ更新を実行したとき通る
             if("update".equals(actionId)) {
-                System.out.println("W0030C updateに来ました");
+                System.out.println("W0030C update");
                 String cid = request.getParameter("categoryId").toString();
-                System.out.println("W0030C cid:" + cid);
                 //中身未実装
                 //ViewからカテゴリIDを受け取る
                 String categoryName = request.getParameter("categoryName");
-                System.out.println("W0030C cateName:" + categoryName + "が入力されました。");
-
                 //ViewからuserIdを受け取る
                 String userId = request.getParameter("userId");
-                System.out.println("W0030C USERID:" + userId + "が入力されている。");
-
                 //Viewから親カテゴリIDを受け取る
                 String parentId = request.getParameter("pldw");
-                System.out.println("W0030C ParentID:" + parentId + "が入力されている。");
 
                 ret = W0030Model.updateCategory(categoryName, parentId, cid, userId);
             }

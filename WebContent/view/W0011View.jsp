@@ -54,8 +54,7 @@
             %>
             <% 	String sessionflag = session.getAttribute("adminFlg").toString();
                 String sessionuser = session.getAttribute("userId").toString();
-
-                System.out.println("★権限は" + sessionflag + "です！！！★"); %>
+            %>
             <%
                 String str1 = "t";
             %>

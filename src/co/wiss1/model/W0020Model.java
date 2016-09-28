@@ -40,8 +40,6 @@ public class W0020Model {
                 categoryInfo.put("categoryId", resultSet.getString("category_id"));
                 categoryInfo.put("categoryName", resultSet.getString("category_name"));
                 categoryList.add(categoryInfo);
-                System.out.println(categoryInfo.get("categoryId"));
-                System.out.println(categoryInfo.get("categoryName"));
             }
         } catch (SQLException e) {
             System.out.println("カテゴリ一覧SQL実行処理失敗!!");
@@ -80,9 +78,7 @@ public class W0020Model {
             for (int i = 0; i < checkBox.length; i++ ) {
                 String sql = "UPDATE t_category SET delete_flg = 'TRUE' WHERE category_id =  '"+ checkBox[i] +"'";
 
-                System.out.println("checkBoxに" + checkBox[i] + "が入力されました。");
                 UpdateCount = statement.executeUpdate (sql);
-                System.out.println(sql);
 
                 //削除が成功しているかどうかの確認
                 if(UpdateCount >= 1){

@@ -33,14 +33,11 @@ public class W0030Model {
 
             //重複チェック
             String selectSql="SELECT COUNT(category_name) as cnt FROM t_category WHERE category_name = ('" + categoryName + "') AND delete_flg = FALSE";
-            System.out.println("W0030M SQL:" + selectSql);
 
-            System.out.println("W0030M categoryName:" + categoryName + "が入力されました。");
             resultSet = statement.executeQuery(selectSql);
 
             resultSet.next();
             getOverlapCount = resultSet.getInt("cnt");
-            System.out.println("W0030M getOverlapCount:" + getOverlapCount + "が入力されました。");
         }catch (SQLException e){
             System.err.println("重複SQL failed.");
             e.printStackTrace ();

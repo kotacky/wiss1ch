@@ -30,8 +30,6 @@ import co.wiss1.model.W0011Model;
             // アクションIDの取得
             String actionId = request.getParameter("actionId");
             String Id = session.getAttribute("userId").toString();
-            System.out.println("W0100C 引数は"+Id );
-            System.out.println("actionId は "+actionId);
 
 
             System.out.println("W11C:通過");

@@ -30,8 +30,6 @@ public class W0070Control extends HttpServlet {
             // アクションIDの取得
             String actionId = request.getParameter("actionId");
             String Id = session.getAttribute("userId").toString();
-            System.out.println("W0070C 引数は"+Id );
-            System.out.println("actionId は "+actionId);
 
             // 単独削除
             if("soloupdate".equals(actionId)) {
@@ -39,8 +37,6 @@ public class W0070Control extends HttpServlet {
                 //削除対象のコメントID。Viewから受け取る
                 String inqID = request.getParameter("inquiryId");
                 String userID = session.getAttribute("userId").toString();
-                System.out.println("*W70C 削除を行うコメントIDは" + inqID + "です。");
-                System.out.println("*W70C 削除を行うユーザIDは" + userID + "です。");
 
                 //削除の項目を送る
                 int delete = W0070Model.updateSoloInq(inqID,userID);
@@ -60,7 +56,6 @@ public class W0070Control extends HttpServlet {
             if ("Update".equals(actionId)) {
                 //ViewからchkBoxの値を受け取る
                 for (int i = 0; i < checkBox.length; i++ ) {
-                    System.out.println(checkBox[i] + "<br>");
                 }
 
                 //削除の項目を送る

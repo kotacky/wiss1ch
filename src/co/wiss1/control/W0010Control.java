@@ -38,9 +38,14 @@ public class W0010Control extends HttpServlet {
           String adminFlg = UserInfo.get("adminFlg");
           String fontColor = UserInfo.get("fontColor");
           String deleteFlg = UserInfo.get("deleteFlg");
-          System.out.println("deleteflg=" + deleteFlg);
           String chk = UserInfo.get("残念");
-          if (hashedpassword.equals(password)){
+
+          if(deleteFlg.equals("t")){ //削除されたユーザーは存在しないものとして弾く
+              request.setAttribute("EMSG0001", "ユーザーが存在しません。");
+              RequestDispatcher dispatch = request.getRequestDispatcher("/view/W0010View.jsp");
+              dispatch.forward(request, response);
+
+          }else if (hashedpassword.equals(password)){
               session.setAttribute("userId",userId);
               session.setAttribute("userName",userName);
               session.setAttribute("adminFlg",adminFlg);
@@ -49,14 +54,10 @@ public class W0010Control extends HttpServlet {
               dispatch.forward(request, response);
 
           }else if(chk == null){
-                request.setAttribute("EMSG0004", "パスワードが間違っています。");
-                RequestDispatcher dispatch = request.getRequestDispatcher("/view/W0010View.jsp");
-                dispatch.forward(request, response);
+              request.setAttribute("EMSG0004", "パスワードが間違っています。");
+              RequestDispatcher dispatch = request.getRequestDispatcher("/view/W0010View.jsp");
+              dispatch.forward(request, response);
           }else if(chk.equals("残念")){
-                request.setAttribute("EMSG0001", "ユーザーが存在しません。");
-                RequestDispatcher dispatch = request.getRequestDispatcher("/view/W0010View.jsp");
-                dispatch.forward(request, response);
-          }else if(deleteFlg != "f"){
               request.setAttribute("EMSG0001", "ユーザーが存在しません。");
               RequestDispatcher dispatch = request.getRequestDispatcher("/view/W0010View.jsp");
               dispatch.forward(request, response);

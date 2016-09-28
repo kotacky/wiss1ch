@@ -41,6 +41,7 @@ public class W0010Model{
             userInfo.put("adminFlg", resultSet.getString("admin_flg"));
             userInfo.put("fontColor", resultSet.getString("font_color"));
             userInfo.put("deleteFlg", resultSet.getString("delete_flg"));
+
         } catch (PSQLException e) {
             userInfo.put("残念", "残念");
             System.out.println(userInfo + "■■■■■");

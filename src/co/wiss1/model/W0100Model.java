@@ -12,8 +12,8 @@ import co.wiss1.common.DBAccessUtils;
 
 public class W0100Model {
 
-    public static List<HashMap<String, String>> getMessageList(String userId) {
-        System.out.println("W0100 getMessageList (" + userId + ")");
+    public static List<HashMap<String, String>> getMessageList(String Id) {
+        System.out.println("W0100M getMessageList (" + Id + ")");
 
         // メッセージ一覧を格納する箱
         List<HashMap<String, String>> messageList = new ArrayList<HashMap<String, String>>();
@@ -38,8 +38,9 @@ public class W0100Model {
                             + "ON m.send_user_id = s.send_user_id "
                             + "INNER JOIN t_user_info u "
                             + "ON m.receive_user_id = u.user_id "
-                            + "WHERE m.delete_flg = FALSE AND (m.send_user_id = '" + userId + "' OR m.receive_user_id = '" + userId + "')"
+                            + "WHERE m.delete_flg = FALSE AND (m.send_user_id = '" + Id + "' OR m.receive_user_id = '" + Id + "')"
                             + "ORDER BY m.message_id ");
+                System.out.println(sb.toString());
             //sbの箱SELECT * FROM t_message のうち送受信者のいずれかが自分で WHERE m.delete_flg = 'FALSE' message_id昇順にいれる
             // SQL文実行
             resultSet = statement.executeQuery(sb.toString());

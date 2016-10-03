@@ -127,7 +127,7 @@
 
                 %>
                 <% String sessionflag = session.getAttribute("adminFlg").toString();
-                   String sessionuser = session.getAttribute("userId").toString();
+                   String userId = session.getAttribute("userId").toString();
                 %>
                 <%
                    String chk1 = null;
@@ -187,7 +187,7 @@
                 <input type="button" value="メッセージ送信フォーム" onClick="go_messageform();"><br>
                 <input type="button"  <%=chk1 %> value="削除" onClick="deletes('Update');">
                 <input type="hidden" name="actionId" value="">
-                <input type="hidden" name="userId" value="">
+                <input type="hidden" name="userId" value="<%= userId %>">
                 <input type="hidden" name="userName" value="">
             </P>
 

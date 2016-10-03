@@ -28,7 +28,7 @@ public class W0100Control extends HttpServlet {
 
             // アクションIDの取得
             String actionId = request.getParameter("actionId");
-            String userId = request.getParameter("userId");
+            String userId = session.getAttribute("userId").toString();
 
             // 単独削除
             if("soloupdate".equals(actionId)) {

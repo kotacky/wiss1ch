@@ -8,6 +8,8 @@
     <title>WISS1ch</title>
     <script type="text/javascript">
 
+
+
     //リクエストパラメータの文字コードを指定
         function logOut(){
             if ( confirm("ログアウトします。よろしいですか？") ){
@@ -54,17 +56,27 @@
             document.MyForm.submit();
         }
 
+        function autoinput(){
+        	//alert("autoinput起動");
+        	document.MyForm.actionId.value = 'autoinput';
+        	//if (actionId.equals("")){ alert("ぬる");} else {alert("ぬるじゃない");}
+        	document.MyForm.action = "<%= request.getContextPath() %>/W0060Control"
+        	document.MyForm.submit();
+        	//alert("autoinput終了")
+        }
+
     </script>
     </head>
     <body>
         <form name="MyForm" method="POST" action="#">
             <div align="right">
                 <% out.print(session.getAttribute("userName")); %>
-                <% String updateFlg = (String)request.getAttribute("updateFlg"); %>
                 <% String userId = (String)request.getAttribute("userId"); %>
                 <% String userName = (String)request.getAttribute("userName"); %>
+                <% String postalCode = (String)request.getAttribute("postalCode"); %>
                 <% String userAddress = (String)request.getAttribute("userAddress"); %>
                 <% String userMail = (String)request.getAttribute("userMail"); %>
+                <% String registar = (String)request.getAttribute("registar"); %>
                 <a style="margin-left:20px"class="button" name="logout" onClick="logOut();"><img src="<%= request.getContextPath() %>/view/img/153.142.124.217 (2).gif"></a>
             </div>
 
@@ -73,28 +85,29 @@
             </h1>
                 <input type="button"  value="戻る"  style="position: absolute; left: 20px; top: 0px;" onClick=go_userlist();>
 
-            <% String registar = request.getAttribute("registar").toString();%>
-            <CENTER><font size=6>ユーザー<% if(updateFlg.equals("1")){ out.print("変更"); }else{ out.print("登録");}  %>画面</font></CENTER><br></br>
-            <% if(registar.equals("0")){out.print("<CENTER><font size='2' color = 'red'>ユーザIDが重複しています。</font></CENTER><br></br>");}%>
+            <CENTER><font size=6>ユーザー<% if(userId != null || "".equals(userId)){ out.print("変更"); }else{ out.print("登録");}  %>画面</font></CENTER><br></br>
+            <% if("0".equals(registar)){out.print("<CENTER><font size='2' color = 'red'>ユーザIDが重複しています。</font></CENTER><br></br>");}%>
 
             <CENTER>
                 <table border="1">
 
                     <tr>
                         <td>ユーザーID(半角英数字)：</td>
-                        <td><input pattern=^[0-9A-Za-z]+$ <% if (updateFlg.equals("1")) { out.print("disabled");}%> value="<% if (updateFlg.equals("1")) { out.print(userId);}%>"  type="text" name="userId" size="20" maxlength="10" required></td>
+                        <td><input pattern=^[0-9A-Za-z]+$ <% if (userId != null || "".equals(userId)) { out.print("disabled");}%> value="<% if (userId != null || "".equals(userId)) { out.print(userId);}%>"  type="text" name="userId" size="20" maxlength="10" required></td>
                     </tr>
                     <tr>
                         <td>ユーザー名(全角文字)：</td>
-                        <td><input pattern=[^\x20-\x7E]* type="text" name="userName" value="<% if (updateFlg.equals("1")) { out.print(userName);}%>" size="20" maxlength="10"required></td>
+                        <td><input pattern=[^\x20-\x7E]* type="text" name="userName" value="<% if (userId != null || "".equals(userId)) { out.print(userName);}%>" size="20" maxlength="10"required></td>
                     </tr>
+                    <tr>
+                    	<td>郵便番号：</td>
+                    	<td><input pattern=\d{3}-?\d{4} type="text" name="postalCode" value="<% if (userId != null || "".equals(userId)) { out.print(postalCode);}%>" maxlength="7" onblur="autoinput();" required></td>
                     <tr>
                         <td>住所：</td>
-                        <td><textarea name="userAddress" cols="30" rows="3" required><% if (updateFlg.equals("1")) { out.print(userAddress);}%></textarea></td>
-                    </tr>
+                        <td><textarea name="userAddress" cols="30" rows="3" required><% if (userId != null || "".equals(userId)) { out.print(userAddress);}%></textarea></td>
                     <tr>
                         <td>メールアドレス：</td>
-                        <td><input pattern=[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$ type="text" name="userMail" value="<% if (updateFlg.equals("1")) { out.print(userMail);}%>" size="30" maxlength="50"required></td>
+                        <td><input pattern=[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$ type="text" name="userMail" value="<% if (userId != null || "".equals(userId)) { out.print(userMail);}%>" size="30" maxlength="50"required></td>
                     </tr>
                     <tr>
                         <td>パスワード(半角文字　8字以上)：</td>
@@ -125,7 +138,7 @@
                     </tr>
                 </table>
                 <br>　
-                <input type="submit" value=<% if(updateFlg.equals("1")){ out.print("変更"); }else{ out.print("登録");}  %> onClick="Registration(<%= updateFlg%>)">
+                <input type="submit" value=<% if(userId != null || "".equals(userId)){ out.print("変更"); }else{ out.print("登録");}  %> onClick="Registration()">
 
                 <input type ="hidden" name ="actionId" value ="">
                 <input type ="hidden" name ="hiddenUserid" value ="">

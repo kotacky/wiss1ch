@@ -62,8 +62,9 @@
             var values = Command.split(','); // , 区切;
             document.MyForm.userId.value = values[0];
             document.MyForm.userName.value = values[1];
-            document.MyForm.userAddress.value = values[2];
-            document.MyForm.userMail.value = values[3];
+            document.MyForm.postalCode.value = values[2]
+            document.MyForm.userAddress.value = values[3];
+            document.MyForm.userMail.value = values[4];
             document.MyForm.actionId.value = 'move';
             document.MyForm.action = "<%= request.getContextPath() %>/W0060Control"
             document.MyForm.submit();
@@ -127,6 +128,7 @@
                     <%String userId = userInfo.get("userId"); %>
                     <%String userName = userInfo.get("userName"); %>
                     <%String admin = userInfo.get("userAdmin");  %>
+                    <%String postalCode = userInfo.get("postalCode"); %>
                     <%String userAddress = userInfo.get("userAddress");  %>
                     <%String userMail = userInfo.get("userMail"); %>
                     <%String encordedAddr = URLEncoder.encode(userAddress, "UTF-8"); %>
@@ -134,7 +136,7 @@
 
                 <tr>
                     <td><input type="checkbox" <%= chk1  %> name="chkbox" style="width:17px;height:17px;"value="<%= userInfo.get("userId") %>" onClick="chk();"></td>
-                    <td><a onClick="move('<%=userId %>,<%=userName %>,<%=userAddress %>,<%=userMail %>');"   href="#"  value=""  ><% out.print(userInfo.get("userId")); %></a></td>
+                    <td><a onClick="move('<%=userId %>,<%=userName %>,<%=postalCode %>,<%=userAddress %>,<%=userMail %>');"   href="#"  value=""  ><% out.print(userInfo.get("userId")); %></a></td>
                     <td><% out.print(userInfo.get("userName")); %></td>
                     <td><a href="javascript:void(0);" onclick=window.open("http://maps.google.co.jp/maps?q=<% out.print(encordedAddr);%>",'GoogleMap','width=700,height=400')> <% out.print(userAddress); %> </a></td>
                     <td><%= userMail %></td>
@@ -165,8 +167,10 @@
             <input type="hidden" name="actionId" value="">
             <input type="hidden" name="userId" value="">
             <input type="hidden" name="userName" value="">
+            <input type="hidden" name="postalCode" value="">
             <input type="hidden" name="userAddress" value="">
             <input type="hidden" name="userMail" value="">
+            <input type="hidden" name="Postalcode" value="">
             </P>
 
         </form>

@@ -1,8 +1,6 @@
 package co.wiss1.control;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -13,8 +11,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.catalina.realm.RealmBase;
-import co.wiss1.model.W0060Model;
+
 import co.wiss1.common.Constants;
+import co.wiss1.model.W0060Model;
 
 @WebServlet(Constants.W0060_CONTROL)
 public class W0060Control extends HttpServlet{
@@ -28,22 +27,39 @@ public class W0060Control extends HttpServlet{
             String loginUser = session.getAttribute("userId").toString();
             String actionId = request.getParameter("actionId");
 
-            request.setAttribute("updateFlg", "0");
-
-            //ユーザ一覧から更新で遷移してきた場合
-            if("move".equals(actionId)) {
-                request.setAttribute("updateFlg", "1");
+            //住所自動入力
+            if("autoinput".equals(actionId)) {
+            	System.out.println("W0060C autoinputします。");
 
                 String userId = request.getParameter("userId");
                 String userName = request.getParameter("userName");
+                String userMail = request.getParameter("userMail");
+            	String postalCode = request.getParameter("postalCode").toString();
+            	String addressInfo = W0060Model.getAddressInfo(postalCode);
+            	System.out.println(addressInfo);
+
+            	request.setAttribute("userId",userId);
+            	request.setAttribute("userName",userName);
+            	request.setAttribute("postalCode", postalCode);
+            	request.setAttribute("userAddress",addressInfo);
+            	request.setAttribute("userMail",userMail);
+            }
+
+            //ユーザ一覧から更新で遷移してきた場合
+            if("move".equals(actionId)) {
+
+                String userId = request.getParameter("userId");
+                String userName = request.getParameter("userName");
+                String postalCode = request.getParameter("postalCode");
                 String userAddress = request.getParameter("userAddress");
                 String userMail = request.getParameter("userMail");
                 System.out.println("moveからやってきた！！");
 
                 request.setAttribute("userId", userId);
                 request.setAttribute("userName", userName);
+                request.setAttribute("postalCode",postalCode);
                 request.setAttribute("userAddress", userAddress);
-                request.setAttribute("userName", userMail);
+                request.setAttribute("userMail", userMail);
                 request.setAttribute("registar", "1");
             }
 
@@ -53,6 +69,7 @@ public class W0060Control extends HttpServlet{
 
                 String userId = request.getParameter("hiddenUserid");
                 String userName = request.getParameter("userName");
+                String postalCode = request.getParameter("postalCode");
                 String userAddress = request.getParameter("userAddress");
                 String userMail = request.getParameter("userMail");
                 String passWord = request.getParameter("passWord");
@@ -61,7 +78,7 @@ public class W0060Control extends HttpServlet{
 
                 // パスワードをハッシュ化
                 String hashedpassword = RealmBase.Digest(passWord, "SHA-1", "Windows-31J");
-                int registar = W0060Model.updateUser(loginUser,userId,userName,userAddress,userMail,hashedpassword,conPassword, fontColor);
+                int registar = W0060Model.updateUser(loginUser,userId,userName,postalCode,userAddress,userMail,hashedpassword,conPassword, fontColor);
                 //自分の情報を更新していた場合
                 if(loginUser.equals(userId)){
                     session.setAttribute("font_color", fontColor);
@@ -78,9 +95,10 @@ public class W0060Control extends HttpServlet{
 
                 request.setAttribute("userId", "");
                 request.setAttribute("userName", "");
+                request.setAttribute("postalCode", "");
                 request.setAttribute("userAddress", "");
                 request.setAttribute("userMail", "");
-                request.setAttribute("registar",4);
+                request.setAttribute("registar",5);
             }
 
             //ユーザ新規登録画面で登録ボタンを押したとき
@@ -89,6 +107,7 @@ public class W0060Control extends HttpServlet{
 
                 String userId = request.getParameter("userId");
                 String userName = request.getParameter("userName");
+                String postalCode = request.getParameter("postalCode");
                 String userAddress = request.getParameter("userAddress");
                 String userMail = request.getParameter("userMail");
                 String passWord = request.getParameter("passWord");
@@ -97,7 +116,7 @@ public class W0060Control extends HttpServlet{
 
                 // パスワードをハッシュ化
                 String hashedpassword = RealmBase.Digest(passWord, "SHA-1", "Windows-31J");
-                int registar = W0060Model.registarUser(loginUser,userId,userName,userAddress,userMail,hashedpassword,conPassword,fontColor);
+                int registar = W0060Model.registarUser(loginUser,userId,userName,postalCode,userAddress,userMail,hashedpassword,conPassword,fontColor);
                 System.out.println("W0060C registar 終了" + registar);
                 request.setAttribute("registar",registar);
 

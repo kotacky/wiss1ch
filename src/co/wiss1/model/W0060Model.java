@@ -75,7 +75,7 @@ public class W0060Model {
 
         try{
             // コメント一覧照会実行
-            connection = DBAccessUtils.getConnection();												//DBへ接続
+            connection = DBAccessUtils.getConnection();													//DBへ接続
             statement = connection.createStatement();													//Statementを取得するためのコード
 
             //自動コミットを有効にする

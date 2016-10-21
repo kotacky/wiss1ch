@@ -16,6 +16,7 @@
                 return;
             }
          }
+
         function Registration(Update){
             //パスワードが一致していなかった場合
             if(document.MyForm.passWord.value != document.MyForm.conPassword.value){
